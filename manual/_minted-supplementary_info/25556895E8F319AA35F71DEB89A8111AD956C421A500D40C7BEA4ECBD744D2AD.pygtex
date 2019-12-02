@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+  themis@linux:\PYGZti{}\PYGZdl{} point\PYGZus{}0001\PYGZus{}0001\PYGZus{}0001.xyz
+
+           8
+\PYG{n+nv}{Energy} \PYG{o}{=}   0.0000000E+00
+ O       0.0000     0.0000     0.0000
+ H      \PYGZhy{}0.0000    \PYGZhy{}0.7668    \PYGZhy{}0.5971
+ H      \PYGZhy{}0.0000     0.7668    \PYGZhy{}0.5971
+ X      \PYGZhy{}0.0000    \PYGZhy{}0.0000    \PYGZhy{}0.0668
+ O       2.3818     1.4720     0.0000
+ H       3.2085     1.9830    \PYGZhy{}0.0000
+ H       2.1793     1.3469     0.9423
+ X       2.4167     1.4936     0.0527
+
+
+  themis@linux:\PYGZti{}\PYGZdl{}
+\end{Verbatim}

@@ -1,0 +1,387 @@
+\hypertarget{namespacemod__loops}{}\section{mod\+\_\+loops Module Reference}
+\label{namespacemod__loops}\index{mod\+\_\+loops@{mod\+\_\+loops}}
+
+
+This module contains the main program loop for Z(\+N,\+V,\+T) calculation.  
+
+
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \hyperlink{namespacemod__loops_a6e4de9cf9c585c364502a63d328071bd}{calc}
+\begin{DoxyCompactList}\small\item\em This routine performs the main loop and calls subroutines to perform the configurational sampling and energy calculations. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__loops_a755c1c6e9232a99181d4ac9a7c0c5cff}{recalc}
+\begin{DoxyCompactList}\small\item\em This routine performs the main loop and reads already calculated energy values from energy file. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__loops_acfec0f16ef59b6277e9dfd13d5026965}{calc\+\_\+ztotal}
+\begin{DoxyCompactList}\small\item\em This routine performs partition function calculation for each grid point and also for the whole grid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+character(len=3) \hyperlink{namespacemod__loops_a66417533bb22418eb95ee7ebbff1f850}{nrot}
+\item 
+character(len=3) \hyperlink{namespacemod__loops_a920fecb79f5e908fa035a810b4d549ea}{npre}
+\item 
+character(len=4) \hyperlink{namespacemod__loops_a79e040eb372f8de350337242a159e2b7}{ntra}
+\item 
+real(kind=dp) \hyperlink{namespacemod__loops_ab6a118712ba0b676790e9cace45c35b5}{t0}
+\item 
+real(kind=dp) \hyperlink{namespacemod__loops_acb345fb5782ee4c7fd3c419baff2c135}{time}
+\item 
+real(kind=dp) \hyperlink{namespacemod__loops_a28f32cc48dca88b5eb914f3b51ff36c4}{kbt}
+\item 
+real(kind=dp) \hyperlink{namespacemod__loops_a17eba688dba567d251d70c4c22d9a1cb}{min\+\_\+ener}
+\item 
+real(kind=dp) \hyperlink{namespacemod__loops_a16597662d980828d74a9078f4b74e677}{atotal}
+\item 
+real(kind=dp) \hyperlink{namespacemod__loops_ae00fd72d753b56050294575eca6b68b1}{mtstotal}
+\item 
+real(kind=dp) \hyperlink{namespacemod__loops_ad69a647146ed54f5c84b96e742396716}{etotalavg}
+\item 
+real(kind=dp) \hyperlink{namespacemod__loops_a6975a502e7bc56e3b95ee8ed8db8e658}{ztrans}
+\item 
+real(kind=dp) \hyperlink{namespacemod__loops_a7c4cc7b204cbf0459e4519befe2b1ef5}{sumvexpvtrans}
+\item 
+real(kind=dp), dimension(\+:), allocatable \hyperlink{namespacemod__loops_a285da08b33e0b132d883ee82f39f6ea2}{min\+\_\+ener\+\_\+t}
+\item 
+integer \hyperlink{namespacemod__loops_adc96eb69b7265038868c81104240ee96}{tini}
+\item 
+integer \hyperlink{namespacemod__loops_a67ea99979384ac6268ae84f7bd2773ec}{tend}
+\item 
+integer \hyperlink{namespacemod__loops_ab4cd7025ac3ba99baaa6d706f7c7cdb7}{rate}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This module contains the main program loop for Z(\+N,\+V,\+T) calculation. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari
+\begin{DoxyItemize}
+\item Laboratório de Química Teórica, L\+QT -- U\+F\+S\+Car 
+\end{DoxyItemize}
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+-\/ Oct, 2017
+\begin{DoxyItemize}
+\item module created 
+\end{DoxyItemize}
+\end{DoxyDate}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\index{mod\+\_\+loops@{mod\+\_\+loops}!calc@{calc}}
+\index{calc@{calc}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{calc}{calc}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+loops\+::calc (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__loops_a6e4de9cf9c585c364502a63d328071bd}{}\label{namespacemod__loops_a6e4de9cf9c585c364502a63d328071bd}
+
+
+This routine performs the main loop and calls subroutines to perform the configurational sampling and energy calculations. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari
+\begin{DoxyItemize}
+\item Laboratório de Química Teórica, L\+QT -- U\+F\+S\+Car 
+\end{DoxyItemize}
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+-\/ Jun, 2017
+\begin{DoxyItemize}
+\item subroutine created
+\item energy values written in binary file 
+\end{DoxyItemize}
+
+-\/ Dec, 2017
+\begin{DoxyItemize}
+\item lowest energy values are subtracted from each value to avoid problems due to exponential explosion 
+\end{DoxyItemize}
+\end{DoxyDate}
+
+
+Definition at line 41 of file mod\+\_\+loops.\+f90.
+
+
+
+References mod\+\_\+pot\+\_\+none\+::check\+\_\+conf(), mod\+\_\+read\+\_\+grids\+::check\+\_\+moves(), mod\+\_\+read\+\_\+xyz\+::cosphir, mod\+\_\+read\+\_\+xyz\+::costhetar, mod\+\_\+pot\+\_\+ljc\+::dimer, mod\+\_\+read\+\_\+xyz\+::dimers, mod\+\_\+read\+\_\+grids\+::grid\+\_\+rot, mod\+\_\+read\+\_\+grids\+::grid\+\_\+trans, mod\+\_\+constants\+::kb, kbt, min\+\_\+ener, min\+\_\+ener\+\_\+t, mod\+\_\+read\+\_\+xyz\+::mol1, mod\+\_\+pot\+\_\+ljc\+::mol1\+\_\+ljc, mod\+\_\+read\+\_\+xyz\+::mol2, mod\+\_\+pot\+\_\+ljc\+::mol2\+\_\+ljc, mod\+\_\+input\+\_\+read\+::np, mod\+\_\+read\+\_\+grids\+::phir, mod\+\_\+input\+\_\+read\+::potential, rate, mod\+\_\+input\+\_\+read\+::ref1, mod\+\_\+input\+\_\+read\+::ref2, mod\+\_\+read\+\_\+grids\+::repulsion, mod\+\_\+read\+\_\+grids\+::rot\+\_\+total, mod\+\_\+read\+\_\+xyz\+::sinphir, mod\+\_\+read\+\_\+xyz\+::sinthetar, mod\+\_\+read\+\_\+grids\+::sumvexpvrot, t0, mod\+\_\+input\+\_\+read\+::temp, tend, mod\+\_\+read\+\_\+grids\+::thetar, time, tini, mod\+\_\+input\+\_\+read\+::vector1, mod\+\_\+input\+\_\+read\+::vector2, mod\+\_\+read\+\_\+grids\+::vtot, mod\+\_\+input\+\_\+read\+::writeframe, mod\+\_\+input\+\_\+read\+::wrtxtc, and mod\+\_\+read\+\_\+grids\+::zrot.
+
+
+
+Referenced by themis().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=341pt]{namespacemod__loops_a6e4de9cf9c585c364502a63d328071bd_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!calc\+\_\+ztotal@{calc\+\_\+ztotal}}
+\index{calc\+\_\+ztotal@{calc\+\_\+ztotal}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{calc\+\_\+ztotal}{calc_ztotal}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+loops\+::calc\+\_\+ztotal (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__loops_acfec0f16ef59b6277e9dfd13d5026965}{}\label{namespacemod__loops_acfec0f16ef59b6277e9dfd13d5026965}
+
+
+This routine performs partition function calculation for each grid point and also for the whole grid. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari
+\begin{DoxyItemize}
+\item Laboratório de Química Teórica, L\+QT -- U\+F\+S\+Car 
+\end{DoxyItemize}
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+-\/ Jun, 2017
+\begin{DoxyItemize}
+\item subroutine created 
+\end{DoxyItemize}
+
+-\/ Dec, 2017
+\begin{DoxyItemize}
+\item absolute energy values are recovered and thermodynamic properties are obtained from them 
+\end{DoxyItemize}
+
+-\/ Mar, 2019
+\begin{DoxyItemize}
+\item -\/\+TdS from ideal gas is subtracted from free energy 
+\end{DoxyItemize}
+\end{DoxyDate}
+
+
+Definition at line 479 of file mod\+\_\+loops.\+f90.
+
+
+
+References mod\+\_\+read\+\_\+grids\+::a, atotal, mod\+\_\+read\+\_\+grids\+::eavg, etotalavg, mod\+\_\+read\+\_\+grids\+::grid\+\_\+rot, mod\+\_\+read\+\_\+grids\+::grid\+\_\+trans, mod\+\_\+constants\+::kb, kbt, min\+\_\+ener, min\+\_\+ener\+\_\+t, mod\+\_\+read\+\_\+grids\+::mts, mtstotal, mod\+\_\+input\+\_\+read\+::np, mod\+\_\+read\+\_\+grids\+::probt, mod\+\_\+read\+\_\+grids\+::sumvexpvrot, sumvexpvtrans, mod\+\_\+input\+\_\+read\+::temp, mod\+\_\+read\+\_\+grids\+::vtot, mod\+\_\+read\+\_\+grids\+::zrot, and ztrans.
+
+
+
+Referenced by themis().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!recalc@{recalc}}
+\index{recalc@{recalc}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{recalc}{recalc}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+loops\+::recalc (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__loops_a755c1c6e9232a99181d4ac9a7c0c5cff}{}\label{namespacemod__loops_a755c1c6e9232a99181d4ac9a7c0c5cff}
+
+
+This routine performs the main loop and reads already calculated energy values from energy file. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari
+\begin{DoxyItemize}
+\item Laboratório de Química Teórica, L\+QT -- U\+F\+S\+Car 
+\end{DoxyItemize}
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+-\/ Jun, 2017
+\begin{DoxyItemize}
+\item subroutine created
+\item energy values read from binary file 
+\end{DoxyItemize}
+
+-\/ Dec, 2017
+\begin{DoxyItemize}
+\item lowest energy values are subtracted from each value to avoid problems in exponential calculation 
+\end{DoxyItemize}
+\end{DoxyDate}
+
+
+Definition at line 335 of file mod\+\_\+loops.\+f90.
+
+
+
+References mod\+\_\+read\+\_\+grids\+::check\+\_\+moves(), mod\+\_\+read\+\_\+grids\+::grid\+\_\+rot, mod\+\_\+read\+\_\+grids\+::grid\+\_\+trans, mod\+\_\+inquire\+::inquire\+\_\+check(), mod\+\_\+constants\+::kb, kbt, min\+\_\+ener, min\+\_\+ener\+\_\+t, mod\+\_\+input\+\_\+read\+::np, mod\+\_\+input\+\_\+read\+::potential, mod\+\_\+read\+\_\+grids\+::repulsion, mod\+\_\+read\+\_\+grids\+::sumvexpvrot, mod\+\_\+input\+\_\+read\+::temp, mod\+\_\+read\+\_\+grids\+::vtot, and mod\+\_\+read\+\_\+grids\+::zrot.
+
+
+
+Referenced by themis().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=330pt]{namespacemod__loops_a755c1c6e9232a99181d4ac9a7c0c5cff_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{mod\+\_\+loops@{mod\+\_\+loops}!atotal@{atotal}}
+\index{atotal@{atotal}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{atotal}{atotal}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+loops\+::atotal}\hypertarget{namespacemod__loops_a16597662d980828d74a9078f4b74e677}{}\label{namespacemod__loops_a16597662d980828d74a9078f4b74e677}
+
+
+Definition at line 20 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc\+\_\+ztotal(), and mod\+\_\+resume\+::sort\+\_\+output().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!etotalavg@{etotalavg}}
+\index{etotalavg@{etotalavg}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{etotalavg}{etotalavg}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+loops\+::etotalavg}\hypertarget{namespacemod__loops_ad69a647146ed54f5c84b96e742396716}{}\label{namespacemod__loops_ad69a647146ed54f5c84b96e742396716}
+
+
+Definition at line 20 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc\+\_\+ztotal(), and mod\+\_\+resume\+::sort\+\_\+output().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!kbt@{kbt}}
+\index{kbt@{kbt}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{kbt}{kbt}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+loops\+::kbt}\hypertarget{namespacemod__loops_a28f32cc48dca88b5eb914f3b51ff36c4}{}\label{namespacemod__loops_a28f32cc48dca88b5eb914f3b51ff36c4}
+
+
+Definition at line 19 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc(), calc\+\_\+ztotal(), mod\+\_\+search\+::count\+\_\+structures(), recalc(), mod\+\_\+search\+::sort\+\_\+energy(), and mod\+\_\+resume\+::sort\+\_\+output().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!min\+\_\+ener@{min\+\_\+ener}}
+\index{min\+\_\+ener@{min\+\_\+ener}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{min\+\_\+ener}{min_ener}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+loops\+::min\+\_\+ener}\hypertarget{namespacemod__loops_a17eba688dba567d251d70c4c22d9a1cb}{}\label{namespacemod__loops_a17eba688dba567d251d70c4c22d9a1cb}
+
+
+Definition at line 19 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc(), calc\+\_\+ztotal(), mod\+\_\+search\+::count\+\_\+structures(), mod\+\_\+resume\+::ending(), recalc(), mod\+\_\+search\+::sort\+\_\+energy(), and mod\+\_\+resume\+::sort\+\_\+output().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!min\+\_\+ener\+\_\+t@{min\+\_\+ener\+\_\+t}}
+\index{min\+\_\+ener\+\_\+t@{min\+\_\+ener\+\_\+t}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{min\+\_\+ener\+\_\+t}{min_ener_t}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+loops\+::min\+\_\+ener\+\_\+t}\hypertarget{namespacemod__loops_a285da08b33e0b132d883ee82f39f6ea2}{}\label{namespacemod__loops_a285da08b33e0b132d883ee82f39f6ea2}
+
+
+Definition at line 22 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc(), calc\+\_\+ztotal(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), and recalc().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!mtstotal@{mtstotal}}
+\index{mtstotal@{mtstotal}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{mtstotal}{mtstotal}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+loops\+::mtstotal}\hypertarget{namespacemod__loops_ae00fd72d753b56050294575eca6b68b1}{}\label{namespacemod__loops_ae00fd72d753b56050294575eca6b68b1}
+
+
+Definition at line 20 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc\+\_\+ztotal(), and mod\+\_\+resume\+::sort\+\_\+output().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!npre@{npre}}
+\index{npre@{npre}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{npre}{npre}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 3 ) mod\+\_\+loops\+::npre}\hypertarget{namespacemod__loops_a920fecb79f5e908fa035a810b4d549ea}{}\label{namespacemod__loops_a920fecb79f5e908fa035a810b4d549ea}
+
+
+Definition at line 17 of file mod\+\_\+loops.\+f90.
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!nrot@{nrot}}
+\index{nrot@{nrot}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{nrot}{nrot}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 3 ) mod\+\_\+loops\+::nrot}\hypertarget{namespacemod__loops_a66417533bb22418eb95ee7ebbff1f850}{}\label{namespacemod__loops_a66417533bb22418eb95ee7ebbff1f850}
+
+
+Definition at line 17 of file mod\+\_\+loops.\+f90.
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!ntra@{ntra}}
+\index{ntra@{ntra}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{ntra}{ntra}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 4 ) mod\+\_\+loops\+::ntra}\hypertarget{namespacemod__loops_a79e040eb372f8de350337242a159e2b7}{}\label{namespacemod__loops_a79e040eb372f8de350337242a159e2b7}
+
+
+Definition at line 18 of file mod\+\_\+loops.\+f90.
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!rate@{rate}}
+\index{rate@{rate}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{rate}{rate}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+loops\+::rate}\hypertarget{namespacemod__loops_ab4cd7025ac3ba99baaa6d706f7c7cdb7}{}\label{namespacemod__loops_ab4cd7025ac3ba99baaa6d706f7c7cdb7}
+
+
+Definition at line 23 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!sumvexpvtrans@{sumvexpvtrans}}
+\index{sumvexpvtrans@{sumvexpvtrans}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{sumvexpvtrans}{sumvexpvtrans}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+loops\+::sumvexpvtrans}\hypertarget{namespacemod__loops_a7c4cc7b204cbf0459e4519befe2b1ef5}{}\label{namespacemod__loops_a7c4cc7b204cbf0459e4519befe2b1ef5}
+
+
+Definition at line 21 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc\+\_\+ztotal().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!t0@{t0}}
+\index{t0@{t0}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{t0}{t0}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+loops\+::t0}\hypertarget{namespacemod__loops_ab6a118712ba0b676790e9cace45c35b5}{}\label{namespacemod__loops_ab6a118712ba0b676790e9cace45c35b5}
+
+
+Definition at line 19 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!tend@{tend}}
+\index{tend@{tend}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{tend}{tend}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+loops\+::tend}\hypertarget{namespacemod__loops_a67ea99979384ac6268ae84f7bd2773ec}{}\label{namespacemod__loops_a67ea99979384ac6268ae84f7bd2773ec}
+
+
+Definition at line 23 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!time@{time}}
+\index{time@{time}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{time}{time}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+loops\+::time}\hypertarget{namespacemod__loops_acb345fb5782ee4c7fd3c419baff2c135}{}\label{namespacemod__loops_acb345fb5782ee4c7fd3c419baff2c135}
+
+
+Definition at line 19 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!tini@{tini}}
+\index{tini@{tini}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{tini}{tini}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+loops\+::tini}\hypertarget{namespacemod__loops_adc96eb69b7265038868c81104240ee96}{}\label{namespacemod__loops_adc96eb69b7265038868c81104240ee96}
+
+
+Definition at line 23 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc().
+
+\index{mod\+\_\+loops@{mod\+\_\+loops}!ztrans@{ztrans}}
+\index{ztrans@{ztrans}!mod\+\_\+loops@{mod\+\_\+loops}}
+\subsubsection[{\texorpdfstring{ztrans}{ztrans}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+loops\+::ztrans}\hypertarget{namespacemod__loops_a6975a502e7bc56e3b95ee8ed8db8e658}{}\label{namespacemod__loops_a6975a502e7bc56e3b95ee8ed8db8e658}
+
+
+Definition at line 21 of file mod\+\_\+loops.\+f90.
+
+
+
+Referenced by calc\+\_\+ztotal(), mod\+\_\+search\+::sort\+\_\+energy(), and mod\+\_\+resume\+::sort\+\_\+output().
+

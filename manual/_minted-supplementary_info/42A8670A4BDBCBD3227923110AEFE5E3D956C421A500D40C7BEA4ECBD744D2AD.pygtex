@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+  themis@linux:\PYGZti{}\PYGZdl{} cat parameters2
+
+   q          sig \PYG{o}{(}A\PYG{o}{)}     eps \PYG{o}{(}kJ/mol\PYG{o}{)}
+OW \PYGZhy{}0.834     3.15061     0.636386
+HW +0.417     0.00000     0.000000	
+HW +0.417     0.00000     0.000000	
+X   0.000     0.00000     0.000000
+
+  themis@linux:\PYGZti{}\PYGZdl{}
+\end{Verbatim}

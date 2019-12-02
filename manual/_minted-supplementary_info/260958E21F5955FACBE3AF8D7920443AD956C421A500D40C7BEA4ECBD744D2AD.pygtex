@@ -1,0 +1,27 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+  themis@linux:\PYGZti{}\PYGZdl{} cat energy\PYGZhy{}sort.log
+
+  inter\PYGZus{}energy\PYG{o}{(}g,r,t\PYG{o}{)}   g       r       t        prob.     sum prob.
+    \PYGZhy{}2.83500E+001       \PYG{l+m}{1}      \PYG{l+m}{10}       \PYG{l+m}{3}     6.704E\PYGZhy{}004  6.704E\PYGZhy{}004
+    \PYGZhy{}2.83500E+001       \PYG{l+m}{1}       \PYG{l+m}{4}       \PYG{l+m}{9}     6.704E\PYGZhy{}004  1.341E\PYGZhy{}003
+    \PYGZhy{}2.83453E+001       \PYG{l+m}{2}       \PYG{l+m}{4}       \PYG{l+m}{9}     6.692E\PYGZhy{}004  2.010E\PYGZhy{}003
+    \PYGZhy{}2.83453E+001       \PYG{l+m}{2}      \PYG{l+m}{10}       \PYG{l+m}{3}     6.692E\PYGZhy{}004  2.679E\PYGZhy{}003
+    \PYGZhy{}2.83453E+001     \PYG{l+m}{120}       \PYG{l+m}{4}       \PYG{l+m}{9}     6.692E\PYGZhy{}004  3.348E\PYGZhy{}003
+    \PYGZhy{}2.83453E+001     \PYG{l+m}{120}      \PYG{l+m}{10}       \PYG{l+m}{3}     6.692E\PYGZhy{}004  4.017E\PYGZhy{}003
+    \PYGZhy{}2.83312E+001       \PYG{l+m}{3}      \PYG{l+m}{10}       \PYG{l+m}{3}     6.654E\PYGZhy{}004  4.683E\PYGZhy{}003
+    \PYGZhy{}2.83312E+001     \PYG{l+m}{119}      \PYG{l+m}{10}       \PYG{l+m}{3}     6.654E\PYGZhy{}004  5.348E\PYGZhy{}003
+    \PYGZhy{}2.83312E+001       \PYG{l+m}{3}       \PYG{l+m}{4}       \PYG{l+m}{9}     6.654E\PYGZhy{}004  6.014E\PYGZhy{}003
+    \PYGZhy{}2.83312E+001     \PYG{l+m}{119}       \PYG{l+m}{4}       \PYG{l+m}{9}     6.654E\PYGZhy{}004  6.679E\PYGZhy{}003
+    \PYGZhy{}2.83078E+001     \PYG{l+m}{118}      \PYG{l+m}{10}       \PYG{l+m}{3}     6.592E\PYGZhy{}004  7.338E\PYGZhy{}003
+    \PYGZhy{}2.83078E+001     \PYG{l+m}{118}       \PYG{l+m}{4}       \PYG{l+m}{9}     6.592E\PYGZhy{}004  7.997E\PYGZhy{}003
+    \PYGZhy{}2.83078E+001       \PYG{l+m}{4}      \PYG{l+m}{10}       \PYG{l+m}{3}     6.592E\PYGZhy{}004  8.657E\PYGZhy{}003
+    \PYGZhy{}2.83078E+001       \PYG{l+m}{4}       \PYG{l+m}{4}       \PYG{l+m}{9}     6.592E\PYGZhy{}004  9.316E\PYGZhy{}003
+    \PYGZhy{}2.82751E+001     \PYG{l+m}{117}       \PYG{l+m}{4}       \PYG{l+m}{9}     6.506E\PYGZhy{}004  9.966E\PYGZhy{}003
+    \PYGZhy{}2.82751E+001     \PYG{l+m}{117}      \PYG{l+m}{10}       \PYG{l+m}{3}     6.506E\PYGZhy{}004  1.062E\PYGZhy{}002
+    \PYGZhy{}2.82751E+001       \PYG{l+m}{5}      \PYG{l+m}{10}       \PYG{l+m}{3}     6.506E\PYGZhy{}004  1.127E\PYGZhy{}002
+    \PYGZhy{}2.82751E+001       \PYG{l+m}{5}       \PYG{l+m}{4}       \PYG{l+m}{9}     6.506E\PYGZhy{}004  1.192E\PYGZhy{}002
+    \PYGZhy{}2.82333E+001     \PYG{l+m}{116}      \PYG{l+m}{10}       \PYG{l+m}{3}     6.398E\PYGZhy{}004  1.256E\PYGZhy{}002
+    \PYGZhy{}2.82333E+001       \PYG{l+m}{6}      \PYG{l+m}{10}       \PYG{l+m}{3}     6.398E\PYGZhy{}004  1.320E\PYGZhy{}002
+
+  themis@linux:\PYGZti{}\PYGZdl{}
+\end{Verbatim}

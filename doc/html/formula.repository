@@ -1,0 +1,3 @@
+\form#0:$ (a+b)^2 = a^2 + 2ab +b^2$
+\form#1:\[ \int \limits_{-\infty}^\infty \exp(-i k x) dx = 2\pi \delta(k) \]
+\form#2:$ Z = \frac{1}{h^{3}}\int exp(-\beta H(q,p))d^{3}qd^{3}p $

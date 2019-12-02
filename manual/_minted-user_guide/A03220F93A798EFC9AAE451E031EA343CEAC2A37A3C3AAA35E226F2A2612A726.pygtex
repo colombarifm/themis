@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+  themis@linux:\PYGZti{}\PYGZdl{} cat INPUT
+
+    reorientation\PYGZus{}factor : \PYG{l+m}{2}                                     \PYG{esc}{#} integer
+    translation\PYGZus{}factor : \PYG{l+m}{2}                                       \PYG{esc}{#} integer
+    gyration\PYGZus{}factors :  360.0 \PYG{l+m}{120}                                \PYG{esc}{#} real \PYG{p}{|} integer
+    temperature : 300.0                                          \PYG{esc}{#} real
+    potential : lj\PYGZhy{}coul                                          \PYG{err}{!}\PYGZsh{} \PYG{l+s+s2}{\PYGZdq{}none\PYGZdq{}}, \PYG{l+s+s2}{\PYGZdq{}lj\PYGZhy{}coul\PYGZdq{}} our \PYG{l+s+s2}{\PYGZdq{}bh\PYGZhy{}coul\PYGZdq{}}
+\PYG{esc}{    ref_mol1 : 1                                                 }\PYGZsh{}\PYG{esc}{ integer}
+\PYG{esc}{    rot_ref_mol1 : 4                                             }\PYGZsh{}\PYG{esc}{ integer}
+\PYG{esc}{    ref_mol2 : 1                                                 }\PYGZsh{}\PYG{esc}{ integer}
+\PYG{esc}{    rot_ref_mol2 : 2                                             }\PYGZsh{}\PYG{esc}{ integer}
+\PYG{esc}{    shortest_distance : 0.8                                      }\PYGZsh{}\PYG{esc}{ real}
+\PYG{esc}{    write_xtc : no                                               }\PYGZsh{}\PYG{err}{!} \PYG{l+s+s2}{\PYGZdq{}no\PYGZdq{}}, \PYG{l+s+s2}{\PYGZdq{}F\PYGZdq{}}, \PYG{l+s+s2}{\PYGZdq{}yes\PYGZdq{}} or \PYG{l+s+s2}{\PYGZdq{}T\PYGZdq{}}
+    lowest\PYGZus{}structures : \PYG{l+m}{10}                                       \PYG{esc}{#} integer
+    write\PYGZus{}frames : none                                          \PYG{esc}{#} \PYG{l+s+s2}{\PYGZdq{}none\PYGZdq{}}, \PYG{l+s+s2}{\PYGZdq{}MOP\PYGZdq{}} or \PYG{l+s+s2}{\PYGZdq{}XYZ\PYGZdq{}}
+    mopac\PYGZus{}job :                                                  \PYG{esc}{#} character
+
+  themis@linux:\PYGZti{}\PYGZdl{}
+\end{Verbatim}

@@ -1,0 +1,27 @@
+On this page we describe the coding conventions that should be used when adding or changing T\+H\+E\+M\+IS code.\hypertarget{conv_themis}{}\section{T\+H\+E\+M\+IS}\label{conv_themis}
+In this section we give a short introduction to T\+H\+E\+M\+IS. We explain the basic usage and show how an automatic documentation of the code can be achieved. To this end one has to add special markers to the comments in the code. This can be done on the fly with little additional work.\hypertarget{conv_code}{}\subsection{Code Documentation}\label{conv_code}
+\hypertarget{conv_basic}{}\subsubsection{Basics}\label{conv_basic}
+\+\_\+\+\_\+\+\_\+ \begin{DoxyVerb}/*!
+ * ... THEMIS  ....
+ */ 
+subroutine read_input()
+{ ..... }
+\end{DoxyVerb}
+
+
+\begin{DoxyVerb} function calc()
+\end{DoxyVerb}
+
+
+\begin{DoxyVerb}/*! \brief A short description of the function 
+ *
+ */ 
+\end{DoxyVerb}
+\hypertarget{conv_theory}{}\subsubsection{Theory}\label{conv_theory}
+
+
+
+
+T\+H\+E\+M\+IS ... Partition function\+:~
+
+$ Z = \frac{1}{h^{3}}\int exp(-\beta H(q,p))d^{3}qd^{3}p $.. 

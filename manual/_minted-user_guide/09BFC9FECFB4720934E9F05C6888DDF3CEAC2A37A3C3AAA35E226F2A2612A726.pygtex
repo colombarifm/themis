@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+  themis@linux:\PYGZti{}\PYGZdl{} cat output.log
+
+        42
+       X \PYG{o}{(}A\PYG{o}{)}     Y \PYG{o}{(}A\PYG{o}{)}     Z \PYG{o}{(}A\PYG{o}{)}  point           PROB      A \PYG{o}{(}kJ/mol\PYG{o}{)}    \PYGZhy{}TS \PYG{o}{(}kJ/mol\PYG{o}{)}      E \PYG{o}{(}kJ/mol\PYG{o}{)}
+X    2.38182   1.47205   0.00000      \PYG{l+m}{1}   2.98845E\PYGZhy{}003   \PYGZhy{}1.08134E+001    6.75915E+000   \PYGZhy{}1.75725E+001
+X    2.38182  \PYGZhy{}1.47205   0.00000      \PYG{l+m}{2}   2.98845E\PYGZhy{}003   \PYGZhy{}1.08134E+001    6.75915E+000   \PYGZhy{}1.75725E+001
+X    1.47205   0.00000   2.38182      \PYG{l+m}{3}   5.85172E\PYGZhy{}002   \PYGZhy{}1.82330E+001    6.84167E+000   \PYGZhy{}2.50746E+001
+X    1.47205   0.00000  \PYGZhy{}2.38182      \PYG{l+m}{4}   1.34004E\PYGZhy{}003   \PYGZhy{}8.81280E+000    4.19575E+000   \PYGZhy{}1.30086E+001
+X    0.00000   2.38182   1.47205      \PYG{l+m}{5}   1.00969E\PYGZhy{}002   \PYGZhy{}1.38502E+001    6.78551E+000   \PYGZhy{}2.06357E+001
+X    0.00000   2.38182  \PYGZhy{}1.47205      \PYG{l+m}{6}   1.74725E\PYGZhy{}001   \PYGZhy{}2.09615E+001    4.32032E+000   \PYGZhy{}2.52818E+001
+X    0.00000  \PYGZhy{}2.38182   1.47205      \PYG{l+m}{7}   1.00969E\PYGZhy{}002   \PYGZhy{}1.38502E+001    6.78551E+000   \PYGZhy{}2.06357E+001
+X    0.00000  \PYGZhy{}2.38182  \PYGZhy{}1.47205      \PYG{l+m}{8}   1.74725E\PYGZhy{}001   \PYGZhy{}2.09615E+001    4.32032E+000   \PYGZhy{}2.52818E+001
+...
+X   \PYGZhy{}2.26525   0.86525  \PYGZhy{}1.40000     \PYG{l+m}{40}   9.83462E\PYGZhy{}004   \PYGZhy{}8.04111E+000    5.57165E+000   \PYGZhy{}1.36128E+001
+X   \PYGZhy{}2.26525  \PYGZhy{}0.86525  \PYGZhy{}1.40000     \PYG{l+m}{41}   9.83462E\PYGZhy{}004   \PYGZhy{}8.04111E+000    5.57165E+000   \PYGZhy{}1.36128E+001
+X   \PYGZhy{}2.80000   0.00000   0.00000     \PYG{l+m}{42}   2.97201E\PYGZhy{}003   \PYGZhy{}1.07996E+001    6.97190E+000   \PYGZhy{}1.77715E+001
+\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}
+TOTAL OVER TRANSLATIONAL GRID             1.00000E+000   \PYGZhy{}1.59900E+001    7.67496E+000   \PYGZhy{}2.36649E+001
+
+  themis@linux:\PYGZti{}\PYGZdl{}
+\end{Verbatim}

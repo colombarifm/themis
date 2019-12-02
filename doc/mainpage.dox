@@ -1,0 +1,63 @@
+/*! \mainpage Documentation for THEMIS
+
+This is the documentation for the source code in THEMIS. 
+
+*\image html themis-pmf.png
+
+The documentation is divided in the following sections:
+- \ref intro 
+- \ref conv
+
+\tableofcontents
+*/
+
+//-----------------------------------------------------------
+
+/*! \page intro Introduction
+THEMIS is a program to study intermolecular recognition via direct partition
+function estimation.&nbsp;
+
+Currently THEMIS is developed in the [Theoretical Chemistry Laboratory](http://www.lqt.dq.ufscar.br)
+*/
+
+//-----------------------------------------------------------
+
+/*! \page conv Coding Conventions
+On this page we describe the coding conventions that should be used when adding or changing THEMIS code.  
+
+\tableofcontents
+
+\section themis THEMIS
+In this section we give a short introduction to THEMIS. We explain the basic usage and show how an automatic documentation of the code can be achieved. To this end one has to add special markers to the comments in the code. This can be done on the fly with little additional work. 
+
+\subsection code Code Documentation
+\subsubsection basic Basics
+___
+\verbatim
+/*!
+ * ... THEMIS  ....
+ */ 
+subroutine read_input()
+{ ..... }
+\endverbatim
+
+\verbatim
+ function calc()
+\endverbatim
+
+\verbatim
+/*! \brief A short description of the function 
+ *
+ */ 
+\endverbatim
+
+
+\subsubsection theory Theory
+
+____
+
+THEMIS ... Partition function:&nbsp;
+
+ \f$ Z = \frac{1}{h^{3}}\int exp(-\beta H(q,p))d^{3}qd^{3}p \f$.. 
+
+*/

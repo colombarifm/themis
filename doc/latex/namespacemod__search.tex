@@ -1,0 +1,215 @@
+\hypertarget{namespacemod__search}{}\section{mod\+\_\+search Module Reference}
+\label{namespacemod__search}\index{mod\+\_\+search@{mod\+\_\+search}}
+
+
+This module contains routines to search and write the lowest energy structures for the run.  
+
+
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \hyperlink{namespacemod__search_a5026804a4e265b1a450eebc86cd81575}{count\+\_\+structures}
+\begin{DoxyCompactList}\small\item\em This routine counts the number of structures with energy closer (within 0.\+5 $\ast$ k\+BT) to the most stable one. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__search_a55e1f850472fe6cef190a6838ae61e51}{sort\+\_\+energy}
+\begin{DoxyCompactList}\small\item\em This routine sorts the energy array and write its first n values to energy-\/sort.\+log. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__search_ac11978e9ebdb6b101a09555f4742a4c9}{search\+\_\+structures}
+\begin{DoxyCompactList}\small\item\em This routine generates the configurations for structures written at energy-\/sort.\+log. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+real(kind=dp) \hyperlink{namespacemod__search_a014567a8f5474b311cedf2f9b1dbda1a}{lowest}
+\item 
+integer, dimension(3) \hyperlink{namespacemod__search_a018a3c64ea9e25b0dfc15ebe763920cf}{pos\+\_\+min\+\_\+energy}
+\item 
+integer \hyperlink{namespacemod__search_a0c7388c12d8e6a95b8c3f9fd86321687}{n}
+\item 
+real(kind=dp), dimension(\+:), allocatable \hyperlink{namespacemod__search_a8ce72764a5658f7958ed5c473dd77706}{energy\+\_\+ordered}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This module contains routines to search and write the lowest energy structures for the run. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari
+\begin{DoxyItemize}
+\item Laboratório de Química Teórica, L\+QT -- U\+F\+S\+Car 
+\end{DoxyItemize}
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+-\/ Sep, 2017
+\begin{DoxyItemize}
+\item independent module created 
+\end{DoxyItemize}
+
+-\/ Jan, 2018
+\begin{DoxyItemize}
+\item documentation and support added 
+\end{DoxyItemize}
+\end{DoxyDate}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\index{mod\+\_\+search@{mod\+\_\+search}!count\+\_\+structures@{count\+\_\+structures}}
+\index{count\+\_\+structures@{count\+\_\+structures}!mod\+\_\+search@{mod\+\_\+search}}
+\subsubsection[{\texorpdfstring{count\+\_\+structures}{count_structures}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+search\+::count\+\_\+structures (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__search_a5026804a4e265b1a450eebc86cd81575}{}\label{namespacemod__search_a5026804a4e265b1a450eebc86cd81575}
+
+
+This routine counts the number of structures with energy closer (within 0.\+5 $\ast$ k\+BT) to the most stable one. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari Laboratório de Química Teórica, L\+QT -- U\+F\+S\+Car 
+\end{DoxyAuthor}
+
+
+Definition at line 36 of file mod\+\_\+search.\+f90.
+
+
+
+References mod\+\_\+read\+\_\+grids\+::grid\+\_\+rot, mod\+\_\+read\+\_\+grids\+::grid\+\_\+trans, mod\+\_\+loops\+::kbt, mod\+\_\+loops\+::min\+\_\+ener, n, mod\+\_\+input\+\_\+read\+::np, and mod\+\_\+read\+\_\+grids\+::vtot.
+
+
+
+Referenced by themis().
+
+\index{mod\+\_\+search@{mod\+\_\+search}!search\+\_\+structures@{search\+\_\+structures}}
+\index{search\+\_\+structures@{search\+\_\+structures}!mod\+\_\+search@{mod\+\_\+search}}
+\subsubsection[{\texorpdfstring{search\+\_\+structures}{search_structures}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+search\+::search\+\_\+structures (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__search_ac11978e9ebdb6b101a09555f4742a4c9}{}\label{namespacemod__search_ac11978e9ebdb6b101a09555f4742a4c9}
+
+
+This routine generates the configurations for structures written at energy-\/sort.\+log. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari
+\begin{DoxyItemize}
+\item Laboratório de Química Teórica, L\+QT -- U\+F\+S\+Car 
+\end{DoxyItemize}
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+-\/ Sep, 2017
+\begin{DoxyItemize}
+\item subroutine created 
+\end{DoxyItemize}
+\end{DoxyDate}
+
+
+Definition at line 146 of file mod\+\_\+search.\+f90.
+
+
+
+References mod\+\_\+read\+\_\+xyz\+::cosphir, mod\+\_\+read\+\_\+xyz\+::costhetar, mod\+\_\+read\+\_\+xyz\+::dimers, energy\+\_\+ordered, mod\+\_\+read\+\_\+grids\+::grid\+\_\+rot, mod\+\_\+read\+\_\+grids\+::grid\+\_\+trans, mod\+\_\+inquire\+::inquire\+\_\+check(), lowest, mod\+\_\+read\+\_\+xyz\+::mol1, mod\+\_\+read\+\_\+xyz\+::mol2, mod\+\_\+input\+\_\+read\+::nstruc, mod\+\_\+read\+\_\+grids\+::phir, mod\+\_\+input\+\_\+read\+::ref1, mod\+\_\+input\+\_\+read\+::ref2, mod\+\_\+read\+\_\+xyz\+::sinphir, mod\+\_\+read\+\_\+xyz\+::sinthetar, mod\+\_\+read\+\_\+grids\+::thetar, mod\+\_\+input\+\_\+read\+::vector1, and mod\+\_\+input\+\_\+read\+::vector2.
+
+
+
+Referenced by themis().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=325pt]{namespacemod__search_ac11978e9ebdb6b101a09555f4742a4c9_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mod\+\_\+search@{mod\+\_\+search}!sort\+\_\+energy@{sort\+\_\+energy}}
+\index{sort\+\_\+energy@{sort\+\_\+energy}!mod\+\_\+search@{mod\+\_\+search}}
+\subsubsection[{\texorpdfstring{sort\+\_\+energy}{sort_energy}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+search\+::sort\+\_\+energy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__search_a55e1f850472fe6cef190a6838ae61e51}{}\label{namespacemod__search_a55e1f850472fe6cef190a6838ae61e51}
+
+
+This routine sorts the energy array and write its first n values to energy-\/sort.\+log. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari
+\begin{DoxyItemize}
+\item Laboratório de Química Teórica, L\+QT -- U\+F\+S\+Car 
+\end{DoxyItemize}
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+-\/ Sep, 2017
+\begin{DoxyItemize}
+\item subroutine created 
+\end{DoxyItemize}
+\end{DoxyDate}
+\begin{DoxyNote}{Note}
+~\newline
+
+\begin{DoxyItemize}
+\item The method used to sort the energy array is non-\/standard, but is much more easier to implement and faster to run\+: ~\newline
+ i) The lowest energy value is found on array A and saved at first position of array B; ii) In array A, such position is replaced by I\+N\+F\+I\+N\+I\+TY; ~\newline
+ iii) Now the lowest energy value from array A will be the second value from array B and so on... 
+\end{DoxyItemize}
+\end{DoxyNote}
+
+
+Definition at line 87 of file mod\+\_\+search.\+f90.
+
+
+
+References energy\+\_\+ordered, mod\+\_\+constants\+::fpinf, mod\+\_\+loops\+::kbt, mod\+\_\+loops\+::min\+\_\+ener, mod\+\_\+input\+\_\+read\+::nstruc, pos\+\_\+min\+\_\+energy, mod\+\_\+read\+\_\+grids\+::vtot, and mod\+\_\+loops\+::ztrans.
+
+
+
+Referenced by themis().
+
+
+
+\subsection{Variable Documentation}
+\index{mod\+\_\+search@{mod\+\_\+search}!energy\+\_\+ordered@{energy\+\_\+ordered}}
+\index{energy\+\_\+ordered@{energy\+\_\+ordered}!mod\+\_\+search@{mod\+\_\+search}}
+\subsubsection[{\texorpdfstring{energy\+\_\+ordered}{energy_ordered}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+search\+::energy\+\_\+ordered}\hypertarget{namespacemod__search_a8ce72764a5658f7958ed5c473dd77706}{}\label{namespacemod__search_a8ce72764a5658f7958ed5c473dd77706}
+
+
+Definition at line 24 of file mod\+\_\+search.\+f90.
+
+
+
+Referenced by search\+\_\+structures(), and sort\+\_\+energy().
+
+\index{mod\+\_\+search@{mod\+\_\+search}!lowest@{lowest}}
+\index{lowest@{lowest}!mod\+\_\+search@{mod\+\_\+search}}
+\subsubsection[{\texorpdfstring{lowest}{lowest}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+search\+::lowest}\hypertarget{namespacemod__search_a014567a8f5474b311cedf2f9b1dbda1a}{}\label{namespacemod__search_a014567a8f5474b311cedf2f9b1dbda1a}
+
+
+Definition at line 22 of file mod\+\_\+search.\+f90.
+
+
+
+Referenced by search\+\_\+structures().
+
+\index{mod\+\_\+search@{mod\+\_\+search}!n@{n}}
+\index{n@{n}!mod\+\_\+search@{mod\+\_\+search}}
+\subsubsection[{\texorpdfstring{n}{n}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+search\+::n}\hypertarget{namespacemod__search_a0c7388c12d8e6a95b8c3f9fd86321687}{}\label{namespacemod__search_a0c7388c12d8e6a95b8c3f9fd86321687}
+
+
+Definition at line 23 of file mod\+\_\+search.\+f90.
+
+
+
+Referenced by count\+\_\+structures(), and mod\+\_\+resume\+::ending().
+
+\index{mod\+\_\+search@{mod\+\_\+search}!pos\+\_\+min\+\_\+energy@{pos\+\_\+min\+\_\+energy}}
+\index{pos\+\_\+min\+\_\+energy@{pos\+\_\+min\+\_\+energy}!mod\+\_\+search@{mod\+\_\+search}}
+\subsubsection[{\texorpdfstring{pos\+\_\+min\+\_\+energy}{pos_min_energy}}]{\setlength{\rightskip}{0pt plus 5cm}integer, dimension(3) mod\+\_\+search\+::pos\+\_\+min\+\_\+energy}\hypertarget{namespacemod__search_a018a3c64ea9e25b0dfc15ebe763920cf}{}\label{namespacemod__search_a018a3c64ea9e25b0dfc15ebe763920cf}
+
+
+Definition at line 23 of file mod\+\_\+search.\+f90.
+
+
+
+Referenced by sort\+\_\+energy().
+

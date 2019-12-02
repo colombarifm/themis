@@ -1,0 +1,226 @@
+\hypertarget{namespacemod__cmd__line}{}\section{mod\+\_\+cmd\+\_\+line Module Reference}
+\label{namespacemod__cmd__line}\index{mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}}
+
+
+This module contains a routine to get command line arguments.  
+
+
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \hyperlink{namespacemod__cmd__line_af3e6d85ae8e1f68f4c7c22e40bd3f3bb}{parse\+\_\+arguments}
+\begin{DoxyCompactList}\small\item\em This routine parses the command line arguments. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__cmd__line_ad2ecb585bbedcf49bd8219c82d034147}{command\+\_\+line\+\_\+errors} (cmd\+\_\+line\+\_\+error)
+\item 
+subroutine \hyperlink{namespacemod__cmd__line_add2ef454c82fd88ce99ea2fa978b2e6f}{display\+\_\+help}
+\item 
+subroutine \hyperlink{namespacemod__cmd__line_a5836de50b766a84c4d341efc9a9bcee0}{display\+\_\+license}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+real(kind=dp) \hyperlink{namespacemod__cmd__line_a726e623fa552ec6109d7f0e78545afe9}{rad} = 0.\+0\+\_\+dp
+\item 
+character(len=10) \hyperlink{namespacemod__cmd__line_aae2bce3e1e50220133e7bd310a051881}{irun} = char(0)
+\item 
+character(len=10) \hyperlink{namespacemod__cmd__line_aa7def1b6cf5f62c8473902ef9fc7f307}{str\+\_\+rad} = char(0)
+\item 
+character(len=10) \hyperlink{namespacemod__cmd__line_ad92694e0caab203d3bc911dabb059271}{grid\+\_\+type} = char(0)
+\item 
+character(len=40) \hyperlink{namespacemod__cmd__line_aa1ebd20914c6804b19cef6f2f1f5b8b9}{grid\+\_\+transl} = char(0)
+\item 
+character(len=20), dimension(\+:), allocatable \hyperlink{namespacemod__cmd__line_a39002195e12526c3d97ff7ee81f9c00c}{arg}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This module contains a routine to get command line arguments. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari
+\begin{DoxyItemize}
+\item Laboratório de Química Teórica, L\+QT -- U\+F\+S\+Car 
+\end{DoxyItemize}
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+-\/ Jun, 2017
+\begin{DoxyItemize}
+\item independent module created 
+\end{DoxyItemize}
+\end{DoxyDate}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\index{mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}!command\+\_\+line\+\_\+errors@{command\+\_\+line\+\_\+errors}}
+\index{command\+\_\+line\+\_\+errors@{command\+\_\+line\+\_\+errors}!mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}}
+\subsubsection[{\texorpdfstring{command\+\_\+line\+\_\+errors(cmd\+\_\+line\+\_\+error)}{command_line_errors(cmd_line_error)}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+cmd\+\_\+line\+::command\+\_\+line\+\_\+errors (
+\begin{DoxyParamCaption}
+\item[{character( len = 256 ), intent(in)}]{cmd\+\_\+line\+\_\+error}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__cmd__line_ad2ecb585bbedcf49bd8219c82d034147}{}\label{namespacemod__cmd__line_ad2ecb585bbedcf49bd8219c82d034147}
+
+
+Definition at line 192 of file mod\+\_\+cmd\+\_\+line.\+f90.
+
+
+
+References arg, and mod\+\_\+constants\+::dashline.
+
+
+
+Referenced by parse\+\_\+arguments().
+
+\index{mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}!display\+\_\+help@{display\+\_\+help}}
+\index{display\+\_\+help@{display\+\_\+help}!mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}}
+\subsubsection[{\texorpdfstring{display\+\_\+help}{display_help}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+cmd\+\_\+line\+::display\+\_\+help (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__cmd__line_add2ef454c82fd88ce99ea2fa978b2e6f}{}\label{namespacemod__cmd__line_add2ef454c82fd88ce99ea2fa978b2e6f}
+
+
+Definition at line 220 of file mod\+\_\+cmd\+\_\+line.\+f90.
+
+
+
+References arg, and mod\+\_\+constants\+::dashline.
+
+
+
+Referenced by parse\+\_\+arguments().
+
+\index{mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}!display\+\_\+license@{display\+\_\+license}}
+\index{display\+\_\+license@{display\+\_\+license}!mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}}
+\subsubsection[{\texorpdfstring{display\+\_\+license}{display_license}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+cmd\+\_\+line\+::display\+\_\+license (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__cmd__line_a5836de50b766a84c4d341efc9a9bcee0}{}\label{namespacemod__cmd__line_a5836de50b766a84c4d341efc9a9bcee0}
+
+
+Definition at line 299 of file mod\+\_\+cmd\+\_\+line.\+f90.
+
+
+
+References arg, and mod\+\_\+constants\+::dashline.
+
+
+
+Referenced by parse\+\_\+arguments().
+
+\index{mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}!parse\+\_\+arguments@{parse\+\_\+arguments}}
+\index{parse\+\_\+arguments@{parse\+\_\+arguments}!mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}}
+\subsubsection[{\texorpdfstring{parse\+\_\+arguments}{parse_arguments}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+cmd\+\_\+line\+::parse\+\_\+arguments (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__cmd__line_af3e6d85ae8e1f68f4c7c22e40bd3f3bb}{}\label{namespacemod__cmd__line_af3e6d85ae8e1f68f4c7c22e40bd3f3bb}
+
+
+This routine parses the command line arguments. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari
+\begin{DoxyItemize}
+\item Laboratório de Química Teórica, L\+QT -- U\+F\+S\+Car 
+\end{DoxyItemize}
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+-\/ Jun, 2017
+\begin{DoxyItemize}
+\item subroutine created 
+\end{DoxyItemize}
+
+-\/ Dec, 2017
+\begin{DoxyItemize}
+\item parsing tests added 
+\end{DoxyItemize}
+\end{DoxyDate}
+
+
+Definition at line 39 of file mod\+\_\+cmd\+\_\+line.\+f90.
+
+
+
+References arg, mod\+\_\+constants\+::char\+\_\+alphabet, command\+\_\+line\+\_\+errors(), mod\+\_\+constants\+::dashline, display\+\_\+help(), display\+\_\+license(), mod\+\_\+constants\+::float\+\_\+alphabet, grid\+\_\+transl, grid\+\_\+type, irun, and rad.
+
+
+
+Referenced by themis().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemod__cmd__line_af3e6d85ae8e1f68f4c7c22e40bd3f3bb_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}!arg@{arg}}
+\index{arg@{arg}!mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}}
+\subsubsection[{\texorpdfstring{arg}{arg}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 20 ), dimension(\+:), allocatable mod\+\_\+cmd\+\_\+line\+::arg}\hypertarget{namespacemod__cmd__line_a39002195e12526c3d97ff7ee81f9c00c}{}\label{namespacemod__cmd__line_a39002195e12526c3d97ff7ee81f9c00c}
+
+
+Definition at line 24 of file mod\+\_\+cmd\+\_\+line.\+f90.
+
+
+
+Referenced by command\+\_\+line\+\_\+errors(), display\+\_\+help(), display\+\_\+license(), and parse\+\_\+arguments().
+
+\index{mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}!grid\+\_\+transl@{grid\+\_\+transl}}
+\index{grid\+\_\+transl@{grid\+\_\+transl}!mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}}
+\subsubsection[{\texorpdfstring{grid\+\_\+transl}{grid_transl}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 40 ) mod\+\_\+cmd\+\_\+line\+::grid\+\_\+transl = char(0)}\hypertarget{namespacemod__cmd__line_aa1ebd20914c6804b19cef6f2f1f5b8b9}{}\label{namespacemod__cmd__line_aa1ebd20914c6804b19cef6f2f1f5b8b9}
+
+
+Definition at line 23 of file mod\+\_\+cmd\+\_\+line.\+f90.
+
+
+
+Referenced by parse\+\_\+arguments(), and mod\+\_\+read\+\_\+grids\+::read\+\_\+translation\+\_\+grid().
+
+\index{mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}!grid\+\_\+type@{grid\+\_\+type}}
+\index{grid\+\_\+type@{grid\+\_\+type}!mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}}
+\subsubsection[{\texorpdfstring{grid\+\_\+type}{grid_type}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 10 ) mod\+\_\+cmd\+\_\+line\+::grid\+\_\+type = char(0)}\hypertarget{namespacemod__cmd__line_ad92694e0caab203d3bc911dabb059271}{}\label{namespacemod__cmd__line_ad92694e0caab203d3bc911dabb059271}
+
+
+Definition at line 22 of file mod\+\_\+cmd\+\_\+line.\+f90.
+
+
+
+Referenced by mod\+\_\+resume\+::ending(), parse\+\_\+arguments(), and themis().
+
+\index{mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}!irun@{irun}}
+\index{irun@{irun}!mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}}
+\subsubsection[{\texorpdfstring{irun}{irun}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 10 ) mod\+\_\+cmd\+\_\+line\+::irun = char(0)}\hypertarget{namespacemod__cmd__line_aae2bce3e1e50220133e7bd310a051881}{}\label{namespacemod__cmd__line_aae2bce3e1e50220133e7bd310a051881}
+
+
+Definition at line 20 of file mod\+\_\+cmd\+\_\+line.\+f90.
+
+
+
+Referenced by mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), mod\+\_\+resume\+::ending(), parse\+\_\+arguments(), and themis().
+
+\index{mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}!rad@{rad}}
+\index{rad@{rad}!mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}}
+\subsubsection[{\texorpdfstring{rad}{rad}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+cmd\+\_\+line\+::rad = 0.\+0\+\_\+dp}\hypertarget{namespacemod__cmd__line_a726e623fa552ec6109d7f0e78545afe9}{}\label{namespacemod__cmd__line_a726e623fa552ec6109d7f0e78545afe9}
+
+
+Definition at line 19 of file mod\+\_\+cmd\+\_\+line.\+f90.
+
+
+
+Referenced by mod\+\_\+read\+\_\+grids\+::build\+\_\+translation\+\_\+sphere(), mod\+\_\+resume\+::ending(), and parse\+\_\+arguments().
+
+\index{mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}!str\+\_\+rad@{str\+\_\+rad}}
+\index{str\+\_\+rad@{str\+\_\+rad}!mod\+\_\+cmd\+\_\+line@{mod\+\_\+cmd\+\_\+line}}
+\subsubsection[{\texorpdfstring{str\+\_\+rad}{str_rad}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 10 ) mod\+\_\+cmd\+\_\+line\+::str\+\_\+rad = char(0)}\hypertarget{namespacemod__cmd__line_aa7def1b6cf5f62c8473902ef9fc7f307}{}\label{namespacemod__cmd__line_aa7def1b6cf5f62c8473902ef9fc7f307}
+
+
+Definition at line 21 of file mod\+\_\+cmd\+\_\+line.\+f90.
+

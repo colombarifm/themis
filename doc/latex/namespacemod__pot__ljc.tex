@@ -1,0 +1,197 @@
+\hypertarget{namespacemod__pot__ljc}{}\section{mod\+\_\+pot\+\_\+ljc Module Reference}
+\label{namespacemod__pot__ljc}\index{mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}}
+
+
+This module performs LJ + coulombic potential calculations.  
+
+
+\subsection*{Data Types}
+\begin{DoxyCompactItemize}
+\item 
+type \hyperlink{structmod__pot__ljc_1_1dimer__ljc}{dimer\+\_\+ljc}
+\item 
+type \hyperlink{structmod__pot__ljc_1_1ljc__atom}{ljc\+\_\+atom}
+\item 
+type \hyperlink{structmod__pot__ljc_1_1ljc__mol}{ljc\+\_\+mol}
+\end{DoxyCompactItemize}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \hyperlink{namespacemod__pot__ljc_aba75dd17c928cdddf564bf03d18b3ee2}{read\+\_\+ljc\+\_\+params} (this, ljc\+\_\+filename, numat)
+\begin{DoxyCompactList}\small\item\em This routine reads atom names, charges, sigma and epsilon values from parameter files. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__pot__ljc_ae251ed7b35f9a6401200390d8684ea46}{check\+\_\+ljc\+\_\+params} (this, numat)
+\begin{DoxyCompactList}\small\item\em This routine checks for inconsistent entries on parameter files. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__pot__ljc_aea69edf70ec804ebb8075741c84ab50b}{calc\+\_\+ljc\+\_\+cross} (this)
+\begin{DoxyCompactList}\small\item\em This routine calculates crossing values for LJ + coulomb potential before the loops. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__pot__ljc_a13c36fde6ac0af7265630bc8105c23b6}{calc\+\_\+ljc\+\_\+energy} (this, p, r, t)
+\begin{DoxyCompactList}\small\item\em This routine calculates LJ + coulomb energy for each valid configuration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+type(\hyperlink{structmod__pot__ljc_1_1ljc__mol}{ljc\+\_\+mol}) \hyperlink{namespacemod__pot__ljc_a840c66fc49efca8db3e2c54932a77356}{mol1\+\_\+ljc}
+\item 
+type(\hyperlink{structmod__pot__ljc_1_1ljc__mol}{ljc\+\_\+mol}) \hyperlink{namespacemod__pot__ljc_a2b003eb4461125a250324cf11fdd50c7}{mol2\+\_\+ljc}
+\item 
+type(\hyperlink{structmod__pot__ljc_1_1dimer__ljc}{dimer\+\_\+ljc}) \hyperlink{namespacemod__pot__ljc_abbcaeaac6c53085e893805852918464d}{dimer}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This module performs LJ + coulombic potential calculations. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari
+\begin{DoxyItemize}
+\item Laboratório de Química Teórica, L\+QT -- U\+F\+S\+Car 
+\end{DoxyItemize}
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+-\/ Oct, 2017
+\begin{DoxyItemize}
+\item module created 
+\end{DoxyItemize}
+\end{DoxyDate}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\index{mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}!calc\+\_\+ljc\+\_\+cross@{calc\+\_\+ljc\+\_\+cross}}
+\index{calc\+\_\+ljc\+\_\+cross@{calc\+\_\+ljc\+\_\+cross}!mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}}
+\subsubsection[{\texorpdfstring{calc\+\_\+ljc\+\_\+cross(this)}{calc_ljc_cross(this)}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+pot\+\_\+ljc\+::calc\+\_\+ljc\+\_\+cross (
+\begin{DoxyParamCaption}
+\item[{class( {\bf dimer\+\_\+ljc} ), intent(inout)}]{this}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__pot__ljc_aea69edf70ec804ebb8075741c84ab50b}{}\label{namespacemod__pot__ljc_aea69edf70ec804ebb8075741c84ab50b}
+
+
+This routine calculates crossing values for LJ + coulomb potential before the loops. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari 
+\end{DoxyAuthor}
+
+
+Definition at line 139 of file mod\+\_\+pot\+\_\+ljc.\+f90.
+
+
+
+References mod\+\_\+read\+\_\+xyz\+::mol1, mol1\+\_\+ljc, mod\+\_\+read\+\_\+xyz\+::mol2, and mol2\+\_\+ljc.
+
+\index{mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}!calc\+\_\+ljc\+\_\+energy@{calc\+\_\+ljc\+\_\+energy}}
+\index{calc\+\_\+ljc\+\_\+energy@{calc\+\_\+ljc\+\_\+energy}!mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}}
+\subsubsection[{\texorpdfstring{calc\+\_\+ljc\+\_\+energy(this, p, r, t)}{calc_ljc_energy(this, p, r, t)}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+pot\+\_\+ljc\+::calc\+\_\+ljc\+\_\+energy (
+\begin{DoxyParamCaption}
+\item[{class( {\bf dimer\+\_\+ljc} ), intent(inout)}]{this, }
+\item[{integer, intent(in)}]{p, }
+\item[{integer, intent(in)}]{r, }
+\item[{integer, intent(in)}]{t}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__pot__ljc_a13c36fde6ac0af7265630bc8105c23b6}{}\label{namespacemod__pot__ljc_a13c36fde6ac0af7265630bc8105c23b6}
+
+
+This routine calculates LJ + coulomb energy for each valid configuration. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari 
+\end{DoxyAuthor}
+
+
+Definition at line 176 of file mod\+\_\+pot\+\_\+ljc.\+f90.
+
+
+
+References mod\+\_\+constants\+::ccon, mod\+\_\+read\+\_\+xyz\+::mol1, mod\+\_\+read\+\_\+xyz\+::mol2, mod\+\_\+input\+\_\+read\+::rcut\+\_\+sqr, mod\+\_\+read\+\_\+grids\+::repulsion, and mod\+\_\+read\+\_\+grids\+::vtot.
+
+\index{mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}!check\+\_\+ljc\+\_\+params@{check\+\_\+ljc\+\_\+params}}
+\index{check\+\_\+ljc\+\_\+params@{check\+\_\+ljc\+\_\+params}!mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}}
+\subsubsection[{\texorpdfstring{check\+\_\+ljc\+\_\+params(this, numat)}{check_ljc_params(this, numat)}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+pot\+\_\+ljc\+::check\+\_\+ljc\+\_\+params (
+\begin{DoxyParamCaption}
+\item[{class( {\bf ljc\+\_\+mol} ), intent(inout)}]{this, }
+\item[{integer, intent(in)}]{numat}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__pot__ljc_ae251ed7b35f9a6401200390d8684ea46}{}\label{namespacemod__pot__ljc_ae251ed7b35f9a6401200390d8684ea46}
+
+
+This routine checks for inconsistent entries on parameter files. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari 
+\end{DoxyAuthor}
+
+
+Definition at line 96 of file mod\+\_\+pot\+\_\+ljc.\+f90.
+
+
+
+References mod\+\_\+constants\+::dashline.
+
+\index{mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}!read\+\_\+ljc\+\_\+params@{read\+\_\+ljc\+\_\+params}}
+\index{read\+\_\+ljc\+\_\+params@{read\+\_\+ljc\+\_\+params}!mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}}
+\subsubsection[{\texorpdfstring{read\+\_\+ljc\+\_\+params(this, ljc\+\_\+filename, numat)}{read_ljc_params(this, ljc_filename, numat)}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+pot\+\_\+ljc\+::read\+\_\+ljc\+\_\+params (
+\begin{DoxyParamCaption}
+\item[{class( {\bf ljc\+\_\+mol} ), intent(inout)}]{this, }
+\item[{character( len = $\ast$ ), intent(in)}]{ljc\+\_\+filename, }
+\item[{integer, intent(in)}]{numat}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemod__pot__ljc_aba75dd17c928cdddf564bf03d18b3ee2}{}\label{namespacemod__pot__ljc_aba75dd17c928cdddf564bf03d18b3ee2}
+
+
+This routine reads atom names, charges, sigma and epsilon values from parameter files. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari 
+\end{DoxyAuthor}
+
+
+Definition at line 48 of file mod\+\_\+pot\+\_\+ljc.\+f90.
+
+
+
+References mod\+\_\+inquire\+::inquire\+\_\+check().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=329pt]{namespacemod__pot__ljc_aba75dd17c928cdddf564bf03d18b3ee2_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\index{mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}!dimer@{dimer}}
+\index{dimer@{dimer}!mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}}
+\subsubsection[{\texorpdfstring{dimer}{dimer}}]{\setlength{\rightskip}{0pt plus 5cm}type( {\bf dimer\+\_\+ljc} ) mod\+\_\+pot\+\_\+ljc\+::dimer}\hypertarget{namespacemod__pot__ljc_abbcaeaac6c53085e893805852918464d}{}\label{namespacemod__pot__ljc_abbcaeaac6c53085e893805852918464d}
+
+
+Definition at line 39 of file mod\+\_\+pot\+\_\+ljc.\+f90.
+
+
+
+Referenced by mod\+\_\+loops\+::calc(), and mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays().
+
+\index{mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}!mol1\+\_\+ljc@{mol1\+\_\+ljc}}
+\index{mol1\+\_\+ljc@{mol1\+\_\+ljc}!mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}}
+\subsubsection[{\texorpdfstring{mol1\+\_\+ljc}{mol1_ljc}}]{\setlength{\rightskip}{0pt plus 5cm}type( {\bf ljc\+\_\+mol} ) mod\+\_\+pot\+\_\+ljc\+::mol1\+\_\+ljc}\hypertarget{namespacemod__pot__ljc_a840c66fc49efca8db3e2c54932a77356}{}\label{namespacemod__pot__ljc_a840c66fc49efca8db3e2c54932a77356}
+
+
+Definition at line 29 of file mod\+\_\+pot\+\_\+ljc.\+f90.
+
+
+
+Referenced by mod\+\_\+loops\+::calc(), calc\+\_\+ljc\+\_\+cross(), and mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays().
+
+\index{mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}!mol2\+\_\+ljc@{mol2\+\_\+ljc}}
+\index{mol2\+\_\+ljc@{mol2\+\_\+ljc}!mod\+\_\+pot\+\_\+ljc@{mod\+\_\+pot\+\_\+ljc}}
+\subsubsection[{\texorpdfstring{mol2\+\_\+ljc}{mol2_ljc}}]{\setlength{\rightskip}{0pt plus 5cm}type( {\bf ljc\+\_\+mol} ) mod\+\_\+pot\+\_\+ljc\+::mol2\+\_\+ljc}\hypertarget{namespacemod__pot__ljc_a2b003eb4461125a250324cf11fdd50c7}{}\label{namespacemod__pot__ljc_a2b003eb4461125a250324cf11fdd50c7}
+
+
+Definition at line 29 of file mod\+\_\+pot\+\_\+ljc.\+f90.
+
+
+
+Referenced by mod\+\_\+loops\+::calc(), calc\+\_\+ljc\+\_\+cross(), and mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays().
+
