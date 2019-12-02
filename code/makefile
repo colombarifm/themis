@@ -3,6 +3,14 @@
 # program name
 PROGRAM = themis
 
+
+# version control 
+# Adding revision informatio to themis
+
+#TODO:
+#REV = $(shell git rev-parse --short HEAD)
+# an error occurs
+
 FC = gfortran
 
 #FFLAGS = -g -Wall -O3 -ffpe-trap=invalid,zero,overflow -fcheck=bounds -Wno-compare-real -Wno-conversion -fbacktrace -fcheck=all -Wextra 
@@ -17,9 +25,10 @@ SRC = $(wildcard $(SRCDIR)/themis.f90)
 # objects created
 OBJS = mod_error_handling.o \
 	mod_constants.o \
+	mod_info.o \
 	mod_cmd_line.o \
 	mod_inquire.o \
-  mod_input_read.o \
+	mod_input_read.o \
 	mod_read_molecules.o \
 	mod_spherical_grids.o \
 	mod_read_grids.o \
@@ -36,6 +45,8 @@ OBJS = mod_error_handling.o \
 
 # modules created
 MODS =	mod_error_handling.mod \
+	mod_constants.mod \
+	mod_info.mod \
 	mod_constants.mod \
 	mod_cmd_line.mod \
 	mod_inquire.mod \
@@ -85,6 +96,13 @@ mod_constants.o: $(SRCDIR)/mod_constants.f90
 	@printf "\n"
 	@$(FC) -c $(SRCDIR)/mod_constants.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"
+
+mod_info.o: $(SRCDIR)/mod_info.f90
+	@printf "\n"
+	@printf "  CREATING OBJECTS...\n"
+	@printf "\n"
+	@$(FC) -c $(SRCDIR)/mod_info.f90 $(FFLAGS)
+	@printf "   **Compiling $@\n"       	
 
 mod_cmd_line.o: $(SRCDIR)/mod_cmd_line.f90
 	@$(FC) -c $(SRCDIR)/mod_cmd_line.f90 $(FFLAGS)

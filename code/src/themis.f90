@@ -14,6 +14,7 @@
 !------------------------------------------------------------------------------
 
 program themis
+  use mod_info           , only: display_header
   use mod_constants      , only: DP, dashline
   use mod_cmd_line       , only: Parse_arguments, irun, grid_type, rad, grid_transl
   use mod_input_read     , only: Read_input_file, ref1, vector1, ref2, vector2, reo_factor, trans_factor, potential
@@ -32,15 +33,7 @@ program themis
   real( kind = DP )                :: timet
   integer                          :: finish, start, rate2
   
-  call Date_and_time( VALUES = values )
-
-  write(*,'(/, T3, A)') dashline
-  write(*,'(/, T25, A, A)') " Program THEMIS version ", trim(version)
-  write(*,'(/, T5, "STARTED AT: ", i2.2, "/", i2.2, "/", i4, " - ", &
-                               &i2.2, ":", i2.2, ":", i2.2)')    &
-                               &values(3), values(2), values(1), &
-                               &values(5), values(6), values(7)
-
+  call display_header()
   call System_clock( start, rate2 )
 
   call Parse_arguments

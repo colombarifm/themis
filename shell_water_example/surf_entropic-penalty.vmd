@@ -1,7 +1,7 @@
 # Generates the surface representation of entropic-penalty along translation grid
 
-set min_val  4.19575E+000
-set max_val  7.26123E+000
+set min_val  1.64738E+000
+set max_val  2.79539E+000
 
 display projection orthographic
 

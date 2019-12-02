@@ -1,7 +1,7 @@
 # Generates the surface representation of energy along translation grid
 
-set min_val -2.56546E+001
-set max_val -1.30086E+001
+set min_val -8.39280E+000
+set max_val -4.36385E+000
 
 display projection orthographic
 
