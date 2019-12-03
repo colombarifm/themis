@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['ljc_5fatom',['ljc_atom',['../structmod__pot__ljc_1_1ljc__atom.html',1,'mod_pot_ljc']]],
-  ['ljc_5fatoms',['ljc_atoms',['../structmod__pot__ljc_1_1ljc__mol.html#a65026a4645ff0576b8a7189649b47512',1,'mod_pot_ljc::ljc_mol']]],
-  ['ljc_5fmol',['ljc_mol',['../structmod__pot__ljc_1_1ljc__mol.html',1,'mod_pot_ljc']]],
+  ['ljc_5fdimer',['ljc_dimer',['../structmod__pot__ljc_1_1ljc__dimer.html',1,'mod_pot_ljc']]],
+  ['ljc_5fdimers',['ljc_dimers',['../namespacemod__pot__ljc.html#a6c45700ba481536007711306e5c21e0c',1,'mod_pot_ljc']]],
+  ['ljc_5fpair_5fdimer',['ljc_pair_dimer',['../structmod__pot__ljc__pair_1_1ljc__pair__dimer.html',1,'mod_pot_ljc_pair']]],
+  ['ljc_5fpair_5fdimers',['ljc_pair_dimers',['../namespacemod__pot__ljc__pair.html#ad0c1c41e0227ea0136e97a69257a4132',1,'mod_pot_ljc_pair']]],
   ['lowest',['lowest',['../namespacemod__search.html#a014567a8f5474b311cedf2f9b1dbda1a',1,'mod_search']]]
 ];

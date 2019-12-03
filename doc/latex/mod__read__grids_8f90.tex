@@ -1,5 +1,5 @@
-\hypertarget{mod__read__grids_8f90}{}\section{/home/alozada/\+T\+H\+E\+M\+I\+S-\/\+D\+E\+V/themis-\/dev/code/src/mod\+\_\+read\+\_\+grids.f90 File Reference}
-\label{mod__read__grids_8f90}\index{/home/alozada/\+T\+H\+E\+M\+I\+S-\/\+D\+E\+V/themis-\/dev/code/src/mod\+\_\+read\+\_\+grids.\+f90@{/home/alozada/\+T\+H\+E\+M\+I\+S-\/\+D\+E\+V/themis-\/dev/code/src/mod\+\_\+read\+\_\+grids.\+f90}}
+\hypertarget{mod__read__grids_8f90}{}\section{/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/mod\+\_\+read\+\_\+grids.f90 File Reference}
+\label{mod__read__grids_8f90}\index{/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/mod\+\_\+read\+\_\+grids.\+f90@{/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/mod\+\_\+read\+\_\+grids.\+f90}}
 \subsection*{Data Types}
 \begin{DoxyCompactItemize}
 \item 
@@ -15,14 +15,18 @@ module \hyperlink{namespacemod__read__grids}{mod\+\_\+read\+\_\+grids}
 \subsection*{Functions/\+Subroutines}
 \begin{DoxyCompactItemize}
 \item 
-subroutine \hyperlink{namespacemod__read__grids_af6cb0bee8e3eb7dfbaa4621275b29fa2}{mod\+\_\+read\+\_\+grids\+::read\+\_\+translation\+\_\+grid}
+subroutine \hyperlink{namespacemod__read__grids_aef0317c21ab86e2e970824fb37f613e7}{mod\+\_\+read\+\_\+grids\+::read\+\_\+grid} (this, grid\+\_\+filename)
 \begin{DoxyCompactList}\small\item\em This routine reads coordinates for user-\/defined translation grid. \end{DoxyCompactList}\item 
-subroutine \hyperlink{namespacemod__read__grids_abba14a1f750b2c342d5c5a80be803310}{mod\+\_\+read\+\_\+grids\+::build\+\_\+translation\+\_\+sphere}
-\item 
-subroutine \hyperlink{namespacemod__read__grids_ae4fb4c515f1f9f5edd3785ca0f509ea4}{mod\+\_\+read\+\_\+grids\+::build\+\_\+rotation\+\_\+sphere}
-\item 
-subroutine \hyperlink{namespacemod__read__grids_a1e081c6668bb3ea97788ffe4a74f39db}{mod\+\_\+read\+\_\+grids\+::center\+\_\+translation\+\_\+grid}
+subroutine \hyperlink{namespacemod__read__grids_ac22d113a654f79569a6fe3d747c7676e}{mod\+\_\+read\+\_\+grids\+::translate\+\_\+grid} (this)
 \begin{DoxyCompactList}\small\item\em This routine centers user-\/defined translation grid altogether with mol1. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__read__grids_a09768b7e5dbb3769d5babf64f3e9d81e}{mod\+\_\+read\+\_\+grids\+::align\+\_\+grid} (this)
+\begin{DoxyCompactList}\small\item\em This routine align user-\/defined translation grid along Z altogether with mol1. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__read__grids_a8da3c9d08e5085b9badea630f01b0666}{mod\+\_\+read\+\_\+grids\+::rotate\+\_\+grid} (this)
+\item 
+subroutine \hyperlink{namespacemod__read__grids_a4285bde2d44b92f9fcc792dfeebb1eae}{mod\+\_\+read\+\_\+grids\+::build\+\_\+translation\+\_\+sphere} (this, trans\+\_\+factor, rad)
+\item 
+subroutine \hyperlink{namespacemod__read__grids_aa9f66d2873344e2a319f7eddb09df558}{mod\+\_\+read\+\_\+grids\+::build\+\_\+reorientation\+\_\+sphere} (this, reo\+\_\+factor)
+\item 
 subroutine \hyperlink{namespacemod__read__grids_a318177c120a409fe4cef7d1785b626ac}{mod\+\_\+read\+\_\+grids\+::check\+\_\+moves}
 \begin{DoxyCompactList}\small\item\em This routine prints some checking information on screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
@@ -30,7 +34,7 @@ subroutine \hyperlink{namespacemod__read__grids_a318177c120a409fe4cef7d1785b626a
 \item 
 type(grid) \hyperlink{namespacemod__read__grids_ab09110371e13fa11f9a839bde8da8fc7}{mod\+\_\+read\+\_\+grids\+::grid\+\_\+trans}
 \item 
-type(grid) \hyperlink{namespacemod__read__grids_a0e370bf7268cf2484361751a7c2cbee5}{mod\+\_\+read\+\_\+grids\+::grid\+\_\+rot}
+type(grid) \hyperlink{namespacemod__read__grids_add45049d527e2c5d636d8382bfe892e8}{mod\+\_\+read\+\_\+grids\+::grid\+\_\+reo}
 \item 
 real(kind=dp), dimension(\+:), allocatable \hyperlink{namespacemod__read__grids_a1cd0dd1119fe3ce58917bf6aaf7abebf}{mod\+\_\+read\+\_\+grids\+::a}
 \item 
@@ -49,10 +53,6 @@ real(kind=dp), dimension(\+:), allocatable \hyperlink{namespacemod__read__grids_
 real(kind=dp), dimension(\+:), allocatable \hyperlink{namespacemod__read__grids_a40918dc75ea77a2757ea8d8dd43beb9e}{mod\+\_\+read\+\_\+grids\+::thetar}
 \item 
 real(kind=dp), dimension(\+:), allocatable \hyperlink{namespacemod__read__grids_aa3da94e35a501dc0ed782d7019127514}{mod\+\_\+read\+\_\+grids\+::phir}
-\item 
-real(kind=dp), dimension(\+:,\+:,\+:), allocatable \hyperlink{namespacemod__read__grids_a1acebe9f23427d5bc54629463ab63378}{mod\+\_\+read\+\_\+grids\+::vtot}
-\item 
-logical, dimension(\+:,\+:,\+:), allocatable \hyperlink{namespacemod__read__grids_a78b7a722975e665430c061c6cca83ca0}{mod\+\_\+read\+\_\+grids\+::repulsion}
 \item 
 integer \hyperlink{namespacemod__read__grids_aa54b9eaa554b8519d41c5e616479d343}{mod\+\_\+read\+\_\+grids\+::ntotal}
 \item 

@@ -15,14 +15,18 @@ type \hyperlink{structmod__read__grids_1_1point}{point}
 \subsection*{Functions/\+Subroutines}
 \begin{DoxyCompactItemize}
 \item 
-subroutine \hyperlink{namespacemod__read__grids_af6cb0bee8e3eb7dfbaa4621275b29fa2}{read\+\_\+translation\+\_\+grid}
+subroutine \hyperlink{namespacemod__read__grids_aef0317c21ab86e2e970824fb37f613e7}{read\+\_\+grid} (this, grid\+\_\+filename)
 \begin{DoxyCompactList}\small\item\em This routine reads coordinates for user-\/defined translation grid. \end{DoxyCompactList}\item 
-subroutine \hyperlink{namespacemod__read__grids_abba14a1f750b2c342d5c5a80be803310}{build\+\_\+translation\+\_\+sphere}
-\item 
-subroutine \hyperlink{namespacemod__read__grids_ae4fb4c515f1f9f5edd3785ca0f509ea4}{build\+\_\+rotation\+\_\+sphere}
-\item 
-subroutine \hyperlink{namespacemod__read__grids_a1e081c6668bb3ea97788ffe4a74f39db}{center\+\_\+translation\+\_\+grid}
+subroutine \hyperlink{namespacemod__read__grids_ac22d113a654f79569a6fe3d747c7676e}{translate\+\_\+grid} (this)
 \begin{DoxyCompactList}\small\item\em This routine centers user-\/defined translation grid altogether with mol1. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__read__grids_a09768b7e5dbb3769d5babf64f3e9d81e}{align\+\_\+grid} (this)
+\begin{DoxyCompactList}\small\item\em This routine align user-\/defined translation grid along Z altogether with mol1. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__read__grids_a8da3c9d08e5085b9badea630f01b0666}{rotate\+\_\+grid} (this)
+\item 
+subroutine \hyperlink{namespacemod__read__grids_a4285bde2d44b92f9fcc792dfeebb1eae}{build\+\_\+translation\+\_\+sphere} (this, trans\+\_\+factor, rad)
+\item 
+subroutine \hyperlink{namespacemod__read__grids_aa9f66d2873344e2a319f7eddb09df558}{build\+\_\+reorientation\+\_\+sphere} (this, reo\+\_\+factor)
+\item 
 subroutine \hyperlink{namespacemod__read__grids_a318177c120a409fe4cef7d1785b626ac}{check\+\_\+moves}
 \begin{DoxyCompactList}\small\item\em This routine prints some checking information on screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Variables}
@@ -30,7 +34,7 @@ subroutine \hyperlink{namespacemod__read__grids_a318177c120a409fe4cef7d1785b626a
 \item 
 type(\hyperlink{structmod__read__grids_1_1grid}{grid}) \hyperlink{namespacemod__read__grids_ab09110371e13fa11f9a839bde8da8fc7}{grid\+\_\+trans}
 \item 
-type(\hyperlink{structmod__read__grids_1_1grid}{grid}) \hyperlink{namespacemod__read__grids_a0e370bf7268cf2484361751a7c2cbee5}{grid\+\_\+rot}
+type(\hyperlink{structmod__read__grids_1_1grid}{grid}) \hyperlink{namespacemod__read__grids_add45049d527e2c5d636d8382bfe892e8}{grid\+\_\+reo}
 \item 
 real(kind=dp), dimension(\+:), allocatable \hyperlink{namespacemod__read__grids_a1cd0dd1119fe3ce58917bf6aaf7abebf}{a}
 \item 
@@ -49,10 +53,6 @@ real(kind=dp), dimension(\+:), allocatable \hyperlink{namespacemod__read__grids_
 real(kind=dp), dimension(\+:), allocatable \hyperlink{namespacemod__read__grids_a40918dc75ea77a2757ea8d8dd43beb9e}{thetar}
 \item 
 real(kind=dp), dimension(\+:), allocatable \hyperlink{namespacemod__read__grids_aa3da94e35a501dc0ed782d7019127514}{phir}
-\item 
-real(kind=dp), dimension(\+:,\+:,\+:), allocatable \hyperlink{namespacemod__read__grids_a1acebe9f23427d5bc54629463ab63378}{vtot}
-\item 
-logical, dimension(\+:,\+:,\+:), allocatable \hyperlink{namespacemod__read__grids_a78b7a722975e665430c061c6cca83ca0}{repulsion}
 \item 
 integer \hyperlink{namespacemod__read__grids_aa54b9eaa554b8519d41c5e616479d343}{ntotal}
 \item 
@@ -85,80 +85,24 @@ Felippe M. Colombari
 \begin{DoxyItemize}
 \item grids are standard X\+YZ coordinate files. 
 \end{DoxyItemize}
+
+added error\+\_\+handling Asdrubal Lozada-\/\+Blanco 
 \end{DoxyNote}
+\begin{DoxyDate}{Date}
+-\/ Nov 2019 
+\end{DoxyDate}
 
 
 \subsection{Function/\+Subroutine Documentation}
-\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!build\+\_\+rotation\+\_\+sphere@{build\+\_\+rotation\+\_\+sphere}}
-\index{build\+\_\+rotation\+\_\+sphere@{build\+\_\+rotation\+\_\+sphere}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{build\+\_\+rotation\+\_\+sphere}{build_rotation_sphere}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+read\+\_\+grids\+::build\+\_\+rotation\+\_\+sphere (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__read__grids_ae4fb4c515f1f9f5edd3785ca0f509ea4}{}\label{namespacemod__read__grids_ae4fb4c515f1f9f5edd3785ca0f509ea4}
-
-
-Definition at line 150 of file mod\+\_\+read\+\_\+grids.\+f90.
+\mbox{\Hypertarget{namespacemod__read__grids_a09768b7e5dbb3769d5babf64f3e9d81e}\label{namespacemod__read__grids_a09768b7e5dbb3769d5babf64f3e9d81e}} 
+\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!align\+\_\+grid@{align\+\_\+grid}}
+\index{align\+\_\+grid@{align\+\_\+grid}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
+\subsubsection{\texorpdfstring{align\+\_\+grid()}{align\_grid()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+read\+\_\+grids\+::align\+\_\+grid (\begin{DoxyParamCaption}\item[{class( \hyperlink{structmod__read__grids_1_1grid}{grid} ), intent(inout)}]{this }\end{DoxyParamCaption})}
 
 
 
-References grid\+\_\+rot, phir, mod\+\_\+input\+\_\+read\+::rot\+\_\+factor, rr, mod\+\_\+spherical\+\_\+grids\+::sphere\+\_\+icos1\+\_\+points(), and thetar.
-
-
-
-Referenced by themis().
-
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{namespacemod__read__grids_ae4fb4c515f1f9f5edd3785ca0f509ea4_cgraph}
-\end{center}
-\end{figure}
-
-
-\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!build\+\_\+translation\+\_\+sphere@{build\+\_\+translation\+\_\+sphere}}
-\index{build\+\_\+translation\+\_\+sphere@{build\+\_\+translation\+\_\+sphere}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{build\+\_\+translation\+\_\+sphere}{build_translation_sphere}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+read\+\_\+grids\+::build\+\_\+translation\+\_\+sphere (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__read__grids_abba14a1f750b2c342d5c5a80be803310}{}\label{namespacemod__read__grids_abba14a1f750b2c342d5c5a80be803310}
-
-
-Definition at line 118 of file mod\+\_\+read\+\_\+grids.\+f90.
-
-
-
-References grid\+\_\+trans, mod\+\_\+cmd\+\_\+line\+::rad, mod\+\_\+spherical\+\_\+grids\+::sphere\+\_\+icos1\+\_\+points(), and mod\+\_\+input\+\_\+read\+::trans\+\_\+factor.
-
-
-
-Referenced by themis().
-
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{namespacemod__read__grids_abba14a1f750b2c342d5c5a80be803310_cgraph}
-\end{center}
-\end{figure}
-
-
-\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!center\+\_\+translation\+\_\+grid@{center\+\_\+translation\+\_\+grid}}
-\index{center\+\_\+translation\+\_\+grid@{center\+\_\+translation\+\_\+grid}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{center\+\_\+translation\+\_\+grid}{center_translation_grid}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+read\+\_\+grids\+::center\+\_\+translation\+\_\+grid (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__read__grids_a1e081c6668bb3ea97788ffe4a74f39db}{}\label{namespacemod__read__grids_a1e081c6668bb3ea97788ffe4a74f39db}
-
-
-This routine centers user-\/defined translation grid altogether with mol1. 
+This routine align user-\/defined translation grid along Z altogether with mol1. 
 
 \begin{DoxyAuthor}{Author}
 Felippe M. Colombari
@@ -168,23 +112,62 @@ Felippe M. Colombari
 \end{DoxyAuthor}
 
 
-Definition at line 226 of file mod\+\_\+read\+\_\+grids.\+f90.
+Definition at line 130 of file mod\+\_\+read\+\_\+grids.\+f90.
 
 
 
-References grid\+\_\+trans, mod\+\_\+read\+\_\+xyz\+::mol1, and mod\+\_\+input\+\_\+read\+::ref1.
+References mod\+\_\+read\+\_\+molecules\+::cosphi, and mod\+\_\+read\+\_\+molecules\+::sinphi.
+
+\mbox{\Hypertarget{namespacemod__read__grids_aa9f66d2873344e2a319f7eddb09df558}\label{namespacemod__read__grids_aa9f66d2873344e2a319f7eddb09df558}} 
+\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!build\+\_\+reorientation\+\_\+sphere@{build\+\_\+reorientation\+\_\+sphere}}
+\index{build\+\_\+reorientation\+\_\+sphere@{build\+\_\+reorientation\+\_\+sphere}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
+\subsubsection{\texorpdfstring{build\+\_\+reorientation\+\_\+sphere()}{build\_reorientation\_sphere()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+read\+\_\+grids\+::build\+\_\+reorientation\+\_\+sphere (\begin{DoxyParamCaption}\item[{class( \hyperlink{structmod__read__grids_1_1grid}{grid} ), intent(inout)}]{this,  }\item[{integer, intent(in)}]{reo\+\_\+factor }\end{DoxyParamCaption})}
 
 
 
-Referenced by read\+\_\+translation\+\_\+grid().
+Definition at line 258 of file mod\+\_\+read\+\_\+grids.\+f90.
 
+
+
+References phir, rr, mod\+\_\+spherical\+\_\+grids\+::sphere\+\_\+icos1\+\_\+points(), and thetar.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemod__read__grids_aa9f66d2873344e2a319f7eddb09df558_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespacemod__read__grids_a4285bde2d44b92f9fcc792dfeebb1eae}\label{namespacemod__read__grids_a4285bde2d44b92f9fcc792dfeebb1eae}} 
+\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!build\+\_\+translation\+\_\+sphere@{build\+\_\+translation\+\_\+sphere}}
+\index{build\+\_\+translation\+\_\+sphere@{build\+\_\+translation\+\_\+sphere}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
+\subsubsection{\texorpdfstring{build\+\_\+translation\+\_\+sphere()}{build\_translation\_sphere()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+read\+\_\+grids\+::build\+\_\+translation\+\_\+sphere (\begin{DoxyParamCaption}\item[{class( \hyperlink{structmod__read__grids_1_1grid}{grid} ), intent(inout)}]{this,  }\item[{integer, intent(in)}]{trans\+\_\+factor,  }\item[{real( kind = dp ), intent(in)}]{rad }\end{DoxyParamCaption})}
+
+
+
+Definition at line 221 of file mod\+\_\+read\+\_\+grids.\+f90.
+
+
+
+References mod\+\_\+spherical\+\_\+grids\+::sphere\+\_\+icos1\+\_\+points().
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemod__read__grids_a4285bde2d44b92f9fcc792dfeebb1eae_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespacemod__read__grids_a318177c120a409fe4cef7d1785b626ac}\label{namespacemod__read__grids_a318177c120a409fe4cef7d1785b626ac}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!check\+\_\+moves@{check\+\_\+moves}}
 \index{check\+\_\+moves@{check\+\_\+moves}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{check\+\_\+moves}{check_moves}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+read\+\_\+grids\+::check\+\_\+moves (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__read__grids_a318177c120a409fe4cef7d1785b626ac}{}\label{namespacemod__read__grids_a318177c120a409fe4cef7d1785b626ac}
+\subsubsection{\texorpdfstring{check\+\_\+moves()}{check\_moves()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+read\+\_\+grids\+::check\+\_\+moves (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
 
 
 This routine prints some checking information on screen. 
@@ -203,23 +186,22 @@ Felippe M. Colombari
 \end{DoxyDate}
 
 
-Definition at line 260 of file mod\+\_\+read\+\_\+grids.\+f90.
+Definition at line 353 of file mod\+\_\+read\+\_\+grids.\+f90.
 
 
 
-References mod\+\_\+constants\+::dashline, grid\+\_\+rot, grid\+\_\+trans, mod\+\_\+input\+\_\+read\+::maxp, mod\+\_\+input\+\_\+read\+::np, ntotal, and rot\+\_\+total.
+References mod\+\_\+constants\+::dashline, grid\+\_\+reo, grid\+\_\+trans, mod\+\_\+input\+\_\+read\+::gyr\+\_\+factor, mod\+\_\+input\+\_\+read\+::max\+\_\+gyr, ntotal, and rot\+\_\+total.
 
 
 
 Referenced by mod\+\_\+loops\+::calc(), and mod\+\_\+loops\+::recalc().
 
-\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!read\+\_\+translation\+\_\+grid@{read\+\_\+translation\+\_\+grid}}
-\index{read\+\_\+translation\+\_\+grid@{read\+\_\+translation\+\_\+grid}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{read\+\_\+translation\+\_\+grid}{read_translation_grid}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+read\+\_\+grids\+::read\+\_\+translation\+\_\+grid (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__read__grids_af6cb0bee8e3eb7dfbaa4621275b29fa2}{}\label{namespacemod__read__grids_af6cb0bee8e3eb7dfbaa4621275b29fa2}
+\mbox{\Hypertarget{namespacemod__read__grids_aef0317c21ab86e2e970824fb37f613e7}\label{namespacemod__read__grids_aef0317c21ab86e2e970824fb37f613e7}} 
+\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!read\+\_\+grid@{read\+\_\+grid}}
+\index{read\+\_\+grid@{read\+\_\+grid}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
+\subsubsection{\texorpdfstring{read\+\_\+grid()}{read\_grid()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+read\+\_\+grids\+::read\+\_\+grid (\begin{DoxyParamCaption}\item[{class( \hyperlink{structmod__read__grids_1_1grid}{grid} ), intent(inout)}]{this,  }\item[{character( len = $\ast$ ), intent(in)}]{grid\+\_\+filename }\end{DoxyParamCaption})}
+
 
 
 This routine reads coordinates for user-\/defined translation grid. 
@@ -248,190 +230,238 @@ Felippe M. Colombari
 \end{DoxyDate}
 
 
-Definition at line 55 of file mod\+\_\+read\+\_\+grids.\+f90.
+Definition at line 63 of file mod\+\_\+read\+\_\+grids.\+f90.
 
 
 
-References center\+\_\+translation\+\_\+grid(), grid\+\_\+trans, mod\+\_\+cmd\+\_\+line\+::grid\+\_\+transl, and mod\+\_\+inquire\+::inquire\+\_\+check().
+References mod\+\_\+inquire\+::inquire\+\_\+file().
 
-
-
-Referenced by themis().
-
-
-
-Here is the call graph for this function\+:\nopagebreak
+Here is the call graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=345pt]{namespacemod__read__grids_af6cb0bee8e3eb7dfbaa4621275b29fa2_cgraph}
+\includegraphics[width=350pt]{namespacemod__read__grids_aef0317c21ab86e2e970824fb37f613e7_cgraph}
 \end{center}
 \end{figure}
+\mbox{\Hypertarget{namespacemod__read__grids_a8da3c9d08e5085b9badea630f01b0666}\label{namespacemod__read__grids_a8da3c9d08e5085b9badea630f01b0666}} 
+\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!rotate\+\_\+grid@{rotate\+\_\+grid}}
+\index{rotate\+\_\+grid@{rotate\+\_\+grid}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
+\subsubsection{\texorpdfstring{rotate\+\_\+grid()}{rotate\_grid()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+read\+\_\+grids\+::rotate\+\_\+grid (\begin{DoxyParamCaption}\item[{class( \hyperlink{structmod__read__grids_1_1grid}{grid} ), intent(inout)}]{this }\end{DoxyParamCaption})}
 
+
+
+Definition at line 158 of file mod\+\_\+read\+\_\+grids.\+f90.
+
+
+
+References mod\+\_\+read\+\_\+molecules\+::cosalpha, mod\+\_\+read\+\_\+molecules\+::cosphir, mod\+\_\+read\+\_\+molecules\+::costheta, mod\+\_\+read\+\_\+molecules\+::costhetar, mod\+\_\+read\+\_\+molecules\+::sinalpha, mod\+\_\+read\+\_\+molecules\+::sinphir, mod\+\_\+read\+\_\+molecules\+::sintheta, and mod\+\_\+read\+\_\+molecules\+::sinthetar.
+
+\mbox{\Hypertarget{namespacemod__read__grids_ac22d113a654f79569a6fe3d747c7676e}\label{namespacemod__read__grids_ac22d113a654f79569a6fe3d747c7676e}} 
+\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!translate\+\_\+grid@{translate\+\_\+grid}}
+\index{translate\+\_\+grid@{translate\+\_\+grid}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
+\subsubsection{\texorpdfstring{translate\+\_\+grid()}{translate\_grid()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+read\+\_\+grids\+::translate\+\_\+grid (\begin{DoxyParamCaption}\item[{class( \hyperlink{structmod__read__grids_1_1grid}{grid} ), intent(inout)}]{this }\end{DoxyParamCaption})}
+
+
+
+This routine centers user-\/defined translation grid altogether with mol1. 
+
+\begin{DoxyAuthor}{Author}
+Felippe M. Colombari
+\begin{DoxyItemize}
+\item Laboratório de Química Teórica, L\+QT -- U\+F\+S\+Car 
+\end{DoxyItemize}
+\end{DoxyAuthor}
+
+
+Definition at line 107 of file mod\+\_\+read\+\_\+grids.\+f90.
+
+
+
+References mod\+\_\+read\+\_\+molecules\+::mol1.
 
 
 
 \subsection{Variable Documentation}
+\mbox{\Hypertarget{namespacemod__read__grids_a1cd0dd1119fe3ce58917bf6aaf7abebf}\label{namespacemod__read__grids_a1cd0dd1119fe3ce58917bf6aaf7abebf}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!a@{a}}
 \index{a@{a}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{a}{a}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::a}\hypertarget{namespacemod__read__grids_a1cd0dd1119fe3ce58917bf6aaf7abebf}{}\label{namespacemod__read__grids_a1cd0dd1119fe3ce58917bf6aaf7abebf}
-
-
-Definition at line 33 of file mod\+\_\+read\+\_\+grids.\+f90.
+\subsubsection{\texorpdfstring{a}{a}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::a}
 
 
 
-Referenced by mod\+\_\+loops\+::calc\+\_\+ztotal(), mod\+\_\+resume\+::ending(), mod\+\_\+resume\+::sort\+\_\+output(), and mod\+\_\+vmd\+::write\+\_\+vmd\+\_\+files().
+Definition at line 43 of file mod\+\_\+read\+\_\+grids.\+f90.
 
+
+
+Referenced by mod\+\_\+loops\+::calc\+\_\+ztotal(), mod\+\_\+resume\+::ending(), mod\+\_\+resume\+::sort\+\_\+output(), and mod\+\_\+vmd\+::\+W\+R\+I\+T\+E\+\_\+\+V\+M\+D\+\_\+\+F\+I\+L\+E\+S\+::write\+\_\+vmd\+\_\+files().
+
+\mbox{\Hypertarget{namespacemod__read__grids_af9747d65a3c7dd6876ab803f0a06e8e9}\label{namespacemod__read__grids_af9747d65a3c7dd6876ab803f0a06e8e9}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!eavg@{eavg}}
 \index{eavg@{eavg}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{eavg}{eavg}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::eavg}\hypertarget{namespacemod__read__grids_af9747d65a3c7dd6876ab803f0a06e8e9}{}\label{namespacemod__read__grids_af9747d65a3c7dd6876ab803f0a06e8e9}
-
-
-Definition at line 33 of file mod\+\_\+read\+\_\+grids.\+f90.
-
-
-
-Referenced by mod\+\_\+loops\+::calc\+\_\+ztotal(), mod\+\_\+resume\+::sort\+\_\+output(), and mod\+\_\+vmd\+::write\+\_\+vmd\+\_\+files().
-
-\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!grid\+\_\+rot@{grid\+\_\+rot}}
-\index{grid\+\_\+rot@{grid\+\_\+rot}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{grid\+\_\+rot}{grid_rot}}]{\setlength{\rightskip}{0pt plus 5cm}type( {\bf grid} ) mod\+\_\+read\+\_\+grids\+::grid\+\_\+rot}\hypertarget{namespacemod__read__grids_a0e370bf7268cf2484361751a7c2cbee5}{}\label{namespacemod__read__grids_a0e370bf7268cf2484361751a7c2cbee5}
-
-
-Definition at line 31 of file mod\+\_\+read\+\_\+grids.\+f90.
+\subsubsection{\texorpdfstring{eavg}{eavg}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::eavg}
 
 
 
-Referenced by build\+\_\+rotation\+\_\+sphere(), mod\+\_\+loops\+::calc(), mod\+\_\+loops\+::calc\+\_\+ztotal(), check\+\_\+moves(), mod\+\_\+search\+::count\+\_\+structures(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), mod\+\_\+loops\+::recalc(), and mod\+\_\+search\+::search\+\_\+structures().
+Definition at line 43 of file mod\+\_\+read\+\_\+grids.\+f90.
 
+
+
+Referenced by mod\+\_\+loops\+::calc\+\_\+ztotal(), mod\+\_\+resume\+::sort\+\_\+output(), and mod\+\_\+vmd\+::\+W\+R\+I\+T\+E\+\_\+\+V\+M\+D\+\_\+\+F\+I\+L\+E\+S\+::write\+\_\+vmd\+\_\+files().
+
+\mbox{\Hypertarget{namespacemod__read__grids_add45049d527e2c5d636d8382bfe892e8}\label{namespacemod__read__grids_add45049d527e2c5d636d8382bfe892e8}} 
+\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!grid\+\_\+reo@{grid\+\_\+reo}}
+\index{grid\+\_\+reo@{grid\+\_\+reo}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
+\subsubsection{\texorpdfstring{grid\+\_\+reo}{grid\_reo}}
+{\footnotesize\ttfamily type( \hyperlink{structmod__read__grids_1_1grid}{grid} ) mod\+\_\+read\+\_\+grids\+::grid\+\_\+reo}
+
+
+
+Definition at line 41 of file mod\+\_\+read\+\_\+grids.\+f90.
+
+
+
+Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+loops\+::calc\+\_\+ztotal(), check\+\_\+moves(), mod\+\_\+search\+::count\+\_\+structures(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), mod\+\_\+loops\+::recalc(), mod\+\_\+search\+::search\+\_\+structures(), and themis().
+
+\mbox{\Hypertarget{namespacemod__read__grids_ab09110371e13fa11f9a839bde8da8fc7}\label{namespacemod__read__grids_ab09110371e13fa11f9a839bde8da8fc7}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!grid\+\_\+trans@{grid\+\_\+trans}}
 \index{grid\+\_\+trans@{grid\+\_\+trans}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{grid\+\_\+trans}{grid_trans}}]{\setlength{\rightskip}{0pt plus 5cm}type( {\bf grid} ) mod\+\_\+read\+\_\+grids\+::grid\+\_\+trans}\hypertarget{namespacemod__read__grids_ab09110371e13fa11f9a839bde8da8fc7}{}\label{namespacemod__read__grids_ab09110371e13fa11f9a839bde8da8fc7}
-
-
-Definition at line 31 of file mod\+\_\+read\+\_\+grids.\+f90.
+\subsubsection{\texorpdfstring{grid\+\_\+trans}{grid\_trans}}
+{\footnotesize\ttfamily type( \hyperlink{structmod__read__grids_1_1grid}{grid} ) mod\+\_\+read\+\_\+grids\+::grid\+\_\+trans}
 
 
 
-Referenced by build\+\_\+translation\+\_\+sphere(), mod\+\_\+loops\+::calc(), mod\+\_\+loops\+::calc\+\_\+ztotal(), center\+\_\+translation\+\_\+grid(), check\+\_\+moves(), mod\+\_\+search\+::count\+\_\+structures(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), read\+\_\+translation\+\_\+grid(), mod\+\_\+loops\+::recalc(), mod\+\_\+search\+::search\+\_\+structures(), and mod\+\_\+resume\+::sort\+\_\+output().
+Definition at line 41 of file mod\+\_\+read\+\_\+grids.\+f90.
 
+
+
+Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+loops\+::calc\+\_\+ztotal(), check\+\_\+moves(), mod\+\_\+search\+::count\+\_\+structures(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), mod\+\_\+loops\+::recalc(), mod\+\_\+search\+::search\+\_\+structures(), mod\+\_\+resume\+::sort\+\_\+output(), and themis().
+
+\mbox{\Hypertarget{namespacemod__read__grids_af619057af0e7ce4717a95d4239422912}\label{namespacemod__read__grids_af619057af0e7ce4717a95d4239422912}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!mts@{mts}}
 \index{mts@{mts}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{mts}{mts}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::mts}\hypertarget{namespacemod__read__grids_af619057af0e7ce4717a95d4239422912}{}\label{namespacemod__read__grids_af619057af0e7ce4717a95d4239422912}
-
-
-Definition at line 33 of file mod\+\_\+read\+\_\+grids.\+f90.
+\subsubsection{\texorpdfstring{mts}{mts}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::mts}
 
 
 
-Referenced by mod\+\_\+loops\+::calc\+\_\+ztotal(), mod\+\_\+resume\+::sort\+\_\+output(), and mod\+\_\+vmd\+::write\+\_\+vmd\+\_\+files().
+Definition at line 43 of file mod\+\_\+read\+\_\+grids.\+f90.
 
+
+
+Referenced by mod\+\_\+loops\+::calc\+\_\+ztotal(), mod\+\_\+resume\+::sort\+\_\+output(), and mod\+\_\+vmd\+::\+W\+R\+I\+T\+E\+\_\+\+V\+M\+D\+\_\+\+F\+I\+L\+E\+S\+::write\+\_\+vmd\+\_\+files().
+
+\mbox{\Hypertarget{namespacemod__read__grids_aa54b9eaa554b8519d41c5e616479d343}\label{namespacemod__read__grids_aa54b9eaa554b8519d41c5e616479d343}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!ntotal@{ntotal}}
 \index{ntotal@{ntotal}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{ntotal}{ntotal}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+read\+\_\+grids\+::ntotal}\hypertarget{namespacemod__read__grids_aa54b9eaa554b8519d41c5e616479d343}{}\label{namespacemod__read__grids_aa54b9eaa554b8519d41c5e616479d343}
+\subsubsection{\texorpdfstring{ntotal}{ntotal}}
+{\footnotesize\ttfamily integer mod\+\_\+read\+\_\+grids\+::ntotal}
 
 
-Definition at line 38 of file mod\+\_\+read\+\_\+grids.\+f90.
+
+Definition at line 46 of file mod\+\_\+read\+\_\+grids.\+f90.
 
 
 
 Referenced by check\+\_\+moves().
 
+\mbox{\Hypertarget{namespacemod__read__grids_aa3da94e35a501dc0ed782d7019127514}\label{namespacemod__read__grids_aa3da94e35a501dc0ed782d7019127514}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!phir@{phir}}
 \index{phir@{phir}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{phir}{phir}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::phir}\hypertarget{namespacemod__read__grids_aa3da94e35a501dc0ed782d7019127514}{}\label{namespacemod__read__grids_aa3da94e35a501dc0ed782d7019127514}
-
-
-Definition at line 35 of file mod\+\_\+read\+\_\+grids.\+f90.
+\subsubsection{\texorpdfstring{phir}{phir}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::phir}
 
 
 
-Referenced by build\+\_\+rotation\+\_\+sphere(), mod\+\_\+loops\+::calc(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), and mod\+\_\+search\+::search\+\_\+structures().
+Definition at line 45 of file mod\+\_\+read\+\_\+grids.\+f90.
 
+
+
+Referenced by build\+\_\+reorientation\+\_\+sphere(), mod\+\_\+loops\+::calc(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), and mod\+\_\+search\+::search\+\_\+structures().
+
+\mbox{\Hypertarget{namespacemod__read__grids_a019fc7a33467abb84318794f59bff9cd}\label{namespacemod__read__grids_a019fc7a33467abb84318794f59bff9cd}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!probt@{probt}}
 \index{probt@{probt}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{probt}{probt}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::probt}\hypertarget{namespacemod__read__grids_a019fc7a33467abb84318794f59bff9cd}{}\label{namespacemod__read__grids_a019fc7a33467abb84318794f59bff9cd}
+\subsubsection{\texorpdfstring{probt}{probt}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::probt}
 
 
-Definition at line 34 of file mod\+\_\+read\+\_\+grids.\+f90.
+
+Definition at line 44 of file mod\+\_\+read\+\_\+grids.\+f90.
 
 
 
 Referenced by mod\+\_\+loops\+::calc\+\_\+ztotal(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), and mod\+\_\+resume\+::sort\+\_\+output().
 
-\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!repulsion@{repulsion}}
-\index{repulsion@{repulsion}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{repulsion}{repulsion}}]{\setlength{\rightskip}{0pt plus 5cm}logical, dimension(\+:,\+:,\+:), allocatable mod\+\_\+read\+\_\+grids\+::repulsion}\hypertarget{namespacemod__read__grids_a78b7a722975e665430c061c6cca83ca0}{}\label{namespacemod__read__grids_a78b7a722975e665430c061c6cca83ca0}
-
-
-Definition at line 37 of file mod\+\_\+read\+\_\+grids.\+f90.
-
-
-
-Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+pot\+\_\+ljc\+::calc\+\_\+ljc\+\_\+energy(), mod\+\_\+pot\+\_\+none\+::check\+\_\+conf(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), mod\+\_\+resume\+::ending(), and mod\+\_\+loops\+::recalc().
-
+\mbox{\Hypertarget{namespacemod__read__grids_aca954e32e5f53302912f372a99affe97}\label{namespacemod__read__grids_aca954e32e5f53302912f372a99affe97}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!rot\+\_\+total@{rot\+\_\+total}}
 \index{rot\+\_\+total@{rot\+\_\+total}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{rot\+\_\+total}{rot_total}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+read\+\_\+grids\+::rot\+\_\+total}\hypertarget{namespacemod__read__grids_aca954e32e5f53302912f372a99affe97}{}\label{namespacemod__read__grids_aca954e32e5f53302912f372a99affe97}
+\subsubsection{\texorpdfstring{rot\+\_\+total}{rot\_total}}
+{\footnotesize\ttfamily integer mod\+\_\+read\+\_\+grids\+::rot\+\_\+total}
 
 
-Definition at line 38 of file mod\+\_\+read\+\_\+grids.\+f90.
+
+Definition at line 46 of file mod\+\_\+read\+\_\+grids.\+f90.
 
 
 
 Referenced by mod\+\_\+loops\+::calc(), and check\+\_\+moves().
 
+\mbox{\Hypertarget{namespacemod__read__grids_a668db35acd10bd5a0c686c3ea19da6c2}\label{namespacemod__read__grids_a668db35acd10bd5a0c686c3ea19da6c2}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!rr@{rr}}
 \index{rr@{rr}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{rr}{rr}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::rr}\hypertarget{namespacemod__read__grids_a668db35acd10bd5a0c686c3ea19da6c2}{}\label{namespacemod__read__grids_a668db35acd10bd5a0c686c3ea19da6c2}
-
-
-Definition at line 35 of file mod\+\_\+read\+\_\+grids.\+f90.
+\subsubsection{\texorpdfstring{rr}{rr}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::rr}
 
 
 
-Referenced by build\+\_\+rotation\+\_\+sphere(), and mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays().
+Definition at line 45 of file mod\+\_\+read\+\_\+grids.\+f90.
 
+
+
+Referenced by build\+\_\+reorientation\+\_\+sphere(), and mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays().
+
+\mbox{\Hypertarget{namespacemod__read__grids_aff025afae6b2b208286c65a85cd8f82a}\label{namespacemod__read__grids_aff025afae6b2b208286c65a85cd8f82a}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!sumvexpvrot@{sumvexpvrot}}
 \index{sumvexpvrot@{sumvexpvrot}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{sumvexpvrot}{sumvexpvrot}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::sumvexpvrot}\hypertarget{namespacemod__read__grids_aff025afae6b2b208286c65a85cd8f82a}{}\label{namespacemod__read__grids_aff025afae6b2b208286c65a85cd8f82a}
+\subsubsection{\texorpdfstring{sumvexpvrot}{sumvexpvrot}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::sumvexpvrot}
 
 
-Definition at line 34 of file mod\+\_\+read\+\_\+grids.\+f90.
+
+Definition at line 44 of file mod\+\_\+read\+\_\+grids.\+f90.
 
 
 
 Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+loops\+::calc\+\_\+ztotal(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), and mod\+\_\+loops\+::recalc().
 
+\mbox{\Hypertarget{namespacemod__read__grids_a40918dc75ea77a2757ea8d8dd43beb9e}\label{namespacemod__read__grids_a40918dc75ea77a2757ea8d8dd43beb9e}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!thetar@{thetar}}
 \index{thetar@{thetar}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{thetar}{thetar}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::thetar}\hypertarget{namespacemod__read__grids_a40918dc75ea77a2757ea8d8dd43beb9e}{}\label{namespacemod__read__grids_a40918dc75ea77a2757ea8d8dd43beb9e}
-
-
-Definition at line 35 of file mod\+\_\+read\+\_\+grids.\+f90.
-
-
-
-Referenced by build\+\_\+rotation\+\_\+sphere(), mod\+\_\+loops\+::calc(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), and mod\+\_\+search\+::search\+\_\+structures().
-
-\index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!vtot@{vtot}}
-\index{vtot@{vtot}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{vtot}{vtot}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:,\+:,\+:), allocatable mod\+\_\+read\+\_\+grids\+::vtot}\hypertarget{namespacemod__read__grids_a1acebe9f23427d5bc54629463ab63378}{}\label{namespacemod__read__grids_a1acebe9f23427d5bc54629463ab63378}
-
-
-Definition at line 36 of file mod\+\_\+read\+\_\+grids.\+f90.
+\subsubsection{\texorpdfstring{thetar}{thetar}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::thetar}
 
 
 
-Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+pot\+\_\+ljc\+::calc\+\_\+ljc\+\_\+energy(), mod\+\_\+loops\+::calc\+\_\+ztotal(), mod\+\_\+search\+::count\+\_\+structures(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), mod\+\_\+loops\+::recalc(), and mod\+\_\+search\+::sort\+\_\+energy().
+Definition at line 45 of file mod\+\_\+read\+\_\+grids.\+f90.
 
+
+
+Referenced by build\+\_\+reorientation\+\_\+sphere(), mod\+\_\+loops\+::calc(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), and mod\+\_\+search\+::search\+\_\+structures().
+
+\mbox{\Hypertarget{namespacemod__read__grids_aa1dc0d4a91ccebc952bde4d1f380b174}\label{namespacemod__read__grids_aa1dc0d4a91ccebc952bde4d1f380b174}} 
 \index{mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}!zrot@{zrot}}
 \index{zrot@{zrot}!mod\+\_\+read\+\_\+grids@{mod\+\_\+read\+\_\+grids}}
-\subsubsection[{\texorpdfstring{zrot}{zrot}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::zrot}\hypertarget{namespacemod__read__grids_aa1dc0d4a91ccebc952bde4d1f380b174}{}\label{namespacemod__read__grids_aa1dc0d4a91ccebc952bde4d1f380b174}
+\subsubsection{\texorpdfstring{zrot}{zrot}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+read\+\_\+grids\+::zrot}
 
 
-Definition at line 34 of file mod\+\_\+read\+\_\+grids.\+f90.
+
+Definition at line 44 of file mod\+\_\+read\+\_\+grids.\+f90.
 
 
 

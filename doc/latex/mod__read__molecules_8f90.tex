@@ -1,0 +1,74 @@
+\hypertarget{mod__read__molecules_8f90}{}\section{/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/mod\+\_\+read\+\_\+molecules.f90 File Reference}
+\label{mod__read__molecules_8f90}\index{/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/mod\+\_\+read\+\_\+molecules.\+f90@{/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/mod\+\_\+read\+\_\+molecules.\+f90}}
+\subsection*{Data Types}
+\begin{DoxyCompactItemize}
+\item 
+type \hyperlink{structmod__read__molecules_1_1atom}{mod\+\_\+read\+\_\+molecules\+::atom}
+\item 
+type \hyperlink{structmod__read__molecules_1_1molecule}{mod\+\_\+read\+\_\+molecules\+::molecule}
+\item 
+type \hyperlink{structmod__read__molecules_1_1dimer}{mod\+\_\+read\+\_\+molecules\+::dimer}
+\end{DoxyCompactItemize}
+\subsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+module \hyperlink{namespacemod__read__molecules}{mod\+\_\+read\+\_\+molecules}
+\begin{DoxyCompactList}\small\item\em This module reads coordinate files for xyz\+\_\+files 1 and 2. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \hyperlink{namespacemod__read__molecules_a5e6a958bafd00dfe5c9279092970ae47}{mod\+\_\+read\+\_\+molecules\+::calc\+\_\+none\+\_\+cross} (this)
+\item 
+subroutine \hyperlink{namespacemod__read__molecules_a137ae89987a14c217f0bcfba8ca493ec}{mod\+\_\+read\+\_\+molecules\+::calc\+\_\+none\+\_\+energy} (this, g, r, t)
+\begin{DoxyCompactList}\small\item\em This routine calculates interatomic distances and. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__read__molecules_a61dd5623986abe13f76dfed8a5ad1e35}{mod\+\_\+read\+\_\+molecules\+::read\+\_\+molecule} (this, molecule\+\_\+filename)
+\begin{DoxyCompactList}\small\item\em This routine reads coordinates for xyz\+\_\+files 1 and 2. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__read__molecules_aae2115ec246e295817cd546bda666e23}{mod\+\_\+read\+\_\+molecules\+::check\+\_\+molecule} (this, reference, vector, mol\+\_\+number)
+\begin{DoxyCompactList}\small\item\em This routine checks the reference sites molecules 1 and 2. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__read__molecules_a516f16861094339983ebcd9af3fedbaa}{mod\+\_\+read\+\_\+molecules\+::translate\+\_\+molecule} (this, reference)
+\begin{DoxyCompactList}\small\item\em This routine translates the molecule. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__read__molecules_ae228ade0f7ea15cdb9d186848ae4eae7}{mod\+\_\+read\+\_\+molecules\+::align\+\_\+molecule} (this, vector, reference)
+\begin{DoxyCompactList}\small\item\em This routine alings the molecule rotation vector along Z axis. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__read__molecules_a3b4923002ba2fa7a6438df2afa80d406}{mod\+\_\+read\+\_\+molecules\+::rotate\+\_\+molecule} (this, gyration)
+\begin{DoxyCompactList}\small\item\em This routine performs rotations of mol2 around mol1. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__read__molecules_a2766cc4e8b825aea9e9695ee50fbd2f9}{mod\+\_\+read\+\_\+molecules\+::build\+\_\+dimer} (this)
+\item 
+subroutine \hyperlink{namespacemod__read__molecules_ab4af6b28d9b99eb519efb212a5f02f58}{mod\+\_\+read\+\_\+molecules\+::write\+\_\+xyz} (this, lowest)
+\item 
+subroutine \hyperlink{namespacemod__read__molecules_a79baec2daf0d11f0bd50d405874d4186}{mod\+\_\+read\+\_\+molecules\+::write\+\_\+mop} (this, header)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+type(molecule) \hyperlink{namespacemod__read__molecules_a8511d6e8d8197d2f03d47376a43e50ce}{mod\+\_\+read\+\_\+molecules\+::mol1}
+\item 
+type(molecule) \hyperlink{namespacemod__read__molecules_a73b2cd7c32146644cc496892645c2e68}{mod\+\_\+read\+\_\+molecules\+::mol2}
+\item 
+type(dimer) \hyperlink{namespacemod__read__molecules_a9947a968e59ca99a71fee1f02e557172}{mod\+\_\+read\+\_\+molecules\+::dimers}
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_ad9dc9f5af77e0db504939d241333d857}{mod\+\_\+read\+\_\+molecules\+::dtheta}
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_a4a9088b19ec4e6043af7894bfa20e87b}{mod\+\_\+read\+\_\+molecules\+::dphi}
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_a25040f2691a3f50a481882e7e6a9816d}{mod\+\_\+read\+\_\+molecules\+::dalpha}
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_aa56e64086c25d032f85b2528c2dfc698}{mod\+\_\+read\+\_\+molecules\+::cosphi}
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_aae35f31c005f89820a9d8806eb04c7c6}{mod\+\_\+read\+\_\+molecules\+::sinphi}
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_aecec9abde85a75891e653ded1997b267}{mod\+\_\+read\+\_\+molecules\+::costheta}
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_a4bb74ab5f27ab9f8418a9174422796c4}{mod\+\_\+read\+\_\+molecules\+::sintheta}
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_ac0e3265d01367c7b422240b7ebc4be85}{mod\+\_\+read\+\_\+molecules\+::cosalpha}
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_ac481718cc895478caac0b9b181436fc3}{mod\+\_\+read\+\_\+molecules\+::sinalpha}
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_a169468a3161d2d2e074c0acacf22289a}{mod\+\_\+read\+\_\+molecules\+::cosphir} = 0.\+0\+\_\+\+DP
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_ab49181669d915cd61bc91b536f9013ed}{mod\+\_\+read\+\_\+molecules\+::sinphir} = 1.\+0\+\_\+\+DP
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_afe28a6b2c9ac300c072b7315c4cf36fb}{mod\+\_\+read\+\_\+molecules\+::costhetar} = -\/1.\+0\+\_\+\+DP
+\item 
+real(kind=dp) \hyperlink{namespacemod__read__molecules_a8f483c69b7c8592ed311a0ba7b816e4a}{mod\+\_\+read\+\_\+molecules\+::sinthetar} = 0.\+0\+\_\+\+DP
+\end{DoxyCompactItemize}

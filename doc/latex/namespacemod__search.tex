@@ -17,11 +17,11 @@ subroutine \hyperlink{namespacemod__search_ac11978e9ebdb6b101a09555f4742a4c9}{se
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-real(kind=dp) \hyperlink{namespacemod__search_a014567a8f5474b311cedf2f9b1dbda1a}{lowest}
-\item 
 integer, dimension(3) \hyperlink{namespacemod__search_a018a3c64ea9e25b0dfc15ebe763920cf}{pos\+\_\+min\+\_\+energy}
 \item 
 integer \hyperlink{namespacemod__search_a0c7388c12d8e6a95b8c3f9fd86321687}{n}
+\item 
+real(kind=dp) \hyperlink{namespacemod__search_a014567a8f5474b311cedf2f9b1dbda1a}{lowest}
 \item 
 real(kind=dp), dimension(\+:), allocatable \hyperlink{namespacemod__search_a8ce72764a5658f7958ed5c473dd77706}{energy\+\_\+ordered}
 \end{DoxyCompactItemize}
@@ -50,13 +50,12 @@ Felippe M. Colombari
 
 
 \subsection{Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{namespacemod__search_a5026804a4e265b1a450eebc86cd81575}\label{namespacemod__search_a5026804a4e265b1a450eebc86cd81575}} 
 \index{mod\+\_\+search@{mod\+\_\+search}!count\+\_\+structures@{count\+\_\+structures}}
 \index{count\+\_\+structures@{count\+\_\+structures}!mod\+\_\+search@{mod\+\_\+search}}
-\subsubsection[{\texorpdfstring{count\+\_\+structures}{count_structures}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+search\+::count\+\_\+structures (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__search_a5026804a4e265b1a450eebc86cd81575}{}\label{namespacemod__search_a5026804a4e265b1a450eebc86cd81575}
+\subsubsection{\texorpdfstring{count\+\_\+structures()}{count\_structures()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+search\+::count\+\_\+structures (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
 
 
 This routine counts the number of structures with energy closer (within 0.\+5 $\ast$ k\+BT) to the most stable one. 
@@ -70,19 +69,18 @@ Definition at line 36 of file mod\+\_\+search.\+f90.
 
 
 
-References mod\+\_\+read\+\_\+grids\+::grid\+\_\+rot, mod\+\_\+read\+\_\+grids\+::grid\+\_\+trans, mod\+\_\+loops\+::kbt, mod\+\_\+loops\+::min\+\_\+ener, n, mod\+\_\+input\+\_\+read\+::np, and mod\+\_\+read\+\_\+grids\+::vtot.
+References mod\+\_\+read\+\_\+grids\+::grid\+\_\+reo, mod\+\_\+read\+\_\+grids\+::grid\+\_\+trans, mod\+\_\+input\+\_\+read\+::gyr\+\_\+factor, mod\+\_\+input\+\_\+read\+::inter\+\_\+energy, mod\+\_\+loops\+::kbt, mod\+\_\+loops\+::min\+\_\+ener, and n.
 
 
 
 Referenced by themis().
 
+\mbox{\Hypertarget{namespacemod__search_ac11978e9ebdb6b101a09555f4742a4c9}\label{namespacemod__search_ac11978e9ebdb6b101a09555f4742a4c9}} 
 \index{mod\+\_\+search@{mod\+\_\+search}!search\+\_\+structures@{search\+\_\+structures}}
 \index{search\+\_\+structures@{search\+\_\+structures}!mod\+\_\+search@{mod\+\_\+search}}
-\subsubsection[{\texorpdfstring{search\+\_\+structures}{search_structures}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+search\+::search\+\_\+structures (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__search_ac11978e9ebdb6b101a09555f4742a4c9}{}\label{namespacemod__search_ac11978e9ebdb6b101a09555f4742a4c9}
+\subsubsection{\texorpdfstring{search\+\_\+structures()}{search\_structures()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+search\+::search\+\_\+structures (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
 
 
 This routine generates the configurations for structures written at energy-\/sort.\+log. 
@@ -101,34 +99,30 @@ Felippe M. Colombari
 \end{DoxyDate}
 
 
-Definition at line 146 of file mod\+\_\+search.\+f90.
+Definition at line 150 of file mod\+\_\+search.\+f90.
 
 
 
-References mod\+\_\+read\+\_\+xyz\+::cosphir, mod\+\_\+read\+\_\+xyz\+::costhetar, mod\+\_\+read\+\_\+xyz\+::dimers, energy\+\_\+ordered, mod\+\_\+read\+\_\+grids\+::grid\+\_\+rot, mod\+\_\+read\+\_\+grids\+::grid\+\_\+trans, mod\+\_\+inquire\+::inquire\+\_\+check(), lowest, mod\+\_\+read\+\_\+xyz\+::mol1, mod\+\_\+read\+\_\+xyz\+::mol2, mod\+\_\+input\+\_\+read\+::nstruc, mod\+\_\+read\+\_\+grids\+::phir, mod\+\_\+input\+\_\+read\+::ref1, mod\+\_\+input\+\_\+read\+::ref2, mod\+\_\+read\+\_\+xyz\+::sinphir, mod\+\_\+read\+\_\+xyz\+::sinthetar, mod\+\_\+read\+\_\+grids\+::thetar, mod\+\_\+input\+\_\+read\+::vector1, and mod\+\_\+input\+\_\+read\+::vector2.
+References mod\+\_\+read\+\_\+molecules\+::cosphir, mod\+\_\+read\+\_\+molecules\+::costhetar, mod\+\_\+read\+\_\+molecules\+::dimers, energy\+\_\+ordered, mod\+\_\+read\+\_\+grids\+::grid\+\_\+reo, mod\+\_\+read\+\_\+grids\+::grid\+\_\+trans, mod\+\_\+inquire\+::inquire\+\_\+file(), lowest, mod\+\_\+read\+\_\+molecules\+::mol1, mod\+\_\+read\+\_\+molecules\+::mol2, mod\+\_\+input\+\_\+read\+::nstruc, mod\+\_\+read\+\_\+grids\+::phir, mod\+\_\+input\+\_\+read\+::ref1, mod\+\_\+input\+\_\+read\+::ref2, mod\+\_\+read\+\_\+molecules\+::sinphir, mod\+\_\+read\+\_\+molecules\+::sinthetar, mod\+\_\+read\+\_\+grids\+::thetar, mod\+\_\+input\+\_\+read\+::vector1, and mod\+\_\+input\+\_\+read\+::vector2.
 
 
 
 Referenced by themis().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
+Here is the call graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=325pt]{namespacemod__search_ac11978e9ebdb6b101a09555f4742a4c9_cgraph}
+\includegraphics[width=343pt]{namespacemod__search_ac11978e9ebdb6b101a09555f4742a4c9_cgraph}
 \end{center}
 \end{figure}
-
-
+\mbox{\Hypertarget{namespacemod__search_a55e1f850472fe6cef190a6838ae61e51}\label{namespacemod__search_a55e1f850472fe6cef190a6838ae61e51}} 
 \index{mod\+\_\+search@{mod\+\_\+search}!sort\+\_\+energy@{sort\+\_\+energy}}
 \index{sort\+\_\+energy@{sort\+\_\+energy}!mod\+\_\+search@{mod\+\_\+search}}
-\subsubsection[{\texorpdfstring{sort\+\_\+energy}{sort_energy}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+search\+::sort\+\_\+energy (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__search_a55e1f850472fe6cef190a6838ae61e51}{}\label{namespacemod__search_a55e1f850472fe6cef190a6838ae61e51}
+\subsubsection{\texorpdfstring{sort\+\_\+energy()}{sort\_energy()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+search\+::sort\+\_\+energy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
 
 
 This routine sorts the energy array and write its first n values to energy-\/sort.\+log. 
@@ -160,7 +154,7 @@ Definition at line 87 of file mod\+\_\+search.\+f90.
 
 
 
-References energy\+\_\+ordered, mod\+\_\+constants\+::fpinf, mod\+\_\+loops\+::kbt, mod\+\_\+loops\+::min\+\_\+ener, mod\+\_\+input\+\_\+read\+::nstruc, pos\+\_\+min\+\_\+energy, mod\+\_\+read\+\_\+grids\+::vtot, and mod\+\_\+loops\+::ztrans.
+References energy\+\_\+ordered, mod\+\_\+constants\+::fpinf, mod\+\_\+input\+\_\+read\+::inter\+\_\+energy, mod\+\_\+loops\+::kbt, mod\+\_\+loops\+::min\+\_\+ener, mod\+\_\+input\+\_\+read\+::nstruc, pos\+\_\+min\+\_\+energy, and mod\+\_\+loops\+::ztrans.
 
 
 
@@ -169,9 +163,12 @@ Referenced by themis().
 
 
 \subsection{Variable Documentation}
+\mbox{\Hypertarget{namespacemod__search_a8ce72764a5658f7958ed5c473dd77706}\label{namespacemod__search_a8ce72764a5658f7958ed5c473dd77706}} 
 \index{mod\+\_\+search@{mod\+\_\+search}!energy\+\_\+ordered@{energy\+\_\+ordered}}
 \index{energy\+\_\+ordered@{energy\+\_\+ordered}!mod\+\_\+search@{mod\+\_\+search}}
-\subsubsection[{\texorpdfstring{energy\+\_\+ordered}{energy_ordered}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+search\+::energy\+\_\+ordered}\hypertarget{namespacemod__search_a8ce72764a5658f7958ed5c473dd77706}{}\label{namespacemod__search_a8ce72764a5658f7958ed5c473dd77706}
+\subsubsection{\texorpdfstring{energy\+\_\+ordered}{energy\_ordered}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+search\+::energy\+\_\+ordered}
+
 
 
 Definition at line 24 of file mod\+\_\+search.\+f90.
@@ -180,34 +177,43 @@ Definition at line 24 of file mod\+\_\+search.\+f90.
 
 Referenced by search\+\_\+structures(), and sort\+\_\+energy().
 
+\mbox{\Hypertarget{namespacemod__search_a014567a8f5474b311cedf2f9b1dbda1a}\label{namespacemod__search_a014567a8f5474b311cedf2f9b1dbda1a}} 
 \index{mod\+\_\+search@{mod\+\_\+search}!lowest@{lowest}}
 \index{lowest@{lowest}!mod\+\_\+search@{mod\+\_\+search}}
-\subsubsection[{\texorpdfstring{lowest}{lowest}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+search\+::lowest}\hypertarget{namespacemod__search_a014567a8f5474b311cedf2f9b1dbda1a}{}\label{namespacemod__search_a014567a8f5474b311cedf2f9b1dbda1a}
+\subsubsection{\texorpdfstring{lowest}{lowest}}
+{\footnotesize\ttfamily real( kind = dp ) mod\+\_\+search\+::lowest}
+
+
+
+Definition at line 23 of file mod\+\_\+search.\+f90.
+
+
+
+Referenced by search\+\_\+structures().
+
+\mbox{\Hypertarget{namespacemod__search_a0c7388c12d8e6a95b8c3f9fd86321687}\label{namespacemod__search_a0c7388c12d8e6a95b8c3f9fd86321687}} 
+\index{mod\+\_\+search@{mod\+\_\+search}!n@{n}}
+\index{n@{n}!mod\+\_\+search@{mod\+\_\+search}}
+\subsubsection{\texorpdfstring{n}{n}}
+{\footnotesize\ttfamily integer mod\+\_\+search\+::n}
+
 
 
 Definition at line 22 of file mod\+\_\+search.\+f90.
 
 
 
-Referenced by search\+\_\+structures().
-
-\index{mod\+\_\+search@{mod\+\_\+search}!n@{n}}
-\index{n@{n}!mod\+\_\+search@{mod\+\_\+search}}
-\subsubsection[{\texorpdfstring{n}{n}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+search\+::n}\hypertarget{namespacemod__search_a0c7388c12d8e6a95b8c3f9fd86321687}{}\label{namespacemod__search_a0c7388c12d8e6a95b8c3f9fd86321687}
-
-
-Definition at line 23 of file mod\+\_\+search.\+f90.
-
-
-
 Referenced by count\+\_\+structures(), and mod\+\_\+resume\+::ending().
 
+\mbox{\Hypertarget{namespacemod__search_a018a3c64ea9e25b0dfc15ebe763920cf}\label{namespacemod__search_a018a3c64ea9e25b0dfc15ebe763920cf}} 
 \index{mod\+\_\+search@{mod\+\_\+search}!pos\+\_\+min\+\_\+energy@{pos\+\_\+min\+\_\+energy}}
 \index{pos\+\_\+min\+\_\+energy@{pos\+\_\+min\+\_\+energy}!mod\+\_\+search@{mod\+\_\+search}}
-\subsubsection[{\texorpdfstring{pos\+\_\+min\+\_\+energy}{pos_min_energy}}]{\setlength{\rightskip}{0pt plus 5cm}integer, dimension(3) mod\+\_\+search\+::pos\+\_\+min\+\_\+energy}\hypertarget{namespacemod__search_a018a3c64ea9e25b0dfc15ebe763920cf}{}\label{namespacemod__search_a018a3c64ea9e25b0dfc15ebe763920cf}
+\subsubsection{\texorpdfstring{pos\+\_\+min\+\_\+energy}{pos\_min\_energy}}
+{\footnotesize\ttfamily integer, dimension(3) mod\+\_\+search\+::pos\+\_\+min\+\_\+energy}
 
 
-Definition at line 23 of file mod\+\_\+search.\+f90.
+
+Definition at line 22 of file mod\+\_\+search.\+f90.
 
 
 

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['parse_5farguments',['parse_arguments',['../namespacemod__cmd__line.html#af3e6d85ae8e1f68f4c7c22e40bd3f3bb',1,'mod_cmd_line']]]
+  ['normal_5ftermination',['normal_termination',['../namespacemod__error__handling.html#a54366620ef058729af93f4bc7d507df7',1,'mod_error_handling']]]
 ];

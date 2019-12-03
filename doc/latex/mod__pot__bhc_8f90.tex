@@ -1,0 +1,36 @@
+\hypertarget{mod__pot__bhc_8f90}{}\section{/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/mod\+\_\+pot\+\_\+bhc.f90 File Reference}
+\label{mod__pot__bhc_8f90}\index{/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/mod\+\_\+pot\+\_\+bhc.\+f90@{/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/mod\+\_\+pot\+\_\+bhc.\+f90}}
+\subsection*{Data Types}
+\begin{DoxyCompactItemize}
+\item 
+type \hyperlink{structmod__pot__bhc_1_1bhc__atom}{mod\+\_\+pot\+\_\+bhc\+::bhc\+\_\+atom}
+\item 
+type \hyperlink{structmod__pot__bhc_1_1bhc__molecule}{mod\+\_\+pot\+\_\+bhc\+::bhc\+\_\+molecule}
+\item 
+type \hyperlink{structmod__pot__bhc_1_1bhc__dimer}{mod\+\_\+pot\+\_\+bhc\+::bhc\+\_\+dimer}
+\end{DoxyCompactItemize}
+\subsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+module \hyperlink{namespacemod__pot__bhc}{mod\+\_\+pot\+\_\+bhc}
+\begin{DoxyCompactList}\small\item\em This module performs BH + C\+O\+U\+L\+O\+M\+B\+IC potential calculations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \hyperlink{namespacemod__pot__bhc_ab1ca15618078c0662d799fc22b126e17}{mod\+\_\+pot\+\_\+bhc\+::read\+\_\+bhc\+\_\+params} (this, bhc\+\_\+filename, numat)
+\begin{DoxyCompactList}\small\item\em This routine reads all necessary parameters from files. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__pot__bhc_a4fe10c812421f1de0a51b6fa227fcfd9}{mod\+\_\+pot\+\_\+bhc\+::check\+\_\+bhc\+\_\+params} (this, mol, numat, bhc\+\_\+filename)
+\begin{DoxyCompactList}\small\item\em This routine checks for inconsistent entries on parameter files. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__pot__bhc_af0819f829c162a751bfd89f7985103dc}{mod\+\_\+pot\+\_\+bhc\+::calc\+\_\+bhc\+\_\+cross} (this)
+\begin{DoxyCompactList}\small\item\em This routine calculates crossing values for BH + coulomb potential before the loops. \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespacemod__pot__bhc_a4053339b84bceb793c404010f7735624}{mod\+\_\+pot\+\_\+bhc\+::calc\+\_\+bhc\+\_\+energy} (this, g, r, t)
+\begin{DoxyCompactList}\small\item\em This routine performs energy calculations and returns V\+T\+O\+T(p,r,t). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+type(bhc\+\_\+molecule) \hyperlink{namespacemod__pot__bhc_a1624e56c037fde88375d7844e2846ab2}{mod\+\_\+pot\+\_\+bhc\+::mol1\+\_\+bhc}
+\item 
+type(bhc\+\_\+molecule) \hyperlink{namespacemod__pot__bhc_af61e65117b770d57d6ec81037ca6590b}{mod\+\_\+pot\+\_\+bhc\+::mol2\+\_\+bhc}
+\item 
+type(bhc\+\_\+dimer) \hyperlink{namespacemod__pot__bhc_a3fcd8470e5904559d0c2c3dd1a517d2d}{mod\+\_\+pot\+\_\+bhc\+::bhc\+\_\+dimers}
+\end{DoxyCompactItemize}

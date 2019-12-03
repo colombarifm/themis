@@ -8,7 +8,7 @@ This module contains routines that resume the run.
 \subsection*{Functions/\+Subroutines}
 \begin{DoxyCompactItemize}
 \item 
-subroutine \hyperlink{namespacemod__resume_a8b68b1d2c65fcac89fc9f40e0a028dd0}{ending}
+subroutine \hyperlink{namespacemod__resume_a74e0ed44fafff381d91477160c6d8a74}{ending} (timet)
 \begin{DoxyCompactList}\small\item\em This routine writes details of the calculation on screen. \end{DoxyCompactList}\item 
 subroutine \hyperlink{namespacemod__resume_a36133bfde88e19b38e5d5245c89843fe}{sort\+\_\+output}
 \begin{DoxyCompactList}\small\item\em This routine sorts central grid points according to their free energy values. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -39,13 +39,12 @@ Felippe M. Colombari
 
 
 \subsection{Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{namespacemod__resume_a74e0ed44fafff381d91477160c6d8a74}\label{namespacemod__resume_a74e0ed44fafff381d91477160c6d8a74}} 
 \index{mod\+\_\+resume@{mod\+\_\+resume}!ending@{ending}}
 \index{ending@{ending}!mod\+\_\+resume@{mod\+\_\+resume}}
-\subsubsection[{\texorpdfstring{ending}{ending}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+resume\+::ending (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__resume_a8b68b1d2c65fcac89fc9f40e0a028dd0}{}\label{namespacemod__resume_a8b68b1d2c65fcac89fc9f40e0a028dd0}
+\subsubsection{\texorpdfstring{ending()}{ending()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+resume\+::ending (\begin{DoxyParamCaption}\item[{real( kind = dp ), intent(in)}]{timet }\end{DoxyParamCaption})}
+
 
 
 This routine writes details of the calculation on screen. 
@@ -68,19 +67,18 @@ Definition at line 33 of file mod\+\_\+resume.\+f90.
 
 
 
-References mod\+\_\+read\+\_\+grids\+::a, mod\+\_\+constants\+::dashline, mod\+\_\+cmd\+\_\+line\+::grid\+\_\+type, mod\+\_\+cmd\+\_\+line\+::irun, mod\+\_\+loops\+::min\+\_\+ener, mod\+\_\+search\+::n, mod\+\_\+input\+\_\+read\+::potential, mod\+\_\+cmd\+\_\+line\+::rad, mod\+\_\+read\+\_\+grids\+::repulsion, and mod\+\_\+input\+\_\+read\+::timet.
+References mod\+\_\+read\+\_\+grids\+::a, mod\+\_\+input\+\_\+read\+::atom\+\_\+overlap, mod\+\_\+constants\+::dashline, mod\+\_\+cmd\+\_\+line\+::grid\+\_\+type, mod\+\_\+cmd\+\_\+line\+::irun, mod\+\_\+loops\+::min\+\_\+ener, mod\+\_\+search\+::n, mod\+\_\+input\+\_\+read\+::potential, and mod\+\_\+cmd\+\_\+line\+::rad.
 
 
 
 Referenced by themis().
 
+\mbox{\Hypertarget{namespacemod__resume_a36133bfde88e19b38e5d5245c89843fe}\label{namespacemod__resume_a36133bfde88e19b38e5d5245c89843fe}} 
 \index{mod\+\_\+resume@{mod\+\_\+resume}!sort\+\_\+output@{sort\+\_\+output}}
 \index{sort\+\_\+output@{sort\+\_\+output}!mod\+\_\+resume@{mod\+\_\+resume}}
-\subsubsection[{\texorpdfstring{sort\+\_\+output}{sort_output}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+resume\+::sort\+\_\+output (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__resume_a36133bfde88e19b38e5d5245c89843fe}{}\label{namespacemod__resume_a36133bfde88e19b38e5d5245c89843fe}
+\subsubsection{\texorpdfstring{sort\+\_\+output()}{sort\_output()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+resume\+::sort\+\_\+output (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
 
 
 This routine sorts central grid points according to their free energy values. 
@@ -108,7 +106,7 @@ Felippe M. Colombari
 \end{DoxyNote}
 
 
-Definition at line 104 of file mod\+\_\+resume.\+f90.
+Definition at line 106 of file mod\+\_\+resume.\+f90.
 
 
 
@@ -121,9 +119,12 @@ Referenced by themis().
 
 
 \subsection{Variable Documentation}
+\mbox{\Hypertarget{namespacemod__resume_ad3cf0f0162ccc00d0efebb0348fe6ae5}\label{namespacemod__resume_ad3cf0f0162ccc00d0efebb0348fe6ae5}} 
 \index{mod\+\_\+resume@{mod\+\_\+resume}!a\+\_\+min@{a\+\_\+min}}
 \index{a\+\_\+min@{a\+\_\+min}!mod\+\_\+resume@{mod\+\_\+resume}}
-\subsubsection[{\texorpdfstring{a\+\_\+min}{a_min}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ), dimension(\+:), allocatable mod\+\_\+resume\+::a\+\_\+min}\hypertarget{namespacemod__resume_ad3cf0f0162ccc00d0efebb0348fe6ae5}{}\label{namespacemod__resume_ad3cf0f0162ccc00d0efebb0348fe6ae5}
+\subsubsection{\texorpdfstring{a\+\_\+min}{a\_min}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+resume\+::a\+\_\+min}
+
 
 
 Definition at line 19 of file mod\+\_\+resume.\+f90.
@@ -132,9 +133,12 @@ Definition at line 19 of file mod\+\_\+resume.\+f90.
 
 Referenced by sort\+\_\+output().
 
+\mbox{\Hypertarget{namespacemod__resume_a2861e2f353be05850b4ad384446859c6}\label{namespacemod__resume_a2861e2f353be05850b4ad384446859c6}} 
 \index{mod\+\_\+resume@{mod\+\_\+resume}!pos\+\_\+a\+\_\+min@{pos\+\_\+a\+\_\+min}}
 \index{pos\+\_\+a\+\_\+min@{pos\+\_\+a\+\_\+min}!mod\+\_\+resume@{mod\+\_\+resume}}
-\subsubsection[{\texorpdfstring{pos\+\_\+a\+\_\+min}{pos_a_min}}]{\setlength{\rightskip}{0pt plus 5cm}integer, dimension(1) mod\+\_\+resume\+::pos\+\_\+a\+\_\+min}\hypertarget{namespacemod__resume_a2861e2f353be05850b4ad384446859c6}{}\label{namespacemod__resume_a2861e2f353be05850b4ad384446859c6}
+\subsubsection{\texorpdfstring{pos\+\_\+a\+\_\+min}{pos\_a\_min}}
+{\footnotesize\ttfamily integer, dimension(1) mod\+\_\+resume\+::pos\+\_\+a\+\_\+min}
+
 
 
 Definition at line 20 of file mod\+\_\+resume.\+f90.

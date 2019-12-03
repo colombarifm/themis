@@ -1,5 +1,5 @@
-\hypertarget{mod__input__read_8f90}{}\section{/home/alozada/\+T\+H\+E\+M\+I\+S-\/\+D\+E\+V/themis-\/dev/code/src/mod\+\_\+input\+\_\+read.f90 File Reference}
-\label{mod__input__read_8f90}\index{/home/alozada/\+T\+H\+E\+M\+I\+S-\/\+D\+E\+V/themis-\/dev/code/src/mod\+\_\+input\+\_\+read.\+f90@{/home/alozada/\+T\+H\+E\+M\+I\+S-\/\+D\+E\+V/themis-\/dev/code/src/mod\+\_\+input\+\_\+read.\+f90}}
+\hypertarget{mod__input__read_8f90}{}\section{/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/mod\+\_\+input\+\_\+read.f90 File Reference}
+\label{mod__input__read_8f90}\index{/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/mod\+\_\+input\+\_\+read.\+f90@{/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/mod\+\_\+input\+\_\+read.\+f90}}
 \subsection*{Modules}
 \begin{DoxyCompactItemize}
 \item 
@@ -8,82 +8,46 @@ module \hyperlink{namespacemod__input__read}{mod\+\_\+input\+\_\+read}
 \subsection*{Functions/\+Subroutines}
 \begin{DoxyCompactItemize}
 \item 
-subroutine \hyperlink{namespacemod__input__read_af75d5f3259d3fca6d4fbbcd22059b6bd}{mod\+\_\+input\+\_\+read\+::read\+\_\+input}
-\item 
-subroutine \hyperlink{namespacemod__input__read_ad163e91aef370c527c6a762f58f43f34}{mod\+\_\+input\+\_\+read\+::input\+\_\+errors} (num\+\_\+line, keyword, attribute, msg\+\_\+line)
+subroutine, public \hyperlink{namespacemod__input__read_ae27abd188ee109221a29ed77b68fb6d9}{mod\+\_\+input\+\_\+read\+::read\+\_\+input\+\_\+file}
 \item 
 subroutine \hyperlink{namespacemod__input__read_a396026faa10ab3698196930dfb90690b}{mod\+\_\+input\+\_\+read\+::check\+\_\+keys}
 \end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-real(kind=dp) \hyperlink{namespacemod__input__read_a5ccab548b1c0f51bdd20cc9251e4dedb}{mod\+\_\+input\+\_\+read\+::timet}
+character(len=10), public \hyperlink{namespacemod__input__read_aaf9a85c22da4f3ae7bbcc9ba72d783dd}{mod\+\_\+input\+\_\+read\+::potential} = char(0)
 \item 
-integer \hyperlink{namespacemod__input__read_af49668c97f27e5589794e545c5be5a22}{mod\+\_\+input\+\_\+read\+::finish}
+character(len=10), public \hyperlink{namespacemod__input__read_a02f99bb5470feaf35ab2fc228c797f64}{mod\+\_\+input\+\_\+read\+::writeframe} = char(0)
 \item 
-integer \hyperlink{namespacemod__input__read_a1fe425b57ec0b776789d69284fa29955}{mod\+\_\+input\+\_\+read\+::start}
+character(len=5), public \hyperlink{namespacemod__input__read_af757b04e60563ace187ed465be839553}{mod\+\_\+input\+\_\+read\+::wrtxtc} = char(0)
 \item 
-integer \hyperlink{namespacemod__input__read_a55525057629121499c3d3fb26c7bf282}{mod\+\_\+input\+\_\+read\+::rate2}
+real(kind=dp), public \hyperlink{namespacemod__input__read_a584082766fe740d0c5f3975d3d44426b}{mod\+\_\+input\+\_\+read\+::temp} = 0.\+0
 \item 
-character(len=250) \hyperlink{namespacemod__input__read_a2aa6f72008491094c0c96753d8d63d2e}{mod\+\_\+input\+\_\+read\+::msg\+\_\+line} = char(0)
+real(kind=dp), public \hyperlink{namespacemod__input__read_ad2ddb7a8a7af94da8a7d12c6e3ab9899}{mod\+\_\+input\+\_\+read\+::rcut\+\_\+sqr} = 0.\+0
 \item 
-character(len=240) \hyperlink{namespacemod__input__read_a21db2c7c0ef283f45a6893ca2bf9a34a}{mod\+\_\+input\+\_\+read\+::mopac\+\_\+head} = char(0)
+real(kind=dp), public \hyperlink{namespacemod__input__read_a9ef9305fdc4e5164af51f0da464c36c0}{mod\+\_\+input\+\_\+read\+::cutoff\+\_\+sqr} = 0.\+0
 \item 
-character(len=10) \hyperlink{namespacemod__input__read_af992e8c0badb490ee9f1d75568de6372}{mod\+\_\+input\+\_\+read\+::potential} = char(0)
+real(kind=dp), public \hyperlink{namespacemod__input__read_a3f3cf0bf8b5ebc1886d493eda84eecf4}{mod\+\_\+input\+\_\+read\+::max\+\_\+gyr} = 0.\+0
 \item 
-character(len=10) \hyperlink{namespacemod__input__read_a7327a05a4121e6b530adab45fdaa5d19}{mod\+\_\+input\+\_\+read\+::writeframe} = char(0)
+integer, public \hyperlink{namespacemod__input__read_a55be21acb2dc4800c8d3cecf28e4166f}{mod\+\_\+input\+\_\+read\+::scale\+\_\+factor} = 0
 \item 
-character(len=5) \hyperlink{namespacemod__input__read_a27a1649717d0aa5463782f51c29102f4}{mod\+\_\+input\+\_\+read\+::wrtxtc} = char(0)
+integer, public \hyperlink{namespacemod__input__read_ae958873dff0867f0aa04dbf6cd8a1166}{mod\+\_\+input\+\_\+read\+::trans\+\_\+factor} = 0
 \item 
-real(kind=dp) \hyperlink{namespacemod__input__read_a41af319bbc9c366863fee70f87f590a0}{mod\+\_\+input\+\_\+read\+::temp} = 0.\+0
+integer, public \hyperlink{namespacemod__input__read_ab81a502be00c6796c9474d728db96041}{mod\+\_\+input\+\_\+read\+::reo\+\_\+factor} = 0
 \item 
-real(kind=dp) \hyperlink{namespacemod__input__read_ad16f7026be229b0b283174a293fe570e}{mod\+\_\+input\+\_\+read\+::rcut} = 0.\+0
+integer, public \hyperlink{namespacemod__input__read_a76985d277087bc52f1b81814fe4c50bc}{mod\+\_\+input\+\_\+read\+::gyr\+\_\+factor} = 0
 \item 
-real(kind=dp) \hyperlink{namespacemod__input__read_a4c4705d35961d02b4275f73e44077819}{mod\+\_\+input\+\_\+read\+::rcut\+\_\+sqr} = 0.\+0
+integer, public \hyperlink{namespacemod__input__read_ae009fc7ba8243327aec0bed57f18b515}{mod\+\_\+input\+\_\+read\+::ref1} = 0
 \item 
-real(kind=dp) \hyperlink{namespacemod__input__read_a52849ceaebc993cf06d473c80bdf92ac}{mod\+\_\+input\+\_\+read\+::maxp} = 0.\+0
+integer, public \hyperlink{namespacemod__input__read_a72ae0812ca16c5cbb7eb3cbe12bafb58}{mod\+\_\+input\+\_\+read\+::ref2} = 0
 \item 
-integer \hyperlink{namespacemod__input__read_a0c42ae57c5b1cbe6dbbb2cf1691525ce}{mod\+\_\+input\+\_\+read\+::trans\+\_\+factor} = 0
+integer, public \hyperlink{namespacemod__input__read_a6e68357b53efca593488929b4554838d}{mod\+\_\+input\+\_\+read\+::vector1} = 0
 \item 
-integer \hyperlink{namespacemod__input__read_a6fde65123947b8b3eaf114c2d96caaad}{mod\+\_\+input\+\_\+read\+::rot\+\_\+factor} = 0
+integer, public \hyperlink{namespacemod__input__read_a4f1ca96e94c5298b480fa8d43bb1b915}{mod\+\_\+input\+\_\+read\+::vector2} = 0
 \item 
-integer \hyperlink{namespacemod__input__read_a4f57e5d94eb06921bf584303b54c88f4}{mod\+\_\+input\+\_\+read\+::np} = 0
+integer, public \hyperlink{namespacemod__input__read_a8aa83854894f2e947a4e1015697433d0}{mod\+\_\+input\+\_\+read\+::nstruc} = 0
 \item 
-integer \hyperlink{namespacemod__input__read_a1fffe01a8c7b8966aa213553649f0cce}{mod\+\_\+input\+\_\+read\+::ref1} = 0
+logical, dimension(\+:,\+:,\+:), allocatable, public \hyperlink{namespacemod__input__read_ada662a2d234d567ce7da80355d2c9e21}{mod\+\_\+input\+\_\+read\+::atom\+\_\+overlap}
 \item 
-integer \hyperlink{namespacemod__input__read_afe9324d2c3dd5b8f8d1afb900599f1e3}{mod\+\_\+input\+\_\+read\+::ref2} = 0
-\item 
-integer \hyperlink{namespacemod__input__read_a9b7f8f60997dd0fb2edfa04aef14fa29}{mod\+\_\+input\+\_\+read\+::vector1} = 0
-\item 
-integer \hyperlink{namespacemod__input__read_afe62d1fbe309ed810c66abd20164a320}{mod\+\_\+input\+\_\+read\+::vector2} = 0
-\item 
-integer \hyperlink{namespacemod__input__read_a176a374fb1f2efbff8fdca2a950c77b0}{mod\+\_\+input\+\_\+read\+::nstruc} = 0
-\item 
-logical \hyperlink{namespacemod__input__read_a668e8b052b58c62bdcb1fde214459cb1}{mod\+\_\+input\+\_\+read\+::key\+\_\+translation\+\_\+grid} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a3a5a0477db778e79dd96be267f9ebde5}{mod\+\_\+input\+\_\+read\+::key\+\_\+rotation\+\_\+grid} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a72d79af87249c49e917e16ed9978d242}{mod\+\_\+input\+\_\+read\+::key\+\_\+rotation\+\_\+axis} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a9227a15f259c9085a4a610eedbcf070c}{mod\+\_\+input\+\_\+read\+::key\+\_\+potential} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a119a4d5f6c8db10062bf46a95dc5ddfa}{mod\+\_\+input\+\_\+read\+::key\+\_\+temperature} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a54f4396af49b6cf2c5a16f000fa7369b}{mod\+\_\+input\+\_\+read\+::key\+\_\+write\+\_\+frames} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a58058a29fc5300521bfe3658ba0444e1}{mod\+\_\+input\+\_\+read\+::key\+\_\+ref\+\_\+mol1} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a0e0f6bb92252196980696d427c1e70ed}{mod\+\_\+input\+\_\+read\+::key\+\_\+ref\+\_\+mol2} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_aa5a0b3c68c22ac66d80805ec388ddc4a}{mod\+\_\+input\+\_\+read\+::key\+\_\+rot\+\_\+ref\+\_\+mol1} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_abf16c25db5c3926452c89143c7548df7}{mod\+\_\+input\+\_\+read\+::key\+\_\+rot\+\_\+ref\+\_\+mol2} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a1956b5de5214082fc58fa663884d9fc8}{mod\+\_\+input\+\_\+read\+::key\+\_\+shortest\+\_\+distance} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a3af1716773b868648513ab784756e599}{mod\+\_\+input\+\_\+read\+::key\+\_\+write\+\_\+xtc} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a1f5f9ac3d207b274fa7eab7f06a7d472}{mod\+\_\+input\+\_\+read\+::key\+\_\+lowest\+\_\+structures} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a273dcae5fbe1ea83ebf236f85d931560}{mod\+\_\+input\+\_\+read\+::key\+\_\+mopac\+\_\+job} = .false.
+real(kind=dp), dimension(\+:,\+:,\+:), allocatable, public \hyperlink{namespacemod__input__read_a59e3573d7d32b72bd699ac1708e70908}{mod\+\_\+input\+\_\+read\+::inter\+\_\+energy}
 \end{DoxyCompactItemize}

@@ -1,0 +1,214 @@
+\hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer}{}\section{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+:\+:ljc\+\_\+pair\+\_\+dimer Type Reference}
+\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer}\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+
+
+Inheritance diagram for mod\+\_\+pot\+\_\+ljc\+\_\+pair\+:\+:ljc\+\_\+pair\+\_\+dimer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=189pt]{structmod__pot__ljc__pair_1_1ljc__pair__dimer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mod\+\_\+pot\+\_\+ljc\+\_\+pair\+:\+:ljc\+\_\+pair\+\_\+dimer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=189pt]{structmod__pot__ljc__pair_1_1ljc__pair__dimer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+procedure, pass, public \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_ac0eca17892ab567ada4547be171df9a2}{read\+\_\+ljc\+\_\+pair\+\_\+params}
+\item 
+procedure, pass, public \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_af138cf6a72055b2d280b08598853bfd9}{calc\+\_\+cross} =$>$ Calc\+\_\+ljc\+\_\+pair\+\_\+cross
+\item 
+procedure, pass, public \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_adc6d1f69b54f1485cbb107e3c78ac867}{calc\+\_\+energy} =$>$ Calc\+\_\+ljc\+\_\+pair\+\_\+energy
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+integer \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_a4a68dac77dd1c7f96844091b52a9b1c9}{ntypes1}
+\item 
+integer \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_aff17dd61954cd4c01b6bfa2456715e42}{ntypes2}
+\item 
+real(kind=dp) \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_aa059e9bbab66781bdaefb9add46a50ff}{pot\+\_\+lj}
+\item 
+real(kind=dp) \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_accfab892d2dee33d1357dba151d13c13}{pot\+\_\+coul}
+\item 
+real(kind=dp), dimension(\+:), allocatable \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_ab69991396c9df5b38ee1db8babb5f944}{c6}
+\item 
+real(kind=dp), dimension(\+:), allocatable \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_acca7df653344e9c22e7ed71d83dfd2da}{c12}
+\item 
+real(kind=dp), dimension(\+:), allocatable \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_ab342f6ea50b777dd052fe2e8dceffc84}{qiqj}
+\item 
+real(kind=dp), dimension(\+:,\+:), allocatable \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_ad93bc567f5babc7535d21edc59c65887}{c6\+\_\+ij}
+\item 
+real(kind=dp), dimension(\+:,\+:), allocatable \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_a15e9c4efef63b3aa5992324ee98d4231}{c12\+\_\+ij}
+\item 
+real(kind=dp), dimension(\+:,\+:), allocatable \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_adcb10761fdd3124043f41b73732711cc}{q\+\_\+ij}
+\item 
+character(len=2), dimension(\+:,\+:), allocatable \hyperlink{structmod__pot__ljc__pair_1_1ljc__pair__dimer_a91a99dc498a74a26a622c4614e367dc9}{pair}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 32 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+
+
+\subsection{Member Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_af138cf6a72055b2d280b08598853bfd9}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_af138cf6a72055b2d280b08598853bfd9}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!calc\+\_\+cross@{calc\+\_\+cross}}
+\index{calc\+\_\+cross@{calc\+\_\+cross}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{calc\+\_\+cross()}{calc\_cross()}}
+{\footnotesize\ttfamily procedure, pass, public mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::calc\+\_\+cross (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 40 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_adc6d1f69b54f1485cbb107e3c78ac867}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_adc6d1f69b54f1485cbb107e3c78ac867}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!calc\+\_\+energy@{calc\+\_\+energy}}
+\index{calc\+\_\+energy@{calc\+\_\+energy}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{calc\+\_\+energy()}{calc\_energy()}}
+{\footnotesize\ttfamily procedure, pass, public mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::calc\+\_\+energy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 41 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_ac0eca17892ab567ada4547be171df9a2}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_ac0eca17892ab567ada4547be171df9a2}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!read\+\_\+ljc\+\_\+pair\+\_\+params@{read\+\_\+ljc\+\_\+pair\+\_\+params}}
+\index{read\+\_\+ljc\+\_\+pair\+\_\+params@{read\+\_\+ljc\+\_\+pair\+\_\+params}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{read\+\_\+ljc\+\_\+pair\+\_\+params()}{read\_ljc\_pair\_params()}}
+{\footnotesize\ttfamily procedure, pass, public mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::read\+\_\+ljc\+\_\+pair\+\_\+params (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 39 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_acca7df653344e9c22e7ed71d83dfd2da}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_acca7df653344e9c22e7ed71d83dfd2da}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!c12@{c12}}
+\index{c12@{c12}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{c12}{c12}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::c12}
+
+
+
+Definition at line 35 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_a15e9c4efef63b3aa5992324ee98d4231}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_a15e9c4efef63b3aa5992324ee98d4231}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!c12\+\_\+ij@{c12\+\_\+ij}}
+\index{c12\+\_\+ij@{c12\+\_\+ij}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{c12\+\_\+ij}{c12\_ij}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:,\+:), allocatable mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::c12\+\_\+ij}
+
+
+
+Definition at line 36 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_ab69991396c9df5b38ee1db8babb5f944}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_ab69991396c9df5b38ee1db8babb5f944}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!c6@{c6}}
+\index{c6@{c6}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{c6}{c6}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::c6}
+
+
+
+Definition at line 35 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_ad93bc567f5babc7535d21edc59c65887}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_ad93bc567f5babc7535d21edc59c65887}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!c6\+\_\+ij@{c6\+\_\+ij}}
+\index{c6\+\_\+ij@{c6\+\_\+ij}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{c6\+\_\+ij}{c6\_ij}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:,\+:), allocatable mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::c6\+\_\+ij}
+
+
+
+Definition at line 36 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_a4a68dac77dd1c7f96844091b52a9b1c9}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_a4a68dac77dd1c7f96844091b52a9b1c9}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!ntypes1@{ntypes1}}
+\index{ntypes1@{ntypes1}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{ntypes1}{ntypes1}}
+{\footnotesize\ttfamily integer mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::ntypes1}
+
+
+
+Definition at line 33 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_aff17dd61954cd4c01b6bfa2456715e42}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_aff17dd61954cd4c01b6bfa2456715e42}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!ntypes2@{ntypes2}}
+\index{ntypes2@{ntypes2}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{ntypes2}{ntypes2}}
+{\footnotesize\ttfamily integer mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::ntypes2}
+
+
+
+Definition at line 33 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_a91a99dc498a74a26a622c4614e367dc9}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_a91a99dc498a74a26a622c4614e367dc9}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!pair@{pair}}
+\index{pair@{pair}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{pair}{pair}}
+{\footnotesize\ttfamily character( len = 2), dimension(\+:,\+:), allocatable mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::pair}
+
+
+
+Definition at line 37 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_accfab892d2dee33d1357dba151d13c13}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_accfab892d2dee33d1357dba151d13c13}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!pot\+\_\+coul@{pot\+\_\+coul}}
+\index{pot\+\_\+coul@{pot\+\_\+coul}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{pot\+\_\+coul}{pot\_coul}}
+{\footnotesize\ttfamily real( kind = dp ) mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::pot\+\_\+coul}
+
+
+
+Definition at line 34 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_aa059e9bbab66781bdaefb9add46a50ff}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_aa059e9bbab66781bdaefb9add46a50ff}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!pot\+\_\+lj@{pot\+\_\+lj}}
+\index{pot\+\_\+lj@{pot\+\_\+lj}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{pot\+\_\+lj}{pot\_lj}}
+{\footnotesize\ttfamily real( kind = dp ) mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::pot\+\_\+lj}
+
+
+
+Definition at line 34 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_adcb10761fdd3124043f41b73732711cc}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_adcb10761fdd3124043f41b73732711cc}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!q\+\_\+ij@{q\+\_\+ij}}
+\index{q\+\_\+ij@{q\+\_\+ij}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{q\+\_\+ij}{q\_ij}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:,\+:), allocatable mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::q\+\_\+ij}
+
+
+
+Definition at line 36 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+\mbox{\Hypertarget{structmod__pot__ljc__pair_1_1ljc__pair__dimer_ab342f6ea50b777dd052fe2e8dceffc84}\label{structmod__pot__ljc__pair_1_1ljc__pair__dimer_ab342f6ea50b777dd052fe2e8dceffc84}} 
+\index{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}!qiqj@{qiqj}}
+\index{qiqj@{qiqj}!mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer@{mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer}}
+\subsubsection{\texorpdfstring{qiqj}{qiqj}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:), allocatable mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::ljc\+\_\+pair\+\_\+dimer\+::qiqj}
+
+
+
+Definition at line 35 of file mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90.
+
+
+
+The documentation for this type was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/alozada/\+T\+H\+E\+M\+I\+S\+\_\+\+D\+E\+C\+E\+M\+B\+E\+R/themis-\/dev\+\_\+december/code/src/\hyperlink{mod__pot__ljc__pair_8f90}{mod\+\_\+pot\+\_\+ljc\+\_\+pair.\+f90}\end{DoxyCompactItemize}

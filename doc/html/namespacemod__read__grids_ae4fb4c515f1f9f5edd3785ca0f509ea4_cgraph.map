@@ -1,6 +1,0 @@
-<map id="mod_read_grids::build_rotation_sphere" name="mod_read_grids::build_rotation_sphere">
-<area shape="rect" id="node2" href="$namespacemod__spherical__grids.html#a58af853045eb54cbf3a8515e0f48b23b" title="mod_spherical_grids\l::sphere_icos1_points" alt="" coords="203,71,352,112"/>
-<area shape="rect" id="node3" href="$namespacemod__spherical__grids.html#a98d8c41d6d666f6c3fe1dbadcf0dba89" title="mod_spherical_grids\l::icos_num" alt="" coords="400,5,541,47"/>
-<area shape="rect" id="node4" href="$namespacemod__spherical__grids.html#ac770a39945e60a262069f9f186819614" title="mod_spherical_grids\l::icos_shape" alt="" coords="400,71,541,112"/>
-<area shape="rect" id="node5" href="$namespacemod__spherical__grids.html#adbe3eff686f6254a50a5afd75255c2c8" title="mod_spherical_grids\l::r8vec_norm" alt="" coords="400,136,541,177"/>
-</map>

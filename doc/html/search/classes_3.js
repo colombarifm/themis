@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['point',['point',['../structmod__read__grids_1_1point.html',1,'mod_read_grids']]],
-  ['point',['point',['../structmod__read__xyz_1_1point.html',1,'mod_read_xyz']]]
+  ['error',['error',['../structmod__error__handling_1_1error.html',1,'mod_error_handling']]]
 ];

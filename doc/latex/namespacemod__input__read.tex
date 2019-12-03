@@ -8,84 +8,48 @@ This module contains a routine for I\+N\+P\+UT reading and checking.
 \subsection*{Functions/\+Subroutines}
 \begin{DoxyCompactItemize}
 \item 
-subroutine \hyperlink{namespacemod__input__read_af75d5f3259d3fca6d4fbbcd22059b6bd}{read\+\_\+input}
-\item 
-subroutine \hyperlink{namespacemod__input__read_ad163e91aef370c527c6a762f58f43f34}{input\+\_\+errors} (num\+\_\+line, keyword, attribute, \hyperlink{namespacemod__input__read_a2aa6f72008491094c0c96753d8d63d2e}{msg\+\_\+line})
+subroutine, public \hyperlink{namespacemod__input__read_ae27abd188ee109221a29ed77b68fb6d9}{read\+\_\+input\+\_\+file}
 \item 
 subroutine \hyperlink{namespacemod__input__read_a396026faa10ab3698196930dfb90690b}{check\+\_\+keys}
 \end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-real(kind=dp) \hyperlink{namespacemod__input__read_a5ccab548b1c0f51bdd20cc9251e4dedb}{timet}
+character(len=10), public \hyperlink{namespacemod__input__read_aaf9a85c22da4f3ae7bbcc9ba72d783dd}{potential} = char(0)
 \item 
-integer \hyperlink{namespacemod__input__read_af49668c97f27e5589794e545c5be5a22}{finish}
+character(len=10), public \hyperlink{namespacemod__input__read_a02f99bb5470feaf35ab2fc228c797f64}{writeframe} = char(0)
 \item 
-integer \hyperlink{namespacemod__input__read_a1fe425b57ec0b776789d69284fa29955}{start}
+character(len=5), public \hyperlink{namespacemod__input__read_af757b04e60563ace187ed465be839553}{wrtxtc} = char(0)
 \item 
-integer \hyperlink{namespacemod__input__read_a55525057629121499c3d3fb26c7bf282}{rate2}
+real(kind=dp), public \hyperlink{namespacemod__input__read_a584082766fe740d0c5f3975d3d44426b}{temp} = 0.\+0
 \item 
-character(len=250) \hyperlink{namespacemod__input__read_a2aa6f72008491094c0c96753d8d63d2e}{msg\+\_\+line} = char(0)
+real(kind=dp), public \hyperlink{namespacemod__input__read_ad2ddb7a8a7af94da8a7d12c6e3ab9899}{rcut\+\_\+sqr} = 0.\+0
 \item 
-character(len=240) \hyperlink{namespacemod__input__read_a21db2c7c0ef283f45a6893ca2bf9a34a}{mopac\+\_\+head} = char(0)
+real(kind=dp), public \hyperlink{namespacemod__input__read_a9ef9305fdc4e5164af51f0da464c36c0}{cutoff\+\_\+sqr} = 0.\+0
 \item 
-character(len=10) \hyperlink{namespacemod__input__read_af992e8c0badb490ee9f1d75568de6372}{potential} = char(0)
+real(kind=dp), public \hyperlink{namespacemod__input__read_a3f3cf0bf8b5ebc1886d493eda84eecf4}{max\+\_\+gyr} = 0.\+0
 \item 
-character(len=10) \hyperlink{namespacemod__input__read_a7327a05a4121e6b530adab45fdaa5d19}{writeframe} = char(0)
+integer, public \hyperlink{namespacemod__input__read_a55be21acb2dc4800c8d3cecf28e4166f}{scale\+\_\+factor} = 0
 \item 
-character(len=5) \hyperlink{namespacemod__input__read_a27a1649717d0aa5463782f51c29102f4}{wrtxtc} = char(0)
+integer, public \hyperlink{namespacemod__input__read_ae958873dff0867f0aa04dbf6cd8a1166}{trans\+\_\+factor} = 0
 \item 
-real(kind=dp) \hyperlink{namespacemod__input__read_a41af319bbc9c366863fee70f87f590a0}{temp} = 0.\+0
+integer, public \hyperlink{namespacemod__input__read_ab81a502be00c6796c9474d728db96041}{reo\+\_\+factor} = 0
 \item 
-real(kind=dp) \hyperlink{namespacemod__input__read_ad16f7026be229b0b283174a293fe570e}{rcut} = 0.\+0
+integer, public \hyperlink{namespacemod__input__read_a76985d277087bc52f1b81814fe4c50bc}{gyr\+\_\+factor} = 0
 \item 
-real(kind=dp) \hyperlink{namespacemod__input__read_a4c4705d35961d02b4275f73e44077819}{rcut\+\_\+sqr} = 0.\+0
+integer, public \hyperlink{namespacemod__input__read_ae009fc7ba8243327aec0bed57f18b515}{ref1} = 0
 \item 
-real(kind=dp) \hyperlink{namespacemod__input__read_a52849ceaebc993cf06d473c80bdf92ac}{maxp} = 0.\+0
+integer, public \hyperlink{namespacemod__input__read_a72ae0812ca16c5cbb7eb3cbe12bafb58}{ref2} = 0
 \item 
-integer \hyperlink{namespacemod__input__read_a0c42ae57c5b1cbe6dbbb2cf1691525ce}{trans\+\_\+factor} = 0
+integer, public \hyperlink{namespacemod__input__read_a6e68357b53efca593488929b4554838d}{vector1} = 0
 \item 
-integer \hyperlink{namespacemod__input__read_a6fde65123947b8b3eaf114c2d96caaad}{rot\+\_\+factor} = 0
+integer, public \hyperlink{namespacemod__input__read_a4f1ca96e94c5298b480fa8d43bb1b915}{vector2} = 0
 \item 
-integer \hyperlink{namespacemod__input__read_a4f57e5d94eb06921bf584303b54c88f4}{np} = 0
+integer, public \hyperlink{namespacemod__input__read_a8aa83854894f2e947a4e1015697433d0}{nstruc} = 0
 \item 
-integer \hyperlink{namespacemod__input__read_a1fffe01a8c7b8966aa213553649f0cce}{ref1} = 0
+logical, dimension(\+:,\+:,\+:), allocatable, public \hyperlink{namespacemod__input__read_ada662a2d234d567ce7da80355d2c9e21}{atom\+\_\+overlap}
 \item 
-integer \hyperlink{namespacemod__input__read_afe9324d2c3dd5b8f8d1afb900599f1e3}{ref2} = 0
-\item 
-integer \hyperlink{namespacemod__input__read_a9b7f8f60997dd0fb2edfa04aef14fa29}{vector1} = 0
-\item 
-integer \hyperlink{namespacemod__input__read_afe62d1fbe309ed810c66abd20164a320}{vector2} = 0
-\item 
-integer \hyperlink{namespacemod__input__read_a176a374fb1f2efbff8fdca2a950c77b0}{nstruc} = 0
-\item 
-logical \hyperlink{namespacemod__input__read_a668e8b052b58c62bdcb1fde214459cb1}{key\+\_\+translation\+\_\+grid} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a3a5a0477db778e79dd96be267f9ebde5}{key\+\_\+rotation\+\_\+grid} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a72d79af87249c49e917e16ed9978d242}{key\+\_\+rotation\+\_\+axis} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a9227a15f259c9085a4a610eedbcf070c}{key\+\_\+potential} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a119a4d5f6c8db10062bf46a95dc5ddfa}{key\+\_\+temperature} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a54f4396af49b6cf2c5a16f000fa7369b}{key\+\_\+write\+\_\+frames} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a58058a29fc5300521bfe3658ba0444e1}{key\+\_\+ref\+\_\+mol1} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a0e0f6bb92252196980696d427c1e70ed}{key\+\_\+ref\+\_\+mol2} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_aa5a0b3c68c22ac66d80805ec388ddc4a}{key\+\_\+rot\+\_\+ref\+\_\+mol1} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_abf16c25db5c3926452c89143c7548df7}{key\+\_\+rot\+\_\+ref\+\_\+mol2} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a1956b5de5214082fc58fa663884d9fc8}{key\+\_\+shortest\+\_\+distance} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a3af1716773b868648513ab784756e599}{key\+\_\+write\+\_\+xtc} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a1f5f9ac3d207b274fa7eab7f06a7d472}{key\+\_\+lowest\+\_\+structures} = .false.
-\item 
-logical \hyperlink{namespacemod__input__read_a273dcae5fbe1ea83ebf236f85d931560}{key\+\_\+mopac\+\_\+job} = .false.
+real(kind=dp), dimension(\+:,\+:,\+:), allocatable, public \hyperlink{namespacemod__input__read_a59e3573d7d32b72bd699ac1708e70908}{inter\+\_\+energy}
 \end{DoxyCompactItemize}
 
 
@@ -109,465 +73,311 @@ Felippe M. Colombari
 \item support added 
 \end{DoxyItemize}
 \end{DoxyDate}
+\begin{DoxyNote}{Note}
+update error condition by error\+\_\+handling module added by Asdrubal Lozada-\/\+Blanco 
+\end{DoxyNote}
+\begin{DoxyDate}{Date}
+-\/ Nov 2019 
+\end{DoxyDate}
 
 
 \subsection{Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{namespacemod__input__read_a396026faa10ab3698196930dfb90690b}\label{namespacemod__input__read_a396026faa10ab3698196930dfb90690b}} 
 \index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!check\+\_\+keys@{check\+\_\+keys}}
 \index{check\+\_\+keys@{check\+\_\+keys}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{check\+\_\+keys}{check_keys}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+input\+\_\+read\+::check\+\_\+keys (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__input__read_a396026faa10ab3698196930dfb90690b}{}\label{namespacemod__input__read_a396026faa10ab3698196930dfb90690b}
-
-
-Definition at line 463 of file mod\+\_\+input\+\_\+read.\+f90.
+\subsubsection{\texorpdfstring{check\+\_\+keys()}{check\_keys()}}
+{\footnotesize\ttfamily subroutine mod\+\_\+input\+\_\+read\+::check\+\_\+keys (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
-References key\+\_\+lowest\+\_\+structures, key\+\_\+mopac\+\_\+job, key\+\_\+potential, key\+\_\+ref\+\_\+mol1, key\+\_\+ref\+\_\+mol2, key\+\_\+rot\+\_\+ref\+\_\+mol1, key\+\_\+rot\+\_\+ref\+\_\+mol2, key\+\_\+rotation\+\_\+axis, key\+\_\+rotation\+\_\+grid, key\+\_\+shortest\+\_\+distance, key\+\_\+temperature, key\+\_\+translation\+\_\+grid, key\+\_\+write\+\_\+frames, key\+\_\+write\+\_\+xtc, and writeframe.
+Definition at line 619 of file mod\+\_\+input\+\_\+read.\+f90.
 
 
 
-Referenced by read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!input\+\_\+errors@{input\+\_\+errors}}
-\index{input\+\_\+errors@{input\+\_\+errors}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{input\+\_\+errors(num\+\_\+line, keyword, attribute, msg\+\_\+line)}{input_errors(num_line, keyword, attribute, msg_line)}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+input\+\_\+read\+::input\+\_\+errors (
-\begin{DoxyParamCaption}
-\item[{integer, intent(in)}]{num\+\_\+line, }
-\item[{character( len = 240 ), intent(in)}]{keyword, }
-\item[{character( len = 240 ), intent(in)}]{attribute, }
-\item[{character( len = 240 ), intent(in)}]{msg\+\_\+line}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__input__read_ad163e91aef370c527c6a762f58f43f34}{}\label{namespacemod__input__read_ad163e91aef370c527c6a762f58f43f34}
-
-
-Definition at line 442 of file mod\+\_\+input\+\_\+read.\+f90.
+References mod\+\_\+cmd\+\_\+line\+::grid\+\_\+type, and writeframe.
 
 
 
-References mod\+\_\+constants\+::dashline.
+Referenced by read\+\_\+input\+\_\+file().
+
+\mbox{\Hypertarget{namespacemod__input__read_ae27abd188ee109221a29ed77b68fb6d9}\label{namespacemod__input__read_ae27abd188ee109221a29ed77b68fb6d9}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!read\+\_\+input\+\_\+file@{read\+\_\+input\+\_\+file}}
+\index{read\+\_\+input\+\_\+file@{read\+\_\+input\+\_\+file}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{read\+\_\+input\+\_\+file()}{read\_input\_file()}}
+{\footnotesize\ttfamily subroutine, public mod\+\_\+input\+\_\+read\+::read\+\_\+input\+\_\+file (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
-Referenced by read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!read\+\_\+input@{read\+\_\+input}}
-\index{read\+\_\+input@{read\+\_\+input}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{read\+\_\+input}{read_input}}]{\setlength{\rightskip}{0pt plus 5cm}subroutine mod\+\_\+input\+\_\+read\+::read\+\_\+input (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemod__input__read_af75d5f3259d3fca6d4fbbcd22059b6bd}{}\label{namespacemod__input__read_af75d5f3259d3fca6d4fbbcd22059b6bd}
-
-
-Definition at line 62 of file mod\+\_\+input\+\_\+read.\+f90.
+Definition at line 78 of file mod\+\_\+input\+\_\+read.\+f90.
 
 
 
-References check\+\_\+keys(), mod\+\_\+constants\+::float\+\_\+alphabet, input\+\_\+errors(), mod\+\_\+inquire\+::inquire\+\_\+check(), mod\+\_\+constants\+::int\+\_\+alphabet, key\+\_\+lowest\+\_\+structures, key\+\_\+mopac\+\_\+job, key\+\_\+potential, key\+\_\+ref\+\_\+mol1, key\+\_\+ref\+\_\+mol2, key\+\_\+rot\+\_\+ref\+\_\+mol1, key\+\_\+rot\+\_\+ref\+\_\+mol2, key\+\_\+rotation\+\_\+axis, key\+\_\+rotation\+\_\+grid, key\+\_\+shortest\+\_\+distance, key\+\_\+temperature, key\+\_\+translation\+\_\+grid, key\+\_\+write\+\_\+frames, key\+\_\+write\+\_\+xtc, maxp, mopac\+\_\+head, msg\+\_\+line, np, nstruc, potential, rcut, rcut\+\_\+sqr, ref1, ref2, rot\+\_\+factor, temp, trans\+\_\+factor, vector1, vector2, writeframe, and wrtxtc.
+References check\+\_\+keys(), cutoff\+\_\+sqr, mod\+\_\+constants\+::float\+\_\+alphabet, mod\+\_\+constants\+::fpinf, gyr\+\_\+factor, mod\+\_\+inquire\+::inquire\+\_\+file(), mod\+\_\+constants\+::int\+\_\+alphabet, max\+\_\+gyr, nstruc, potential, rcut\+\_\+sqr, ref1, ref2, reo\+\_\+factor, scale\+\_\+factor, temp, trans\+\_\+factor, vector1, vector2, writeframe, and wrtxtc.
 
 
 
 Referenced by themis().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
+Here is the call graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=350pt]{namespacemod__input__read_af75d5f3259d3fca6d4fbbcd22059b6bd_cgraph}
+\includegraphics[width=350pt]{namespacemod__input__read_ae27abd188ee109221a29ed77b68fb6d9_cgraph}
 \end{center}
 \end{figure}
 
 
-
-
 \subsection{Variable Documentation}
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!finish@{finish}}
-\index{finish@{finish}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{finish}{finish}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+input\+\_\+read\+::finish}\hypertarget{namespacemod__input__read_af49668c97f27e5589794e545c5be5a22}{}\label{namespacemod__input__read_af49668c97f27e5589794e545c5be5a22}
+\mbox{\Hypertarget{namespacemod__input__read_ada662a2d234d567ce7da80355d2c9e21}\label{namespacemod__input__read_ada662a2d234d567ce7da80355d2c9e21}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!atom\+\_\+overlap@{atom\+\_\+overlap}}
+\index{atom\+\_\+overlap@{atom\+\_\+overlap}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{atom\+\_\+overlap}{atom\_overlap}}
+{\footnotesize\ttfamily logical, dimension(\+:,\+:,\+:), allocatable, public mod\+\_\+input\+\_\+read\+::atom\+\_\+overlap}
 
 
-Definition at line 22 of file mod\+\_\+input\+\_\+read.\+f90.
 
+Definition at line 70 of file mod\+\_\+input\+\_\+read.\+f90.
 
 
-Referenced by themis().
 
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+lowest\+\_\+structures@{key\+\_\+lowest\+\_\+structures}}
-\index{key\+\_\+lowest\+\_\+structures@{key\+\_\+lowest\+\_\+structures}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+lowest\+\_\+structures}{key_lowest_structures}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+lowest\+\_\+structures = .false.}\hypertarget{namespacemod__input__read_a1f5f9ac3d207b274fa7eab7f06a7d472}{}\label{namespacemod__input__read_a1f5f9ac3d207b274fa7eab7f06a7d472}
+Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+pot\+\_\+bhc\+::calc\+\_\+bhc\+\_\+energy(), mod\+\_\+pot\+\_\+ljc\+::calc\+\_\+ljc\+\_\+energy(), mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::calc\+\_\+ljc\+\_\+pair\+\_\+energy(), mod\+\_\+read\+\_\+molecules\+::calc\+\_\+none\+\_\+energy(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), and mod\+\_\+resume\+::ending().
 
+\mbox{\Hypertarget{namespacemod__input__read_a9ef9305fdc4e5164af51f0da464c36c0}\label{namespacemod__input__read_a9ef9305fdc4e5164af51f0da464c36c0}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!cutoff\+\_\+sqr@{cutoff\+\_\+sqr}}
+\index{cutoff\+\_\+sqr@{cutoff\+\_\+sqr}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{cutoff\+\_\+sqr}{cutoff\_sqr}}
+{\footnotesize\ttfamily real( kind = dp ), public mod\+\_\+input\+\_\+read\+::cutoff\+\_\+sqr = 0.\+0}
 
-Definition at line 56 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+mopac\+\_\+job@{key\+\_\+mopac\+\_\+job}}
-\index{key\+\_\+mopac\+\_\+job@{key\+\_\+mopac\+\_\+job}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+mopac\+\_\+job}{key_mopac_job}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+mopac\+\_\+job = .false.}\hypertarget{namespacemod__input__read_a273dcae5fbe1ea83ebf236f85d931560}{}\label{namespacemod__input__read_a273dcae5fbe1ea83ebf236f85d931560}
-
-
-Definition at line 57 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+potential@{key\+\_\+potential}}
-\index{key\+\_\+potential@{key\+\_\+potential}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+potential}{key_potential}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+potential = .false.}\hypertarget{namespacemod__input__read_a9227a15f259c9085a4a610eedbcf070c}{}\label{namespacemod__input__read_a9227a15f259c9085a4a610eedbcf070c}
-
-
-Definition at line 47 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+ref\+\_\+mol1@{key\+\_\+ref\+\_\+mol1}}
-\index{key\+\_\+ref\+\_\+mol1@{key\+\_\+ref\+\_\+mol1}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+ref\+\_\+mol1}{key_ref_mol1}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+ref\+\_\+mol1 = .false.}\hypertarget{namespacemod__input__read_a58058a29fc5300521bfe3658ba0444e1}{}\label{namespacemod__input__read_a58058a29fc5300521bfe3658ba0444e1}
-
-
-Definition at line 50 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+ref\+\_\+mol2@{key\+\_\+ref\+\_\+mol2}}
-\index{key\+\_\+ref\+\_\+mol2@{key\+\_\+ref\+\_\+mol2}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+ref\+\_\+mol2}{key_ref_mol2}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+ref\+\_\+mol2 = .false.}\hypertarget{namespacemod__input__read_a0e0f6bb92252196980696d427c1e70ed}{}\label{namespacemod__input__read_a0e0f6bb92252196980696d427c1e70ed}
-
-
-Definition at line 51 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+rot\+\_\+ref\+\_\+mol1@{key\+\_\+rot\+\_\+ref\+\_\+mol1}}
-\index{key\+\_\+rot\+\_\+ref\+\_\+mol1@{key\+\_\+rot\+\_\+ref\+\_\+mol1}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+rot\+\_\+ref\+\_\+mol1}{key_rot_ref_mol1}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+rot\+\_\+ref\+\_\+mol1 = .false.}\hypertarget{namespacemod__input__read_aa5a0b3c68c22ac66d80805ec388ddc4a}{}\label{namespacemod__input__read_aa5a0b3c68c22ac66d80805ec388ddc4a}
-
-
-Definition at line 52 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+rot\+\_\+ref\+\_\+mol2@{key\+\_\+rot\+\_\+ref\+\_\+mol2}}
-\index{key\+\_\+rot\+\_\+ref\+\_\+mol2@{key\+\_\+rot\+\_\+ref\+\_\+mol2}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+rot\+\_\+ref\+\_\+mol2}{key_rot_ref_mol2}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+rot\+\_\+ref\+\_\+mol2 = .false.}\hypertarget{namespacemod__input__read_abf16c25db5c3926452c89143c7548df7}{}\label{namespacemod__input__read_abf16c25db5c3926452c89143c7548df7}
-
-
-Definition at line 53 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+rotation\+\_\+axis@{key\+\_\+rotation\+\_\+axis}}
-\index{key\+\_\+rotation\+\_\+axis@{key\+\_\+rotation\+\_\+axis}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+rotation\+\_\+axis}{key_rotation_axis}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+rotation\+\_\+axis = .false.}\hypertarget{namespacemod__input__read_a72d79af87249c49e917e16ed9978d242}{}\label{namespacemod__input__read_a72d79af87249c49e917e16ed9978d242}
-
-
-Definition at line 46 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+rotation\+\_\+grid@{key\+\_\+rotation\+\_\+grid}}
-\index{key\+\_\+rotation\+\_\+grid@{key\+\_\+rotation\+\_\+grid}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+rotation\+\_\+grid}{key_rotation_grid}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+rotation\+\_\+grid = .false.}\hypertarget{namespacemod__input__read_a3a5a0477db778e79dd96be267f9ebde5}{}\label{namespacemod__input__read_a3a5a0477db778e79dd96be267f9ebde5}
-
-
-Definition at line 45 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+shortest\+\_\+distance@{key\+\_\+shortest\+\_\+distance}}
-\index{key\+\_\+shortest\+\_\+distance@{key\+\_\+shortest\+\_\+distance}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+shortest\+\_\+distance}{key_shortest_distance}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+shortest\+\_\+distance = .false.}\hypertarget{namespacemod__input__read_a1956b5de5214082fc58fa663884d9fc8}{}\label{namespacemod__input__read_a1956b5de5214082fc58fa663884d9fc8}
-
-
-Definition at line 54 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+temperature@{key\+\_\+temperature}}
-\index{key\+\_\+temperature@{key\+\_\+temperature}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+temperature}{key_temperature}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+temperature = .false.}\hypertarget{namespacemod__input__read_a119a4d5f6c8db10062bf46a95dc5ddfa}{}\label{namespacemod__input__read_a119a4d5f6c8db10062bf46a95dc5ddfa}
-
-
-Definition at line 48 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+translation\+\_\+grid@{key\+\_\+translation\+\_\+grid}}
-\index{key\+\_\+translation\+\_\+grid@{key\+\_\+translation\+\_\+grid}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+translation\+\_\+grid}{key_translation_grid}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+translation\+\_\+grid = .false.}\hypertarget{namespacemod__input__read_a668e8b052b58c62bdcb1fde214459cb1}{}\label{namespacemod__input__read_a668e8b052b58c62bdcb1fde214459cb1}
-
-
-Definition at line 44 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+write\+\_\+frames@{key\+\_\+write\+\_\+frames}}
-\index{key\+\_\+write\+\_\+frames@{key\+\_\+write\+\_\+frames}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+write\+\_\+frames}{key_write_frames}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+write\+\_\+frames = .false.}\hypertarget{namespacemod__input__read_a54f4396af49b6cf2c5a16f000fa7369b}{}\label{namespacemod__input__read_a54f4396af49b6cf2c5a16f000fa7369b}
-
-
-Definition at line 49 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!key\+\_\+write\+\_\+xtc@{key\+\_\+write\+\_\+xtc}}
-\index{key\+\_\+write\+\_\+xtc@{key\+\_\+write\+\_\+xtc}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{key\+\_\+write\+\_\+xtc}{key_write_xtc}}]{\setlength{\rightskip}{0pt plus 5cm}logical mod\+\_\+input\+\_\+read\+::key\+\_\+write\+\_\+xtc = .false.}\hypertarget{namespacemod__input__read_a3af1716773b868648513ab784756e599}{}\label{namespacemod__input__read_a3af1716773b868648513ab784756e599}
-
-
-Definition at line 55 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by check\+\_\+keys(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!maxp@{maxp}}
-\index{maxp@{maxp}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{maxp}{maxp}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+input\+\_\+read\+::maxp = 0.\+0}\hypertarget{namespacemod__input__read_a52849ceaebc993cf06d473c80bdf92ac}{}\label{namespacemod__input__read_a52849ceaebc993cf06d473c80bdf92ac}
-
-
-Definition at line 34 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by mod\+\_\+read\+\_\+grids\+::check\+\_\+moves(), read\+\_\+input(), and mod\+\_\+read\+\_\+xyz\+::rotate\+\_\+xyz().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!mopac\+\_\+head@{mopac\+\_\+head}}
-\index{mopac\+\_\+head@{mopac\+\_\+head}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{mopac\+\_\+head}{mopac_head}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 240 ) mod\+\_\+input\+\_\+read\+::mopac\+\_\+head = char(0)}\hypertarget{namespacemod__input__read_a21db2c7c0ef283f45a6893ca2bf9a34a}{}\label{namespacemod__input__read_a21db2c7c0ef283f45a6893ca2bf9a34a}
-
-
-Definition at line 27 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!msg\+\_\+line@{msg\+\_\+line}}
-\index{msg\+\_\+line@{msg\+\_\+line}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{msg\+\_\+line}{msg_line}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 250 ) mod\+\_\+input\+\_\+read\+::msg\+\_\+line = char(0)}\hypertarget{namespacemod__input__read_a2aa6f72008491094c0c96753d8d63d2e}{}\label{namespacemod__input__read_a2aa6f72008491094c0c96753d8d63d2e}
-
-
-Definition at line 26 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!np@{np}}
-\index{np@{np}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{np}{np}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+input\+\_\+read\+::np = 0}\hypertarget{namespacemod__input__read_a4f57e5d94eb06921bf584303b54c88f4}{}\label{namespacemod__input__read_a4f57e5d94eb06921bf584303b54c88f4}
-
-
-Definition at line 37 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+loops\+::calc\+\_\+ztotal(), mod\+\_\+read\+\_\+grids\+::check\+\_\+moves(), mod\+\_\+search\+::count\+\_\+structures(), read\+\_\+input(), mod\+\_\+loops\+::recalc(), and mod\+\_\+read\+\_\+xyz\+::rotate\+\_\+xyz().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!nstruc@{nstruc}}
-\index{nstruc@{nstruc}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{nstruc}{nstruc}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+input\+\_\+read\+::nstruc = 0}\hypertarget{namespacemod__input__read_a176a374fb1f2efbff8fdca2a950c77b0}{}\label{namespacemod__input__read_a176a374fb1f2efbff8fdca2a950c77b0}
-
-
-Definition at line 42 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by read\+\_\+input(), mod\+\_\+search\+::search\+\_\+structures(), and mod\+\_\+search\+::sort\+\_\+energy().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!potential@{potential}}
-\index{potential@{potential}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{potential}{potential}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 10 ) mod\+\_\+input\+\_\+read\+::potential = char(0)}\hypertarget{namespacemod__input__read_af992e8c0badb490ee9f1d75568de6372}{}\label{namespacemod__input__read_af992e8c0badb490ee9f1d75568de6372}
-
-
-Definition at line 28 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), mod\+\_\+resume\+::ending(), read\+\_\+input(), mod\+\_\+loops\+::recalc(), and themis().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!rate2@{rate2}}
-\index{rate2@{rate2}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{rate2}{rate2}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+input\+\_\+read\+::rate2}\hypertarget{namespacemod__input__read_a55525057629121499c3d3fb26c7bf282}{}\label{namespacemod__input__read_a55525057629121499c3d3fb26c7bf282}
-
-
-Definition at line 22 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by themis().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!rcut@{rcut}}
-\index{rcut@{rcut}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{rcut}{rcut}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+input\+\_\+read\+::rcut = 0.\+0}\hypertarget{namespacemod__input__read_ad16f7026be229b0b283174a293fe570e}{}\label{namespacemod__input__read_ad16f7026be229b0b283174a293fe570e}
-
-
-Definition at line 32 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!rcut\+\_\+sqr@{rcut\+\_\+sqr}}
-\index{rcut\+\_\+sqr@{rcut\+\_\+sqr}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{rcut\+\_\+sqr}{rcut_sqr}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+input\+\_\+read\+::rcut\+\_\+sqr = 0.\+0}\hypertarget{namespacemod__input__read_a4c4705d35961d02b4275f73e44077819}{}\label{namespacemod__input__read_a4c4705d35961d02b4275f73e44077819}
-
-
-Definition at line 33 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by mod\+\_\+pot\+\_\+ljc\+::calc\+\_\+ljc\+\_\+energy(), mod\+\_\+pot\+\_\+none\+::check\+\_\+conf(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!ref1@{ref1}}
-\index{ref1@{ref1}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{ref1}{ref1}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+input\+\_\+read\+::ref1 = 0}\hypertarget{namespacemod__input__read_a1fffe01a8c7b8966aa213553649f0cce}{}\label{namespacemod__input__read_a1fffe01a8c7b8966aa213553649f0cce}
-
-
-Definition at line 38 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+read\+\_\+grids\+::center\+\_\+translation\+\_\+grid(), read\+\_\+input(), and mod\+\_\+search\+::search\+\_\+structures().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!ref2@{ref2}}
-\index{ref2@{ref2}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{ref2}{ref2}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+input\+\_\+read\+::ref2 = 0}\hypertarget{namespacemod__input__read_afe9324d2c3dd5b8f8d1afb900599f1e3}{}\label{namespacemod__input__read_afe9324d2c3dd5b8f8d1afb900599f1e3}
-
-
-Definition at line 39 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by mod\+\_\+loops\+::calc(), read\+\_\+input(), and mod\+\_\+search\+::search\+\_\+structures().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!rot\+\_\+factor@{rot\+\_\+factor}}
-\index{rot\+\_\+factor@{rot\+\_\+factor}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{rot\+\_\+factor}{rot_factor}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+input\+\_\+read\+::rot\+\_\+factor = 0}\hypertarget{namespacemod__input__read_a6fde65123947b8b3eaf114c2d96caaad}{}\label{namespacemod__input__read_a6fde65123947b8b3eaf114c2d96caaad}
-
-
-Definition at line 36 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by mod\+\_\+read\+\_\+grids\+::build\+\_\+rotation\+\_\+sphere(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!start@{start}}
-\index{start@{start}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{start}{start}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+input\+\_\+read\+::start}\hypertarget{namespacemod__input__read_a1fe425b57ec0b776789d69284fa29955}{}\label{namespacemod__input__read_a1fe425b57ec0b776789d69284fa29955}
-
-
-Definition at line 22 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by themis().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!temp@{temp}}
-\index{temp@{temp}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{temp}{temp}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+input\+\_\+read\+::temp = 0.\+0}\hypertarget{namespacemod__input__read_a41af319bbc9c366863fee70f87f590a0}{}\label{namespacemod__input__read_a41af319bbc9c366863fee70f87f590a0}
-
-
-Definition at line 31 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+loops\+::calc\+\_\+ztotal(), read\+\_\+input(), and mod\+\_\+loops\+::recalc().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!timet@{timet}}
-\index{timet@{timet}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{timet}{timet}}]{\setlength{\rightskip}{0pt plus 5cm}real( kind = dp ) mod\+\_\+input\+\_\+read\+::timet}\hypertarget{namespacemod__input__read_a5ccab548b1c0f51bdd20cc9251e4dedb}{}\label{namespacemod__input__read_a5ccab548b1c0f51bdd20cc9251e4dedb}
-
-
-Definition at line 21 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by mod\+\_\+resume\+::ending(), and themis().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!trans\+\_\+factor@{trans\+\_\+factor}}
-\index{trans\+\_\+factor@{trans\+\_\+factor}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{trans\+\_\+factor}{trans_factor}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+input\+\_\+read\+::trans\+\_\+factor = 0}\hypertarget{namespacemod__input__read_a0c42ae57c5b1cbe6dbbb2cf1691525ce}{}\label{namespacemod__input__read_a0c42ae57c5b1cbe6dbbb2cf1691525ce}
-
-
-Definition at line 35 of file mod\+\_\+input\+\_\+read.\+f90.
-
-
-
-Referenced by mod\+\_\+read\+\_\+grids\+::build\+\_\+translation\+\_\+sphere(), and read\+\_\+input().
-
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!vector1@{vector1}}
-\index{vector1@{vector1}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{vector1}{vector1}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+input\+\_\+read\+::vector1 = 0}\hypertarget{namespacemod__input__read_a9b7f8f60997dd0fb2edfa04aef14fa29}{}\label{namespacemod__input__read_a9b7f8f60997dd0fb2edfa04aef14fa29}
 
 
 Definition at line 40 of file mod\+\_\+input\+\_\+read.\+f90.
 
 
 
-Referenced by mod\+\_\+loops\+::calc(), read\+\_\+input(), and mod\+\_\+search\+::search\+\_\+structures().
+Referenced by mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::calc\+\_\+ljc\+\_\+pair\+\_\+energy(), and read\+\_\+input\+\_\+file().
 
-\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!vector2@{vector2}}
-\index{vector2@{vector2}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{vector2}{vector2}}]{\setlength{\rightskip}{0pt plus 5cm}integer mod\+\_\+input\+\_\+read\+::vector2 = 0}\hypertarget{namespacemod__input__read_afe62d1fbe309ed810c66abd20164a320}{}\label{namespacemod__input__read_afe62d1fbe309ed810c66abd20164a320}
+\mbox{\Hypertarget{namespacemod__input__read_a76985d277087bc52f1b81814fe4c50bc}\label{namespacemod__input__read_a76985d277087bc52f1b81814fe4c50bc}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!gyr\+\_\+factor@{gyr\+\_\+factor}}
+\index{gyr\+\_\+factor@{gyr\+\_\+factor}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{gyr\+\_\+factor}{gyr\_factor}}
+{\footnotesize\ttfamily integer, public mod\+\_\+input\+\_\+read\+::gyr\+\_\+factor = 0}
+
+
+
+Definition at line 45 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+loops\+::calc\+\_\+ztotal(), mod\+\_\+read\+\_\+grids\+::check\+\_\+moves(), mod\+\_\+search\+::count\+\_\+structures(), read\+\_\+input\+\_\+file(), mod\+\_\+loops\+::recalc(), and mod\+\_\+read\+\_\+molecules\+::rotate\+\_\+molecule().
+
+\mbox{\Hypertarget{namespacemod__input__read_a59e3573d7d32b72bd699ac1708e70908}\label{namespacemod__input__read_a59e3573d7d32b72bd699ac1708e70908}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!inter\+\_\+energy@{inter\+\_\+energy}}
+\index{inter\+\_\+energy@{inter\+\_\+energy}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{inter\+\_\+energy}{inter\_energy}}
+{\footnotesize\ttfamily real( kind = dp ), dimension(\+:,\+:,\+:), allocatable, public mod\+\_\+input\+\_\+read\+::inter\+\_\+energy}
+
+
+
+Definition at line 71 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+pot\+\_\+bhc\+::calc\+\_\+bhc\+\_\+energy(), mod\+\_\+pot\+\_\+ljc\+::calc\+\_\+ljc\+\_\+energy(), mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::calc\+\_\+ljc\+\_\+pair\+\_\+energy(), mod\+\_\+read\+\_\+molecules\+::calc\+\_\+none\+\_\+energy(), mod\+\_\+loops\+::calc\+\_\+ztotal(), mod\+\_\+search\+::count\+\_\+structures(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), mod\+\_\+loops\+::recalc(), and mod\+\_\+search\+::sort\+\_\+energy().
+
+\mbox{\Hypertarget{namespacemod__input__read_a3f3cf0bf8b5ebc1886d493eda84eecf4}\label{namespacemod__input__read_a3f3cf0bf8b5ebc1886d493eda84eecf4}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!max\+\_\+gyr@{max\+\_\+gyr}}
+\index{max\+\_\+gyr@{max\+\_\+gyr}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{max\+\_\+gyr}{max\_gyr}}
+{\footnotesize\ttfamily real( kind = dp ), public mod\+\_\+input\+\_\+read\+::max\+\_\+gyr = 0.\+0}
+
 
 
 Definition at line 41 of file mod\+\_\+input\+\_\+read.\+f90.
 
 
 
-Referenced by mod\+\_\+loops\+::calc(), read\+\_\+input(), and mod\+\_\+search\+::search\+\_\+structures().
+Referenced by mod\+\_\+read\+\_\+grids\+::check\+\_\+moves(), read\+\_\+input\+\_\+file(), and mod\+\_\+read\+\_\+molecules\+::rotate\+\_\+molecule().
 
+\mbox{\Hypertarget{namespacemod__input__read_a8aa83854894f2e947a4e1015697433d0}\label{namespacemod__input__read_a8aa83854894f2e947a4e1015697433d0}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!nstruc@{nstruc}}
+\index{nstruc@{nstruc}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{nstruc}{nstruc}}
+{\footnotesize\ttfamily integer, public mod\+\_\+input\+\_\+read\+::nstruc = 0}
+
+
+
+Definition at line 50 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by read\+\_\+input\+\_\+file(), mod\+\_\+search\+::search\+\_\+structures(), and mod\+\_\+search\+::sort\+\_\+energy().
+
+\mbox{\Hypertarget{namespacemod__input__read_aaf9a85c22da4f3ae7bbcc9ba72d783dd}\label{namespacemod__input__read_aaf9a85c22da4f3ae7bbcc9ba72d783dd}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!potential@{potential}}
+\index{potential@{potential}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{potential}{potential}}
+{\footnotesize\ttfamily character( len = 10 ), public mod\+\_\+input\+\_\+read\+::potential = char(0)}
+
+
+
+Definition at line 33 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+deallocate\+\_\+all\+::deallocate\+\_\+arrays(), mod\+\_\+resume\+::ending(), read\+\_\+input\+\_\+file(), mod\+\_\+loops\+::recalc(), and themis().
+
+\mbox{\Hypertarget{namespacemod__input__read_ad2ddb7a8a7af94da8a7d12c6e3ab9899}\label{namespacemod__input__read_ad2ddb7a8a7af94da8a7d12c6e3ab9899}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!rcut\+\_\+sqr@{rcut\+\_\+sqr}}
+\index{rcut\+\_\+sqr@{rcut\+\_\+sqr}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{rcut\+\_\+sqr}{rcut\_sqr}}
+{\footnotesize\ttfamily real( kind = dp ), public mod\+\_\+input\+\_\+read\+::rcut\+\_\+sqr = 0.\+0}
+
+
+
+Definition at line 38 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by mod\+\_\+pot\+\_\+bhc\+::calc\+\_\+bhc\+\_\+energy(), mod\+\_\+pot\+\_\+ljc\+::calc\+\_\+ljc\+\_\+energy(), mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::calc\+\_\+ljc\+\_\+pair\+\_\+energy(), and read\+\_\+input\+\_\+file().
+
+\mbox{\Hypertarget{namespacemod__input__read_ae009fc7ba8243327aec0bed57f18b515}\label{namespacemod__input__read_ae009fc7ba8243327aec0bed57f18b515}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!ref1@{ref1}}
+\index{ref1@{ref1}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{ref1}{ref1}}
+{\footnotesize\ttfamily integer, public mod\+\_\+input\+\_\+read\+::ref1 = 0}
+
+
+
+Definition at line 46 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by read\+\_\+input\+\_\+file(), mod\+\_\+search\+::search\+\_\+structures(), and themis().
+
+\mbox{\Hypertarget{namespacemod__input__read_a72ae0812ca16c5cbb7eb3cbe12bafb58}\label{namespacemod__input__read_a72ae0812ca16c5cbb7eb3cbe12bafb58}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!ref2@{ref2}}
+\index{ref2@{ref2}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{ref2}{ref2}}
+{\footnotesize\ttfamily integer, public mod\+\_\+input\+\_\+read\+::ref2 = 0}
+
+
+
+Definition at line 47 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by mod\+\_\+loops\+::calc(), read\+\_\+input\+\_\+file(), mod\+\_\+search\+::search\+\_\+structures(), and themis().
+
+\mbox{\Hypertarget{namespacemod__input__read_ab81a502be00c6796c9474d728db96041}\label{namespacemod__input__read_ab81a502be00c6796c9474d728db96041}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!reo\+\_\+factor@{reo\+\_\+factor}}
+\index{reo\+\_\+factor@{reo\+\_\+factor}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{reo\+\_\+factor}{reo\_factor}}
+{\footnotesize\ttfamily integer, public mod\+\_\+input\+\_\+read\+::reo\+\_\+factor = 0}
+
+
+
+Definition at line 44 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by read\+\_\+input\+\_\+file(), and themis().
+
+\mbox{\Hypertarget{namespacemod__input__read_a55be21acb2dc4800c8d3cecf28e4166f}\label{namespacemod__input__read_a55be21acb2dc4800c8d3cecf28e4166f}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!scale\+\_\+factor@{scale\+\_\+factor}}
+\index{scale\+\_\+factor@{scale\+\_\+factor}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{scale\+\_\+factor}{scale\_factor}}
+{\footnotesize\ttfamily integer, public mod\+\_\+input\+\_\+read\+::scale\+\_\+factor = 0}
+
+
+
+Definition at line 42 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by mod\+\_\+pot\+\_\+bhc\+::calc\+\_\+bhc\+\_\+energy(), mod\+\_\+pot\+\_\+ljc\+::calc\+\_\+ljc\+\_\+energy(), mod\+\_\+pot\+\_\+ljc\+\_\+pair\+::calc\+\_\+ljc\+\_\+pair\+\_\+energy(), read\+\_\+input\+\_\+file(), and mod\+\_\+loops\+::recalc().
+
+\mbox{\Hypertarget{namespacemod__input__read_a584082766fe740d0c5f3975d3d44426b}\label{namespacemod__input__read_a584082766fe740d0c5f3975d3d44426b}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!temp@{temp}}
+\index{temp@{temp}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{temp}{temp}}
+{\footnotesize\ttfamily real( kind = dp ), public mod\+\_\+input\+\_\+read\+::temp = 0.\+0}
+
+
+
+Definition at line 36 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by mod\+\_\+loops\+::calc(), mod\+\_\+loops\+::calc\+\_\+ztotal(), read\+\_\+input\+\_\+file(), and mod\+\_\+loops\+::recalc().
+
+\mbox{\Hypertarget{namespacemod__input__read_ae958873dff0867f0aa04dbf6cd8a1166}\label{namespacemod__input__read_ae958873dff0867f0aa04dbf6cd8a1166}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!trans\+\_\+factor@{trans\+\_\+factor}}
+\index{trans\+\_\+factor@{trans\+\_\+factor}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{trans\+\_\+factor}{trans\_factor}}
+{\footnotesize\ttfamily integer, public mod\+\_\+input\+\_\+read\+::trans\+\_\+factor = 0}
+
+
+
+Definition at line 43 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by read\+\_\+input\+\_\+file(), and themis().
+
+\mbox{\Hypertarget{namespacemod__input__read_a6e68357b53efca593488929b4554838d}\label{namespacemod__input__read_a6e68357b53efca593488929b4554838d}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!vector1@{vector1}}
+\index{vector1@{vector1}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{vector1}{vector1}}
+{\footnotesize\ttfamily integer, public mod\+\_\+input\+\_\+read\+::vector1 = 0}
+
+
+
+Definition at line 48 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by read\+\_\+input\+\_\+file(), mod\+\_\+search\+::search\+\_\+structures(), and themis().
+
+\mbox{\Hypertarget{namespacemod__input__read_a4f1ca96e94c5298b480fa8d43bb1b915}\label{namespacemod__input__read_a4f1ca96e94c5298b480fa8d43bb1b915}} 
+\index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!vector2@{vector2}}
+\index{vector2@{vector2}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
+\subsubsection{\texorpdfstring{vector2}{vector2}}
+{\footnotesize\ttfamily integer, public mod\+\_\+input\+\_\+read\+::vector2 = 0}
+
+
+
+Definition at line 49 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by read\+\_\+input\+\_\+file(), mod\+\_\+search\+::search\+\_\+structures(), and themis().
+
+\mbox{\Hypertarget{namespacemod__input__read_a02f99bb5470feaf35ab2fc228c797f64}\label{namespacemod__input__read_a02f99bb5470feaf35ab2fc228c797f64}} 
 \index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!writeframe@{writeframe}}
 \index{writeframe@{writeframe}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{writeframe}{writeframe}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 10 ) mod\+\_\+input\+\_\+read\+::writeframe = char(0)}\hypertarget{namespacemod__input__read_a7327a05a4121e6b530adab45fdaa5d19}{}\label{namespacemod__input__read_a7327a05a4121e6b530adab45fdaa5d19}
-
-
-Definition at line 29 of file mod\+\_\+input\+\_\+read.\+f90.
+\subsubsection{\texorpdfstring{writeframe}{writeframe}}
+{\footnotesize\ttfamily character( len = 10 ), public mod\+\_\+input\+\_\+read\+::writeframe = char(0)}
 
 
 
-Referenced by mod\+\_\+loops\+::calc(), check\+\_\+keys(), and read\+\_\+input().
+Definition at line 34 of file mod\+\_\+input\+\_\+read.\+f90.
 
+
+
+Referenced by mod\+\_\+loops\+::calc(), check\+\_\+keys(), and read\+\_\+input\+\_\+file().
+
+\mbox{\Hypertarget{namespacemod__input__read_af757b04e60563ace187ed465be839553}\label{namespacemod__input__read_af757b04e60563ace187ed465be839553}} 
 \index{mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}!wrtxtc@{wrtxtc}}
 \index{wrtxtc@{wrtxtc}!mod\+\_\+input\+\_\+read@{mod\+\_\+input\+\_\+read}}
-\subsubsection[{\texorpdfstring{wrtxtc}{wrtxtc}}]{\setlength{\rightskip}{0pt plus 5cm}character( len = 5 ) mod\+\_\+input\+\_\+read\+::wrtxtc = char(0)}\hypertarget{namespacemod__input__read_a27a1649717d0aa5463782f51c29102f4}{}\label{namespacemod__input__read_a27a1649717d0aa5463782f51c29102f4}
-
-
-Definition at line 30 of file mod\+\_\+input\+\_\+read.\+f90.
+\subsubsection{\texorpdfstring{wrtxtc}{wrtxtc}}
+{\footnotesize\ttfamily character( len = 5 ), public mod\+\_\+input\+\_\+read\+::wrtxtc = char(0)}
 
 
 
-Referenced by mod\+\_\+loops\+::calc(), and read\+\_\+input().
+Definition at line 35 of file mod\+\_\+input\+\_\+read.\+f90.
+
+
+
+Referenced by mod\+\_\+loops\+::calc(), and read\+\_\+input\+\_\+file().
 
