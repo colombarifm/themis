@@ -305,7 +305,7 @@ module MOD_LOOPS
 
       enddo 
 
-      write(*,'(T50,A)') "DONE"
+      write(*,'(T76,A)') "DONE"
 
       return
     end subroutine CALC
@@ -554,7 +554,7 @@ module MOD_LOOPS
 
       close(20)
 
-      write(*,'(T44,A)') "DONE"
+      write(*,'(T70,A)') "DONE"
 
       return
     end subroutine CALC_ZTOTAL

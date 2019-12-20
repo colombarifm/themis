@@ -252,9 +252,9 @@ module MOD_SEARCH
 
       close(file_unit)
 
-      write(*,'(T44,A)') "DONE"
+      write(*,'(T70,A)') "DONE"
       write(*,*)
-      write(*,'(T3,A)') repeat('-',74)
+      write(*,'(T3,A)') dashline
 
       return
     end subroutine SEARCH_STRUCTURES

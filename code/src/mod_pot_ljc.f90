@@ -117,8 +117,8 @@ module MOD_POT_LJC
       write(*,'( /, T3, A )')                             dashline
       write(*,'( T5, "Checking molecule ", i1, " ..." )') mol
       write(*,'( T3, A )')                                dashline
-      write(*,'( /, T5, "Number of atoms", T65, i10   )') numat
-      write(*,'( /, T5, "Total charge", T65, f10.5, / )') sum(this % ljc_atoms % q)
+      write(*,'( /, T5, "Number of atoms", T91, i10   )') numat
+      write(*,'( /, T5, "Total charge", T91, f10.5, / )') sum(this % ljc_atoms % q)
 
       if ( ANY( this % ljc_atoms % sig < 0.0_DP ) ) then
 
@@ -138,7 +138,7 @@ module MOD_POT_LJC
 
       else
 
-        write(*,'( T5, "LJ parameters:", T73, "OK" )') 
+        write(*,'( T5, "LJ parameters:", T99, "OK" )') 
 
       endif
 

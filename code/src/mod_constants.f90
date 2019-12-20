@@ -30,7 +30,6 @@ module mod_constants
   character( len = 12 ), parameter     :: float_alphabet = '.-1234567890'  !               allowed character for floats
   character( len = 66 ), parameter     :: char_alphabet  = &
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._-1234567890 '   !              allowed character for strings
-  character( len = 74 ), parameter     :: dashline = repeat('-',74)        !                            just a dashline
-  character( len = 100 ), parameter     :: dashline1 = repeat('-',100)       !                            just a dashline
+  character( len = 100 ), parameter     :: dashline = repeat('-',100)        !                            just a dashline
 
 end module mod_constants

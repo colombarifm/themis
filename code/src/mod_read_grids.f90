@@ -368,12 +368,12 @@ module MOD_READ_GRIDS
       write(*,'(/, T3, A)') dashline      
       write(*,'(T5, "Phase space discretization"                     )') 
       write(*,'(T3, A)') dashline      
-      write(*,'(/, T5, "Translation grid points:", T65, A)') trim(var_nt)
-      write(*,'(/, T5, "Reorientation grid points:", T65, A)') trim(var_nr)
-      write(*,'(/, T5, "Gyration points around mol2 axis (from 0 to ", A, " degree):", T65,  A)') &
+      write(*,'(/, T5, "Translation grid points:", T91, A)') trim(var_nt)
+      write(*,'(/, T5, "Reorientation grid points:", T91, A)') trim(var_nr)
+      write(*,'(/, T5, "Gyration points around mol2 axis (from 0 to ", A, " degree):", T91,  A)') &
                & trim(var_max_gyr), trim(var_ng)
-      write(*,'(/, T9, "Total number of rotations:", T65, i10)') rot_total
-      write(*,'(/, T5, "TOTAL NUMBER OF CONFIGURATIONS:", T65, i10 )') ntotal
+      write(*,'(/, T9, "Total number of rotations:", T91, i10)') rot_total
+      write(*,'(/, T5, "TOTAL NUMBER OF CONFIGURATIONS:", T91, i10 )') ntotal
       write(*,'(/, T3, A)') dashline
 
       return

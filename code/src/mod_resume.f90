@@ -44,11 +44,11 @@ module MOD_RESUME
 
         case( "shell" )
 
-          write(*,'(/, T5, A, T67, f6.2, A)') "Shell mapping done for r: ", rad, " A" 
+          write(*,'(/, T5, A, T93, f6.2, A)') "Shell mapping done for r: ", rad, " A" 
 
         case ( "user" )
 
-          write(*,'(/, T5, A, T67, f6.2, A)') "Grid mapping done."
+          write(*,'(/, T5, A, T93, f6.2, A)') "Grid mapping done."
 
         case default
 
@@ -58,7 +58,7 @@ module MOD_RESUME
 
       if ( irun == "run" ) then
 
-        write(*,'(/,T5,A,T66,i9,/)') "Skipped configurations:", count(atom_overlap)
+        write(*,'(/,T5,A,T92,i9,/)') "Skipped configurations:", count(atom_overlap)
 
       else
 
@@ -68,18 +68,18 @@ module MOD_RESUME
 
       if ( potential /= "none" ) then
 
-        write(*,'(T5,a34,T62,es13.5e3,/)') "Lowest energy structure (kJ/mol): ", min_ener
-        write(*,'(T5,a39,T68, i7,/)') "Number of structures within 0.5 * kBT: ", n
+        write(*,'(T5,a34,T88,es13.5e3,/)') "Lowest energy structure (kJ/mol): ", min_ener
+        write(*,'(T5,a39,T94, i7,/)') "Number of structures within 0.5 * kBT: ", n
 
-        write(*,'(T5,a30,T70,i5,/)') "Lowest free energy grid point: ", minloc(A)
-        write(*,'(T9,a28,T62,es13.5E3,/)') "Free energy value (kJ/mol): ", minval(A)
-        write(*,'(T5,a31,T70,i5,/)') "Highest free energy grid point: ", maxloc(A)
-        write(*,'(T9,a28,T62,es13.5E3,/)') "Free energy value (kJ/mol): ", maxval(A)
+        write(*,'(T5,a30,T96,i5,/)') "Lowest free energy grid point: ", minloc(A)
+        write(*,'(T9,a28,T88,es13.5E3,/)') "Free energy value (kJ/mol): ", minval(A)
+        write(*,'(T5,a31,T96,i5,/)') "Highest free energy grid point: ", maxloc(A)
+        write(*,'(T9,a28,T88,es13.5E3,/)') "Free energy value (kJ/mol): ", maxval(A)
 
       endif
 
       write(*,'(T3, A,/)') dashline
-      write(*,'(T5,a20,T57,f10.2,a8,/)') "Total running time: ", timet, " seconds."
+      write(*,'(T5,a20,T83,f10.2,a8,/)') "Total running time: ", timet, " seconds."
       write(*,'(T3, A,/)') dashline
 
       return

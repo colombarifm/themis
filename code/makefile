@@ -91,16 +91,10 @@ mod_error_handling.o: $(SRCDIR)/mod_error_handling.f90
 	@printf "   **Compiling $@\n"       	
 
 mod_constants.o: $(SRCDIR)/mod_constants.f90
-	@printf "\n"
-	@printf "  CREATING OBJECTS...\n"
-	@printf "\n"
 	@$(FC) -c $(SRCDIR)/mod_constants.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"
 
 mod_info.o: $(SRCDIR)/mod_info.f90
-	@printf "\n"
-	@printf "  CREATING OBJECTS...\n"
-	@printf "\n"
 	@$(FC) -c $(SRCDIR)/mod_info.f90 $(FFLAGS)
 	@printf "   **Compiling $@\n"       	
 
