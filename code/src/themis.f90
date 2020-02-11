@@ -1,39 +1,52 @@
-!------------------------------------------------------------------------------
-! THEMIS: A code to study intermolecular recognition via direct partition      
-!         function estimation                                                  
-!                                                                                   
-! Copyright (C) 2017 Felippe M. Colombari                                      
-!------------------------------------------------------------------------------
-!> @brief Main module of THEMIS 
-!> @author Felippe M. Colombari 
-!> - Laboratório de Química Teórica, LQT -- UFSCar
-!> @date - Jun, 2017
-!> - initial test version
-!> @date - Oct, 2017 
+!---------------------------------------------------------------------------------------------------
+! THEMIS: A code to study intermolecular recognition via direct partition function estimation                                                  
+!---------------------------------------------------------------------------------------------------
+!   Copyright 2020 Felippe M. Colombari
+!
+!   This program is free software: you can redistribute it and/or modify it under the terms of the 
+!   GNU General Public License as published by the Free Software Foundation, either version 3 of the 
+!   License, or (at your option) any later version.
+!
+!   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+!   without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+!   the GNU General Public License for more details.
+!
+!   You should have received a copy of the GNU General Public License along with this program. If 
+!   not, see <https://www.gnu.org/licenses/>.
+!---------------------------------------------------------------------------------------------------
+!> @file   themis.f90
+!> @author Felippe M. Colombari
+!>         Laboratory of Theoretical Chemistry - LQT
+!>         Federal University of São Carlos
+!>         <http://www.lqt.dq.ufscar.br>
+!> @email  colombarifm@hotmail.com
+!> @brief  Main module of THEMIS 
+!> @date - Jun, 2017                                                           
+!> - initial test version (dimer.x)
+!> @date - Oct, 2017
 !> - modular version
-!------------------------------------------------------------------------------
+!---------------------------------------------------------------------------------------------------
 
 program themis
-  use mod_info           , only: display_header
-  use mod_constants      , only: DP, dashline
-  use mod_cmd_line       , only: Parse_arguments, irun, grid_type, rad, grid_transl
-  use mod_input_read     , only: Read_input_file, ref1, vector1, ref2, vector2, reo_factor, trans_factor, potential
-  use MOD_READ_MOLECULES , only: mol1, mol2
-  use MOD_READ_GRIDS     , only: grid_trans, grid_reo
-  use MOD_LOOPS          , only: Calc, Recalc, Calc_Ztotal
-  use MOD_RESUME         , only: Ending, Sort_output
-  use MOD_VMD            , only: Write_VMD_files
-  use MOD_SEARCH         , only: Count_structures, Sort_energy, Search_structures
-  use MOD_DEALLOCATE_ALL , only: Deallocate_arrays
+  use mod_info              , only : Display_header, Display_date_time
+  use mod_constants         , only : DP, dashline
+  use mod_cmd_line          , only : Parse_arguments, irun, grid_type, rad, grid_transl
+  use mod_input_read        , only : Read_input_file, ref1, vector1, ref2, vector2, reo_factor, trans_factor, potential
+  use mod_read_molecules    , only : mol1, mol2
+  use mod_grids             , only : grid_trans, grid_reo
+  use mod_loops             , only : Run_loops, Rerun_loops, Calculate_ztotal
+  use mod_resume            , only : Ending, Sort_output
+  use mod_write_vmd         , only : Write_VMD_files
+  use mod_search_structures , only : Count_structures, Sort_energy, Search_structures
+  use mod_deallocate_all    , only : Deallocate_arrays
 
   implicit none
   
-  character( len = 16 ), parameter :: version = 'beta'
-  integer,dimension(8)             :: values
   real( kind = DP )                :: timet
   integer                          :: finish, start, rate2
   
   call display_header()
+  call Display_date_time( "BEGAN AT: " )
   call System_clock( start, rate2 )
 
   call Parse_arguments
@@ -70,29 +83,29 @@ program themis
       call mol2 % Align_molecule( vector2, ref2 )
 
       call grid_reo % Build_reorientation_sphere( reo_factor )
-      call Calc
+      call Run_loops
 
       SELECT CASE ( potential )
 
         CASE ( "lj-coul", "bh-coul", "ljc_pair" )
 
-          call Calc_Ztotal
+          call Calculate_ztotal
 
           call System_clock( finish )
   
           timet = real(finish - start) / real(rate2)
 
-          call WRITE_VMD_FILES
-          call COUNT_STRUCTURES
-          call SORT_ENERGY
-          call SEARCH_STRUCTURES
-          call ENDING( timet )
-          call SORT_OUTPUT
-          call DEALLOCATE_ARRAYS
+          call Write_vmd_files
+          call Count_structures
+          call Sort_energy
+          call Search_structures
+          call Ending( timet )
+          call Sort_output
+          call Deallocate_arrays
 
         CASE ( "none" )
 
-          call ENDING( timet )
+          call Ending( timet )
 
       end SELECT
 
@@ -123,29 +136,24 @@ program themis
       call mol2 % Align_molecule( vector2, ref2 )
 
       call grid_reo % Build_reorientation_sphere( reo_factor )
-      call RECALC
-      call CALC_ZTOTAL
+      call Rerun_loops
+      call Calculate_ztotal
 
       call System_clock( finish )
   
       timet = real(finish - start) / real(rate2)
 
-      call WRITE_VMD_FILES
-      call SORT_ENERGY
-      call SEARCH_STRUCTURES
-      call ENDING( timet )
-      call SORT_OUTPUT
-      call DEALLOCATE_ARRAYS
+      call Write_vmd_files
+      call Sort_energy
+      call Search_structures
+      call Ending( timet )
+      call Sort_output
+      call Deallocate_arrays
 
   end SELECT
 
-  call Date_and_time( VALUES = values )
+  call Display_date_time( "FINISHED AT: " )
 
-  write(*,'(T5, "FINISHED AT: ", i2.2, "/", i2.2, "/", i4, " - ", &
-                                &i2.2, ":", i2.2, ":", i2.2, /)')    &
-                                &values(3), values(2), values(1), &
-                                &values(5), values(6), values(7)
-  
-  write(*,'(T3, A)') dashline
+  write(*,'(/, T3, A)') dashline
 
 end program

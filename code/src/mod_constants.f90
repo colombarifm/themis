@@ -1,15 +1,29 @@
-!------------------------------------------------------------------------------
-! THEMIS: A code to study intermolecular recognition via direct partition      
-!         function estimation                                                  
-!                                                                                   
-! Copyright (C) 2017 Felippe M. Colombari                                      
-!------------------------------------------------------------------------------
-!> @brief This module defines a set constants.
-!> @author Felippe M. Colombari                                                
-!> - Laboratório de Química Teórica, LQT -- UFSCar                             
+!---------------------------------------------------------------------------------------------------
+! THEMIS: A code to study intermolecular recognition via direct partition function estimation                                                  
+!---------------------------------------------------------------------------------------------------
+!   Copyright 2020 Felippe M. Colombari
+!
+!   This program is free software: you can redistribute it and/or modify it under the terms of the 
+!   GNU General Public License as published by the Free Software Foundation, either version 3 of the 
+!   License, or (at your option) any later version.
+!
+!   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+!   without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See 
+!   the GNU General Public License for more details.
+!
+!   You should have received a copy of the GNU General Public License along with this program. If 
+!   not, see <https://www.gnu.org/licenses/>.
+!---------------------------------------------------------------------------------------------------
+!> @file   mod_constants.f90
+!> @author Felippe M. Colombari
+!>         Laboratory of Theoretical Chemistry - LQT
+!>         Federal University of São Carlos
+!>         <http://www.lqt.dq.ufscar.br>
+!> @email  colombarifm@hotmail.com
+!> @brief  Defines a set constants.
 !> @date - Dec, 2017                                                           
-!> - module created                                                
-!------------------------------------------------------------------------------
+!> - independent module created                                                
+!---------------------------------------------------------------------------------------------------
 
 module mod_constants
 
@@ -20,16 +34,16 @@ module mod_constants
   
   real( kind = DP ), public, parameter :: PI      = 3.14159265358979_DP    !         PI constant with 14 decimal places
   real( kind = DP ), public, parameter :: DEG2RAD = 180.0_DP / PI          !                         degrees to radians
-  real( kind = DP ), public, parameter :: kB      = 0.0083144621_DP        !             boltzmann constant in kJ/mol/K
+  real( kind = DP ), public, parameter :: KB      = 0.0083144621_DP        !             boltzmann constant in kJ/mol/K
   real( kind = DP ), public, parameter :: CCON    = 1389.354578_DP         ! coulombic energy to kJ/mol in kJ.A/mol/e^2
   real( kind = DP ), public, parameter :: FPZERO  = tiny(1.0_DP)           !              define machine-precision ZERO
   real( kind = DP ), public, parameter :: FPINF   = huge(1.0_DP)           !          define machine-precision INFINITY
-  real( kind = DP ), public, parameter :: ms      = 0.001_DP               !                            convert ms to s
+  real( kind = DP ), public, parameter :: MS      = 0.001_DP               !                            convert ms to s
   
-  character( len = 11 ), parameter     :: int_alphabet   = '1234567890'    !             allowed character for integers
-  character( len = 12 ), parameter     :: float_alphabet = '.-1234567890'  !               allowed character for floats
-  character( len = 66 ), parameter     :: char_alphabet  = &
+  character( len = 11 ), public, parameter   :: INT_ALPHABET   = '1234567890'    !       allowed character for integers
+  character( len = 12 ), public, parameter   :: FLOAT_ALPHABET = '.-1234567890'  !         allowed character for floats
+  character( len = 66 ), public, parameter   :: CHAR_ALPHABET  = &
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._-1234567890 '   !              allowed character for strings
-  character( len = 100 ), parameter     :: dashline = repeat('-',100)        !                            just a dashline
+  character( len = 100 ), public, parameter  :: DASHLINE = repeat('-',100)      !                       just a dashline
 
 end module mod_constants

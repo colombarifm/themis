@@ -1,0 +1,21 @@
+
+about themis:
+
+Themis is a statistichal mechanics software designed to obtain the association
+thermodynamics of two structures (ions, molecules, crystals, nanoparticles and
+etc...). It generates a configurational partition function by systematically
+sampling the whole phase space using discrete grids to perform translations and
+rotations of one structure around another. Interaction energy for each
+microstate can be obtained by one of the potentials implemented or by using
+external softwares.
+
+Themis is written in Fortran 2003 and is freely available under GPL license.
+Since it was written in modules, new potential functions and analysis routines 
+can be easily implemented.
+
+
+cite:
+
+fadaray discussions
+
+ionic liquids - kalil

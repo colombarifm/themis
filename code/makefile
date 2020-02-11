@@ -31,15 +31,15 @@ OBJS = mod_error_handling.o \
 	mod_input_read.o \
 	mod_read_molecules.o \
 	mod_spherical_grids.o \
-	mod_read_grids.o \
+	mod_grids.o \
 	mod_pot_ljc.o \
 	mod_pot_bhc.o \
 	mod_pot_ljc_pair.o \
 	xdr.o \
 	libxdrfile.a \
 	mod_loops.o \
-	mod_vmd.o \
-	mod_search.o \
+	mod_write_vmd.o \
+	mod_search_structures.o \
 	mod_resume.o \
 	mod_deallocate_all.o
 
@@ -53,14 +53,14 @@ MODS =	mod_error_handling.mod \
 	mod_input_read.mod \
 	mod_read_molecules.mod \
 	mod_spherical_grids.mod \
-	mod_read_grids.mod \
+	mod_grids.mod \
 	mod_pot_ljc.mod \
 	mod_pot_bhc.mod \
 	mod_pot_ljc_pair.mod \
 	xdr.mod \
 	mod_loops.mod \
-	mod_vmd.mod \
-	mod_search.mod \
+	mod_write_vmd.mod \
+	mod_search_structures.mod \
 	mod_resume.mod \
 	mod_deallocate_all.mod
 
@@ -88,7 +88,7 @@ mod_error_handling.o: $(SRCDIR)/mod_error_handling.f90
 	@printf "  CREATING OBJECTS...\n"
 	@printf "\n"
 	@$(FC) -c $(SRCDIR)/mod_error_handling.f90 $(FFLAGS)
-	@printf "   **Compiling $@\n"       	
+	@printf "   ** Compiling $@\n"       	
 
 mod_constants.o: $(SRCDIR)/mod_constants.f90
 	@$(FC) -c $(SRCDIR)/mod_constants.f90 $(FFLAGS)
@@ -96,7 +96,7 @@ mod_constants.o: $(SRCDIR)/mod_constants.f90
 
 mod_info.o: $(SRCDIR)/mod_info.f90
 	@$(FC) -c $(SRCDIR)/mod_info.f90 $(FFLAGS)
-	@printf "   **Compiling $@\n"       	
+	@printf "   ** Compiling $@\n"       	
 
 mod_cmd_line.o: $(SRCDIR)/mod_cmd_line.f90
 	@$(FC) -c $(SRCDIR)/mod_cmd_line.f90 $(FFLAGS)
@@ -122,31 +122,31 @@ mod_spherical_grids.o: $(SRCDIR)/mod_spherical_grids.f90 \
 	@$(FC) -c $(SRCDIR)/mod_spherical_grids.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"
 
-mod_read_grids.o: $(SRCDIR)/mod_read_grids.f90 \
+mod_grids.o: $(SRCDIR)/mod_grids.f90 \
 	$(SRCDIR)/mod_input_read.f90 \
 	$(SRCDIR)/mod_cmd_line.f90 \
 	$(SRCDIR)/mod_read_molecules.f90
-	@$(FC) -c $(SRCDIR)/mod_read_grids.f90 $(FFLAGS)
+	@$(FC) -c $(SRCDIR)/mod_grids.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"
 
 mod_pot_ljc.o: $(SRCDIR)/mod_pot_ljc.f90 \
 	$(SRCDIR)/mod_input_read.f90 \
 	$(SRCDIR)/mod_read_molecules.f90 \
-	$(SRCDIR)/mod_read_grids.f90
+	$(SRCDIR)/mod_grids.f90
 	@$(FC) -c $(SRCDIR)/mod_pot_ljc.f90 $(FFLAGS) 
 	@printf "   ** Compiling $@\n"
 
 mod_pot_bhc.o: $(SRCDIR)/mod_pot_bhc.f90 \
 	$(SRCDIR)/mod_input_read.f90 \
   $(SRCDIR)/mod_read_molecules.f90 \
-	$(SRCDIR)/mod_read_grids.f90
+	$(SRCDIR)/mod_grids.f90
 	@$(FC) -c $(SRCDIR)/mod_pot_bhc.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"
 
 mod_pot_ljc_pair.o: $(SRCDIR)/mod_pot_ljc_pair.f90 \
 	$(SRCDIR)/mod_input_read.f90 \
   $(SRCDIR)/mod_read_molecules.f90 \
-	$(SRCDIR)/mod_read_grids.f90
+	$(SRCDIR)/mod_grids.f90
 	@$(FC) -c $(SRCDIR)/mod_pot_ljc_pair.f90 $(FFLAGS) 
 	@printf "   ** Compiling $@\n"
 
@@ -160,7 +160,7 @@ xdr.o: $(SRCDIR)/xdr.f90
 mod_loops.o: $(SRCDIR)/mod_loops.f90 \
 	$(SRCDIR)/mod_input_read.f90 \
 	$(SRCDIR)/mod_read_molecules.f90 \
-	$(SRCDIR)/mod_read_grids.f90 \
+	$(SRCDIR)/mod_grids.f90 \
 	$(SRCDIR)/mod_pot_ljc.f90 \
 	$(SRCDIR)/mod_pot_bhc.f90 \
 	$(SRCDIR)/mod_pot_ljc_pair.f90 \
@@ -170,34 +170,35 @@ mod_loops.o: $(SRCDIR)/mod_loops.f90 \
 
 #resume
 
-
-mod_vmd.o:
-	@$(FC) -c $(SRCDIR)/mod_vmd.f90 $(FFLAGS)
+mod_write_vmd.o:
+	@$(FC) -c $(SRCDIR)/mod_write_vmd.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"
 
-mod_search.o: $(SRCDIR)/mod_input_read.f90 \
+mod_search_structures.o: $(SRCDIR)/mod_search_structures.f90 \
+	$(SRCDIR)/mod_input_read.f90 \
 	$(SRCDIR)/mod_read_molecules.f90 \
-	$(SRCDIR)/mod_read_grids.f90 \
+	$(SRCDIR)/mod_grids.f90 \
 	$(SRCDIR)/mod_loops.f90 
-	@$(FC) -c $(SRCDIR)/mod_search.f90 $(FFLAGS)
+	@$(FC) -c $(SRCDIR)/mod_search_structures.f90 $(FFLAGS) 
 	@printf "   ** Compiling $@\n"
 
 mod_resume.o: $(SRCDIR)/mod_resume.f90 \
 	$(SRCDIR)/mod_cmd_line.f90 \
 	$(SRCDIR)/mod_input_read.f90 \
-	$(SRCDIR)/mod_read_grids.f90 \
-	$(SRCDIR)/mod_search.f90
+	$(SRCDIR)/mod_grids.f90 \
+	$(SRCDIR)/mod_search_structures.f90
 	@$(FC) -c $(SRCDIR)/mod_resume.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"
 
-mod_deallocate_all.o: $(SRCDIR)/mod_cmd_line.f90 \
+mod_deallocate_all.o: $(SRCDIR)/mod_deallocate_all.f90 \
+	$(SRCDIR)/mod_cmd_line.f90 \
 	$(SRCDIR)/mod_read_molecules.f90 \
-	$(SRCDIR)/mod_read_grids.f90 \
+	$(SRCDIR)/mod_grids.f90 \
 	$(SRCDIR)/mod_input_read.f90 \
 	$(SRCDIR)/mod_pot_ljc.f90 \
 	$(SRCDIR)/mod_pot_bhc.f90 \
 	$(SRCDIR)/mod_pot_ljc_pair.f90 \
-	$(SRCDIR)/mod_search.f90
+	$(SRCDIR)/mod_search_structures.f90
 	@$(FC) -c $(SRCDIR)/mod_deallocate_all.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"
 
