@@ -1,10 +1,21 @@
 !---------------------------------------------------------------------------------------------------
 ! THEMIS: A code to study intermolecular recognition via direct partition function estimation                                                  
 !---------------------------------------------------------------------------------------------------
-!   Copyright 2020 Felippe M. Colombari
 !
-!   This program is free software: you can redistribute it and/or modify it under the terms of the 
-!   GNU General Public License as published by the Free Software Foundation, either version 3 of the 
+!   Free software, licensed under GNU GPL v3
+!
+!   Copyright (c) 2017 - 2020 Themis developers
+!                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
+!                 <http://www.lqt.dq.ufscar.br>
+!
+!   Please cite: 
+!
+!   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
+!
+!---------------------------------------------------------------------------------------------------
+!
+!   Themis is free software: you can redistribute it and/or modify it under the terms of the GNU 
+!   General Public License as published by the Free Software Foundation, either version 3 of the 
 !   License, or (at your option) any later version.
 !
 !   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
@@ -13,18 +24,15 @@
 !
 !   You should have received a copy of the GNU General Public License along with this program. If 
 !   not, see <https://www.gnu.org/licenses/>.
+!
 !---------------------------------------------------------------------------------------------------
 !> @file   mod_input_read.f90
 !> @author Felippe M. Colombari
-!>         Laboratory of Theoretical Chemistry - LQT
-!>         Federal University of São Carlos
-!>         <http://www.lqt.dq.ufscar.br>
-!> @email  colombarifm@hotmail.com
 !> @brief  This module contains a routine for INPUT reading and checking.
 !> @date - Jun, 2017                                                           
 !> - independent module created                                                
 !> @date - Jan, 2018                                                           
-!> - improved read os keywords and attributes. error messages added
+!> - improved read of keywords and attributes. error messages added.
 !> @date - Nov 2019
 !> - update error condition by error_handling module added by Asdrubal Lozada-Blanco
 !---------------------------------------------------------------------------------------------------

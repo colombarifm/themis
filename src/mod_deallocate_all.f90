@@ -1,10 +1,21 @@
 !---------------------------------------------------------------------------------------------------
 ! THEMIS: A code to study intermolecular recognition via direct partition function estimation                                                  
 !---------------------------------------------------------------------------------------------------
-!   Copyright 2020 Felippe M. Colombari
 !
-!   This program is free software: you can redistribute it and/or modify it under the terms of the 
-!   GNU General Public License as published by the Free Software Foundation, either version 3 of the 
+!   Free software, licensed under GNU GPL v3
+!
+!   Copyright (c) 2017 - 2020 Themis developers
+!                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
+!                 <http://www.lqt.dq.ufscar.br>
+!
+!   Please cite: 
+!
+!   This file was written by Felippe M. Colombari.
+!
+!---------------------------------------------------------------------------------------------------
+!
+!   Themis is free software: you can redistribute it and/or modify it under the terms of the GNU 
+!   General Public License as published by the Free Software Foundation, either version 3 of the 
 !   License, or (at your option) any later version.
 !
 !   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
@@ -13,16 +24,15 @@
 !
 !   You should have received a copy of the GNU General Public License along with this program. If 
 !   not, see <https://www.gnu.org/licenses/>.
+!
 !---------------------------------------------------------------------------------------------------
 !> @file   mod_deallocate_all.f90
 !> @author Felippe M. Colombari
-!>         Laboratory of Theoretical Chemistry - LQT
-!>         Federal University of São Carlos
-!>         <http://www.lqt.dq.ufscar.br>
-!> @email  colombarifm@hotmail.com
 !> @brief  Deallocates all arrays prior to program termination
 !> @date - Dec, 2017                                                           
 !> - independent module created                                                
+!> @date - Fev, 2020                                                           
+!> - update variable names                                                
 !> @note
 !> - to check for memory leaks and/or final status of allocatable arrays please use: \n 
 !>   valgrind --leak-check=full --show-leak-kinds=all -v ./themis [ options ]
