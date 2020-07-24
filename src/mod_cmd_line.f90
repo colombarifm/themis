@@ -306,33 +306,28 @@ contains
     write(output_unit,'(/,T10, A10, 15x, A)') adjustr('--run'), &
                                  &adjustl('Start new calculation.')
     write(output_unit,'(/,T10, A10, 15x, A)') adjustr('--rerun'), &
-                                 &adjustl('Calculate properties from energies previously calculated:') 
-    write(output_unit,'(T10, A10, 15x, A)') adjustr(''), &
-                                 &adjustl('energy.bin file - from Themis run;')
-    write(output_unit,'(T10, A10, 15x, A)') adjustr(''), &
-                                 &adjustl('energy.log file - from external calculation.')
+                                 &adjustl('Calculate properties from:') 
+    write(output_unit,'(T10, A10, 17x, A)') adjustr(''), &
+                                 &adjustl('energy.bin - energies obtained from Themis run;')
+    write(output_unit,'(T10, A10, 17x, A)') adjustr(''), &
+                                 &adjustl('energy.log - energies obtained from external calculation.')
     
     write(output_unit,'(/,T3, A)') dashline
-    write(output_unit,'(/,T25, A)')'     [GRIDTYPE] options'       
-    write(output_unit,'(/,T10, A10, 15x, A)') adjustr('--shell'), &
+
+    write(output_unit,'(/,T25, A)')'     [GRID] options'       
+    write(output_unit,'(/,T10, A18, 7x, A)') adjustr('--shell <radius>'), &
                                  &adjustl('Translation moves will be performed on a spherical shell')
     write(output_unit,'(T10, A10, 15x, A)') adjustr(''), &
-                                 &adjustl('of radius RADIUS generated on the run.')
-    write(output_unit,'(/,T10, A10, 15x, A)') adjustr('--user'), &
+                                 &adjustl('generated on the run. The real argument <radius> is the') 
+    write(output_unit,'(T10, A10, 15x, A)') adjustr(''), &
+                                 &adjustl('scaling factor for the radius (in Angstrom);')
+
+    write(output_unit,'(/,T10, A18, 7x, A)') adjustr('--user <file.xyz>'), &
                                 & adjustl('Translation moves will be performed on an user-defined')
     write(output_unit,'(T10, A10, 15x, A)') adjustr(''), &
-                                 &adjustl('grid read from FILENAME.')
-      
-    write(output_unit,'(T3, A)') dashline
-    write(output_unit,'(/,T25, A)')'       [RADIUS] value'       
-    write(output_unit,'(/,T10, A10, 15x, A)') adjustr('(real)'), &
-                                 &adjustl('Scaling factor for the spherical grid radius (in Angstrom)')
-      
-    write(output_unit,'(/,T25, A)')'     [FILENAME] value'       
-    write(output_unit,'(/,T10, A10, 15x, A)') adjustr('(char)'), &
-                                 &adjustl('XYZ file containing the user-defined translation grid. It')
+                                 &adjustl('grid read from <file.xyz>. It must be aligned with')
     write(output_unit,'(T10, A10, 15x, A)') adjustr(''), &
-                                 &adjustl('must be aligned with molecule 1')
+                                 &adjustl('molecule 1;')
       
     write(output_unit,'(/,T3, A)') dashline
     write(output_unit,'(/,T25, A)')'        Other options'       
@@ -340,8 +335,14 @@ contains
                                  &adjustl('Display this help')
     write(output_unit,'(/,T10, A10, 15x, A)') adjustr('--version'), &
                                  &adjustl('Display the version')
-    write(output_unit,'(/,T3, A,/)') dashline
+    write(output_unit,'(/,T3, A)') dashline
 
+    write(output_unit,'(/,T3, A)') '   Report bugs to:'
+    write(output_unit,'(T10, A)') '   Felippe M. Colombari   - colombarifm@hotmail.com'
+    write(output_unit,'(T10, A)') '   Asdrubal Lozada-Blanco - aslozada@gmail.com'
+
+    write(output_unit,'(/,T3, A,/)') dashline
+    
     if ( allocated(arg) ) deallocate(arg)
 
     call err%termination(0,'f')
@@ -372,7 +373,6 @@ contains
     write(output_unit,'(/,T4, A)')'You should have received a copy of the GNU General Public License along & 
                       &with this program. If not,'
     write(output_unit,'(T34, A)')'see <https://www.gnu.org/licenses/>.'
-    write(output_unit,'(/,T36, A)')'E-mail: colombarifm@hotmail.com'
     write(output_unit,'(/,T3, A,/)') dashline
 
     if ( allocated(arg) ) deallocate(arg)
