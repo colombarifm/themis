@@ -325,14 +325,14 @@ contains
 
           select case( attribute )
 
-            case( 'lj-coul', 'bh-coul', 'ljc-pair', 'none' )
+            case( 'lj-coul', 'bh-coul', 'none' )
 
               read(attribute, '(A)', iostat=ios) potential
 
             case default
 
               msg_line = "Please enter a valid potential function. Options&
-                         & are 'lj-coul', 'bh-coul', 'ljc-pair' and 'none'."
+                         & are 'lj-coul', 'bh-coul', and 'none'."
 
               call err%error('e',message="while reading INPUT file.")
 

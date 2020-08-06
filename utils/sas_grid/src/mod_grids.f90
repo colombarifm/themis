@@ -16,9 +16,6 @@
 !---------------------------------------------------------------------------------------------------
 !> @file   mod_grids.f90
 !> @author Felippe M. Colombari
-!>         Laboratory of Theoretical Chemistry - LQT
-!>         Federal University of São Carlos
-!>         <http://www.lqt.dq.ufscar.br>
 !> @email  colombarifm@hotmail.com
 !> @brief  This module manipulates the coordinates of translation and rotation grids
 !> @date - Nov, 2019                                                           

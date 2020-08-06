@@ -1,5 +1,5 @@
 !---------------------------------------------------------------------------------------------------
-! SAS_GRID: A code to obtain the solvent accessible surface (SAS) around a given molecular structure                                                  
+! COM: A code to calculate the center of mass of a given molecular structure                                                  
 !---------------------------------------------------------------------------------------------------
 !
 !   Free software, licensed under GNU GPL v3
@@ -26,28 +26,36 @@
 !   not, see <https://www.gnu.org/licenses/>.
 !
 !---------------------------------------------------------------------------------------------------
-!> @file   mod_constants.f90
+!> @file   com.f90
 !> @author Felippe M. Colombari
-!> @brief  Defines a set constants.
-!> @date - Oct, 2019                                                           
+!> @brief  This program calculates the center of mass of a given molecular structure
+!> @date - Jan, 2020                                                           
 !> - independent module created                                                
+!> @note 
+!> - reads "filein.xyz" and writes "fileout.xyz" with an extra XX site corresponding to the center 
+!>   of mass. XX coordinates can ba placed at the origin.
 !---------------------------------------------------------------------------------------------------
 
-module mod_constants
+program com
+
+  use mod_info              , only : Display_header, Display_date_time
+  use mod_cmd_line          , only : Parse_arguments, filename_molecule, filename_com, center_option
+  use mod_read_molecule     , only : mol
+  use mod_calc_com          , only : mol_mass, Assign_mass, Calc_com
+  use mod_deallocate_all    , only : Deallocate_arrays
 
   implicit none
 
-  integer, public, parameter           :: DP = selected_real_kind(15, 307) !  double precision constant for portability
-  
-  real( kind = DP ), public, parameter :: PI      = 3.14159265358979_DP    !         PI constant with 14 decimal places
-  real( kind = DP ), public, parameter :: DEG2RAD = 180.0_DP / PI          !                         degrees to radians
-  real( kind = DP ), public, parameter :: FPZERO  = tiny(1.0_DP)           !              define machine-precision ZERO
-  real( kind = DP ), public, parameter :: FPINF   = huge(1.0_DP)           !          define machine-precision INFINITY
-  
-  character( len = 11 ), public, parameter   :: INT_ALPHABET   = '1234567890'    !       allowed character for integers
-  character( len = 12 ), public, parameter   :: FLOAT_ALPHABET = '.-1234567890'  !         allowed character for floats
-  character( len = 66 ), public, parameter   :: CHAR_ALPHABET  = &
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._-1234567890 '   !              allowed character for strings
-  character( len = 100 ), public, parameter  :: DASHLINE = repeat('-',100)      !                       just a dashline
+  call display_header()
 
-end module mod_constants
+  call Parse_arguments
+
+  call mol % Read_molecule( filename_molecule )
+
+  call mol_mass % Assign_mass
+
+  call mol_mass % Calc_com( filename_com, center_option )
+
+  !  call Deallocate_arrays
+
+end program com

@@ -1,5 +1,5 @@
 !---------------------------------------------------------------------------------------------------
-! SAS_GRID: A code to obtain the solvent accessible surface (SAS) around a given molecular structure                                                  
+! COM: A code to calculate the center of mass of a given molecular structure                                                  
 !---------------------------------------------------------------------------------------------------
 !
 !   Free software, licensed under GNU GPL v3
@@ -10,7 +10,7 @@
 !
 !   Please cite: 
 !
-!   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
+!   This file was written by Felippe M. Colombari.
 !
 !---------------------------------------------------------------------------------------------------
 !
@@ -29,26 +29,26 @@
 !> @file   mod_cmd_line.f90
 !> @author Felippe M. Colombari
 !> @brief  Get command line arguments         
-!> @date - Oct, 2019                                                           
+!> @date - Jan, 2020                                                           
 !> - independent module created                                                
-!> @date - Nov, 2019
-!> - update error condition by error_handling module added by Asdrubal Lozada-Blanco
+!> @date - Jan, 2020
+!> - update error condition by error_handling module added
 !---------------------------------------------------------------------------------------------------
 
 module mod_cmd_line
   use iso_fortran_env    , only : stdout => output_unit
-  use mod_constants      , only : DP, int_alphabet, float_alphabet, char_alphabet, dashline
+  use mod_constants      , only : DP, char_alphabet, dashline
   use mod_error_handling
 
   implicit none
 
   private
-  public Parse_Arguments, radius, factor, filename
+  public Parse_Arguments, filename_molecule, filename_com, center_option
 
-  integer                                          :: factor = 0
-  real( kind = DP )                                :: radius = 0.0_DP
-  character( len = 64 )                            :: filename = char(0)
-  character( len = 20 ), allocatable, dimension(:) :: arg         
+  character( len = 64 )                            :: filename_molecule = char(0)
+  character( len = 64 )                            :: filename_com      = char(0)
+  character( len = 16 )                            :: center_option     = char(0)
+  character( len = 64 ), allocatable, dimension(:) :: arg         
 
   integer                                          :: ierr
   type(error)                                      :: err
@@ -104,46 +104,6 @@ contains
 
               call display_version
 
-            CASE( '--radius' )
-
-              call Get_command_argument( i+1, arg(i+1) )
-
-              nochar = verify( trim( arg(i+1) ), float_alphabet )
-
-              if ( nochar > 0 ) then
-
-                call err%error('e',message="while reading command line.")
-                call err%error('e',check="solvent radius around atoms.") 
-                call err%error('e',tip="Its value (in Angstrom) should be > 0.1.")
-               
-                stop
-                
-              else
-
-                read(arg(i+1),*,iostat=ios) radius
-
-                if ( ios > 0 ) then
-
-                  call err%error('e',message="while reading command line.")
-                  call err%error('e',check="solvent radius around atoms.") 
-                  call err%error('e',tip="Its value (in Angstrom) should be > 0.1.")
-               
-                  stop
-
-                endif
-
-                if ( radius <= 1.0_DP ) then
-
-                  call err%error('e',message="while reading command line.")
-                  call err%error('e',check="solvent radius around atoms.") 
-                  call err%error('e',tip="Its value (in Angstrom) should be > 0.1.")
-               
-                  stop
-
-                endif
-
-              endif
-
             CASE( '--input' )
 
               call Get_command_argument( i+1, arg(i+1) )
@@ -160,7 +120,7 @@ contains
                 
               else
 
-                read(arg(i+1),*,iostat=ios) filename
+                read(arg(i+1),*,iostat=ios) filename_molecule
 
                 if ( ios > 0 ) then
 
@@ -174,39 +134,73 @@ contains
 
               endif
 
-            CASE( '--factor' )
+            CASE( '--output' )
 
               call Get_command_argument( i+1, arg(i+1) )
 
-              nochar = verify( trim( arg(i+1) ), int_alphabet )
+              nochar = verify( trim( arg(i+1) ), char_alphabet )
 
               if ( nochar > 0 ) then
 
                 call err%error('e',message="while reading command line.")
-                call err%error('e',check="sphere tessellation factor.") 
-                call err%error('e',tip="Its value (an integer) should be > 1.")
+                call err%error('e',check="molecule coordinate file.") 
+                call err%error('e',tip="Should be a valid .xyz file.")
                
                 stop
                 
               else
 
-                read(arg(i+1),*,iostat=ios) factor
+                read(arg(i+1),*,iostat=ios) filename_com
 
                 if ( ios > 0 ) then
 
                   call err%error('e',message="while reading command line.")
-                  call err%error('e',check="sphere tessellation factor.") 
-                  call err%error('e',tip="Its value (an integer) should be > 1.")
+                  call err%error('e',check="molecule coordinate file.") 
+                  call err%error('e',tip="Should be a valid .xyz file.")
                
                   stop
 
                 endif
 
-                if ( factor <= 1.0_DP ) then
+              endif
+
+            CASE( '--center' )
+
+              call Get_command_argument( i+1, arg(i+1) )
+
+              nochar = verify( trim( arg(i+1) ), char_alphabet )
+
+              if ( nochar > 0 ) then
+
+                call err%error('e',message="while reading command line.")
+                call err%error('e',check="centering option.") 
+                call err%error('e',tip="Should be TRUE or FALSE.")
+               
+                stop
+                
+              else
+
+                read(arg(i+1),*,iostat=ios) center_option
+
+                if ( ios > 0 ) then
 
                   call err%error('e',message="while reading command line.")
-                  call err%error('e',check="sphere tessellation factor.") 
-                  call err%error('e',tip="Its value (an integer) should be > 1.")
+                  call err%error('e',check="centering option.") 
+                  call err%error('e',tip="Should be TRUE or FALSE.")
+               
+                  stop
+
+                endif
+
+                if ( ( center_option == 'TRUE' ) .or. ( center_option == 'FALSE' ) ) then
+
+                  continue
+
+                else
+                  
+                  call err%error('e',message="while reading command line.")
+                  call err%error('e',check="centering option.") 
+                  call err%error('e',tip="Should be TRUE or FALSE.")
                
                   stop
 
@@ -258,27 +252,27 @@ contains
 
     endif
 
-    if ( radius == 0.0_DP ) then
-
-      call err%error('e',message="while reading command line.")
-      call err%error('e',check="radius option.")
-      call err%error('e',tip="values should be > 0.1.")
-
-      stop
-
-    else if ( factor == 0 ) then
-
-      call err%error('e',message="while reading command line.")
-      call err%error('e',check="factor option.")
-      call err%error('e',tip="values should be > 1.")
-
-      stop
-
-    else if ( filename == char(0) ) then
+    if ( filename_molecule == char(0) ) then
 
       call err%error('e',message="while reading command line.")
       call err%error('e',check="molecule coordinate file.") 
       call err%error('e',tip="Should be a valid .xyz file.")
+
+      stop
+
+    else if ( filename_com == char(0) ) then
+
+      call err%error('e',message="while reading command line.")
+      call err%error('e',check="output coordinate file.") 
+      call err%error('e',tip="Should be a valid .xyz file.")
+
+      stop
+
+    else if ( center_option == char(0) ) then
+
+      call err%error('e',message="while reading command line.")
+      call err%error('e',check="centering option.") 
+      call err%error('e',tip="Should be TRUE or FALSE.")
 
       stop
 
@@ -294,12 +288,11 @@ contains
             
     implicit none
 
-    write(stdout,'(/,T20, A)')'Usage:  sas_grid --input [FILE] --radius [RADIUS] --factor [FACTOR]     '
+    write(stdout,'(/,T20, A)')'Usage:  com --input [FILEIN] --output [FILEOUT] --center [TRUE/FALSE]     '
     write(stdout,'(/,T3, A)') dashline
-    write(stdout,'(/,T25, A)')'[FILE]   is a .xyz coordinate file.'
-    write(stdout,'(/,T25, A)')'[RADIUS] is the solvent radius, in Angstrom.'
-    write(stdout,'(/,T25, A)')'[FACTOR] is an integer factor for the tessellation sphere.' 
-    write(stdout,'(T33, A)')' N_points = 2 + factor^2 * 10' 
+    write(stdout,'(/,T25, A)')'[FILEIN]     : initial .xyz coordinate file.'
+    write(stdout,'(/,T25, A)')'[FILEOUT]    : final .xyz coordinate file.'
+    write(stdout,'(/,T25, A)')'[TRUE/FALSE] : place the COM at (0,0,0) ?' 
     write(stdout,'(/,T3, A)') dashline
     
     if ( allocated(arg) ) deallocate(arg)
@@ -352,9 +345,9 @@ contains
     
     ! TODO link to version control 
 
-    version = '1.0.0-beta'
+    version = '1.0.0'
 
-    write(stdout,'("sas_grid ",a)') version
+    write(stdout,'("com ",a)') version
      
     call err%termination(0,'f')
 

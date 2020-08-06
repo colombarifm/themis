@@ -1,5 +1,5 @@
 !---------------------------------------------------------------------------------------------------
-! SAS_GRID: A code to obtain the solvent accessible surface (SAS) around a given molecular structure                                                  
+! COM: A code to calculate the center of mass of a given molecular structure                                                  
 !---------------------------------------------------------------------------------------------------
 !
 !   Free software, licensed under GNU GPL v3
@@ -10,7 +10,7 @@
 !
 !   Please cite: 
 !
-!   This file was written by Asdrubal Lozada-Blanco and Felippe M. Colombari.
+!   This file was written by Felippe M. Colombari.
 !
 !---------------------------------------------------------------------------------------------------
 !
@@ -54,8 +54,8 @@ contains
     character(len=7), parameter      :: revision = 'ae2e8ac'
       
     write(stdout,'(T3, A)') dashline
-    write(stdout,'(T50, A, A)') "SAS_GRID"
-    write(stdout,'(/,T8, A)')" A code to obtain the solvent accessible surface (SAS) around a given molecular structure" 
+    write(stdout,'(T50, A, A)') "COM"
+    write(stdout,'(/,T8, A)')" A code to calculate the center of mass of a given molecular structure"                                                  
     write(stdout,'(/,T40, A, A)') "Author: Felippe M. Colombari"
     write(stdout,'(T50, A, A)') "Brazil"
     write(stdout,'(/,T42, A, A)') "Program version: ",trim(version)
@@ -63,8 +63,6 @@ contains
     write(stdout,'(T3, A)') dashline
     write(stdout,'(/,T5, A)') "Contributions" 
     write(stdout,'(T8, A, A)') "Asdrubal Lozada: ", "Error handling revision"
-    write(stdout,'(/,T5, A)') "This version of SAS_GRID uses:"
-    write(stdout,'(T8, A)') "SPHERE_GRID library (John Burkardt)"
     write(stdout,'(/,T3, A)') dashline
       
   end subroutine Display_header

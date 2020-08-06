@@ -1,5 +1,5 @@
 !---------------------------------------------------------------------------------------------------
-! SAS_GRID: A code to obtain the solvent accessible surface (SAS) around a given molecular structure                                                  
+! COM: A code to calculate the center of mass of a given molecular structure                                                  
 !---------------------------------------------------------------------------------------------------
 !
 !   Free software, licensed under GNU GPL v3
@@ -26,28 +26,39 @@
 !   not, see <https://www.gnu.org/licenses/>.
 !
 !---------------------------------------------------------------------------------------------------
-!> @file   mod_constants.f90
+!> @file   mod_deallocate_all.f90
 !> @author Felippe M. Colombari
-!> @brief  Defines a set constants.
-!> @date - Oct, 2019                                                           
+!> @brief  Deallocates all arrays prior to program termination
+!> @date - Jan, 2020                                                           
 !> - independent module created                                                
+!> @note
+!> - to check for memory leaks and/or final status of allocatable arrays please use: \n 
+!>   valgrind --leak-check=full --show-leak-kinds=all -v ./com [ options ]
+!> @note
+!> - to check memory usage along execution, please use: \n
+!>   valgrind --tool=massif ./com [options]
 !---------------------------------------------------------------------------------------------------
 
-module mod_constants
+module mod_deallocate_all
 
   implicit none
 
-  integer, public, parameter           :: DP = selected_real_kind(15, 307) !  double precision constant for portability
-  
-  real( kind = DP ), public, parameter :: PI      = 3.14159265358979_DP    !         PI constant with 14 decimal places
-  real( kind = DP ), public, parameter :: DEG2RAD = 180.0_DP / PI          !                         degrees to radians
-  real( kind = DP ), public, parameter :: FPZERO  = tiny(1.0_DP)           !              define machine-precision ZERO
-  real( kind = DP ), public, parameter :: FPINF   = huge(1.0_DP)           !          define machine-precision INFINITY
-  
-  character( len = 11 ), public, parameter   :: INT_ALPHABET   = '1234567890'    !       allowed character for integers
-  character( len = 12 ), public, parameter   :: FLOAT_ALPHABET = '.-1234567890'  !         allowed character for floats
-  character( len = 66 ), public, parameter   :: CHAR_ALPHABET  = &
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._-1234567890 '   !              allowed character for strings
-  character( len = 100 ), public, parameter  :: DASHLINE = repeat('-',100)      !                       just a dashline
+  private
+  public Deallocate_arrays
 
-end module mod_constants
+contains
+
+  subroutine Deallocate_arrays
+    use mod_read_molecule , only : mol, mass_found
+
+    implicit none
+
+    !!!!! ARRAYS FROM MOD_READ_XYZ !!!!!
+
+    deallocate( mol % atoms )
+    deallocate( mass_found )
+
+    return
+  end subroutine Deallocate_arrays
+
+end module mod_deallocate_all

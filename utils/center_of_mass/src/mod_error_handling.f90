@@ -1,5 +1,5 @@
 !---------------------------------------------------------------------------------------------------
-! SAS_GRID: A code to obtain the solvent accessible surface (SAS) around a given molecular structure                                                  
+! COM: A code to calculate the center of mass of a given molecular structure                                                  
 !---------------------------------------------------------------------------------------------------
 !
 !   Free software, licensed under GNU GPL v3
@@ -10,7 +10,7 @@
 !
 !   Please cite: 
 !
-!   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
+!   This file was written by Felippe M. Colombari.
 !
 !---------------------------------------------------------------------------------------------------
 !

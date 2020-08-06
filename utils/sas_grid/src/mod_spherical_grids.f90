@@ -1,10 +1,21 @@
 !---------------------------------------------------------------------------------------------------
 ! SAS_GRID: A code to obtain the solvent accessible surface (SAS) around a given molecular structure                                                  
 !---------------------------------------------------------------------------------------------------
-!   Copyright 2020 Felippe M. Colombari
 !
-!   This program is free software: you can redistribute it and/or modify it under the terms of the 
-!   GNU General Public License as published by the Free Software Foundation, either version 3 of the 
+!   Free software, licensed under GNU GPL v3
+!
+!   Copyright (c) 2017 - 2020 Themis developers
+!                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
+!                 <http://www.lqt.dq.ufscar.br>
+!
+!   Please cite: 
+!
+!   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
+!
+!---------------------------------------------------------------------------------------------------
+!
+!   Themis is free software: you can redistribute it and/or modify it under the terms of the GNU 
+!   General Public License as published by the Free Software Foundation, either version 3 of the 
 !   License, or (at your option) any later version.
 !
 !   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
@@ -13,13 +24,10 @@
 !
 !   You should have received a copy of the GNU General Public License along with this program. If 
 !   not, see <https://www.gnu.org/licenses/>.
+!
 !---------------------------------------------------------------------------------------------------
 !> @file   mod_spherical_grids.f90
 !> @author Felippe M. Colombari
-!>         Laboratory of Theoretical Chemistry - LQT
-!>         Federal University of São Carlos
-!>         <http://www.lqt.dq.ufscar.br>
-!> @email  colombarifm@hotmail.com
 !> @brief  This module contains routines to generate spherical grids by tessellation
 !> @date - Jun, 2019                                                           
 !> - independent module created                                                

@@ -1,7 +1,7 @@
 # makefile for themis program
 
 # program name
-PROGRAM = sas_grid
+PROGRAM = com
 
 
 # version control 
@@ -20,7 +20,7 @@ FFLAGS = -g -Wall -O3 -fcheck=bounds -Wno-compare-reals -Wno-conversion -fbacktr
 SRCDIR = src
 
 # source files and objects
-SRC = $(wildcard $(SRCDIR)/sas_grid.f90)
+SRC = $(wildcard $(SRCDIR)/com.f90)
 
 # objects created
 OBJS = mod_error_handling.o \
@@ -29,8 +29,7 @@ OBJS = mod_error_handling.o \
 	mod_cmd_line.o \
 	mod_inquire.o \
 	mod_read_molecule.o \
-	mod_spherical_grids.o \
-	mod_grids.o \
+	mod_calc_com.o \
 	mod_deallocate_all.o
 
 # modules created
@@ -41,8 +40,7 @@ MODS = mod_error_handling.mod \
 	mod_cmd_line.mod \
 	mod_inquire.mod \
 	mod_read_molecule.mod \
-	mod_spherical_grids.mod \
-	mod_grids.mod \
+	mod_calc_com.mod \
 	mod_deallocate_all.mod
 
 all: $(OBJS)
@@ -51,7 +49,7 @@ all: $(OBJS)
 	@printf "  GENERATING EXECUTABLE...\n"
 	@printf "\n"
 	@$(FC) $(SRC) $(FFLAGS) $(OBJS) -o $(PROGRAM) 
-	@printf "   ** Compiling sas_grid\n"
+	@printf "   ** Compiling com\n"
 	@printf "\n"
 	@printf "  CLEANING MODULES...\n"
 	@printf "\n"
@@ -92,21 +90,15 @@ mod_read_molecule.o: $(SRCDIR)/mod_read_molecule.f90 \
 	@$(FC) -c $(SRCDIR)/mod_read_molecule.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"
 
-mod_spherical_grids.o: $(SRCDIR)/mod_spherical_grids.f90 \
-	$(SRCDIR)/mod_constants.f90 
-	@$(FC) -c $(SRCDIR)/mod_spherical_grids.f90 $(FFLAGS)
-	@printf "   ** Compiling $@\n"
-
-mod_grids.o: $(SRCDIR)/mod_grids.f90 \
+mod_calc_com.o: $(SRCDIR)/mod_calc_com.f90 \
 	$(SRCDIR)/mod_constants.f90 \
 	$(SRCDIR)/mod_cmd_line.f90 \
 	$(SRCDIR)/mod_read_molecule.f90
-	@$(FC) -c $(SRCDIR)/mod_grids.f90 $(FFLAGS)
+	@$(FC) -c $(SRCDIR)/mod_calc_com.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"
 
 mod_deallocate_all.o: $(SRCDIR)/mod_deallocate_all.f90 \
-	$(SRCDIR)/mod_read_molecule.f90 \
-	$(SRCDIR)/mod_grids.f90
+	$(SRCDIR)/mod_read_molecule.f90
 	@$(FC) -c $(SRCDIR)/mod_deallocate_all.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"
 

@@ -69,7 +69,6 @@ contains
     use mod_grids
     use mod_pot_ljc
     use mod_pot_bhc
-    use mod_pot_ljc_pair
     use xdr,           only: xtcfile
     use mod_error_handling
 
@@ -86,7 +85,6 @@ contains
 
     type( ljc_dimer ), target         :: ljc_target
     type( bhc_dimer ), target         :: bhc_target
-    type( ljc_pair_dimer ), target    :: ljc_pair_target
     type( dimer ), target             :: none_target
     class( dimer ), pointer           :: potential_pointer
 
@@ -160,12 +158,6 @@ contains
 
         call mol1_bhc % Check_BHC_params( 1, mol1 % num_atoms, "parameters1" )
         call mol2_bhc % Check_BHC_params( 2, mol2 % num_atoms, "parameters2" )
-
-      CASE ("ljc_pair")
-
-        potential_pointer => ljc_pair_target
-
-        call ljc_pair_dimers % Read_ljc_pair_params ( "parameters" )
 
       CASE ("none")
 
@@ -306,7 +298,7 @@ contains
 
       SELECT CASE (potential)
 
-        CASE ("lj-coul", "bh-coul", "ljc_pair")
+        CASE ("lj-coul", "bh-coul")
 
           Zrot(t) = sum( dexp( -( inter_energy(:,:,t) - min_ener_t(t) ) / kBT ) )
             

@@ -39,7 +39,7 @@
 
 program themis
   use mod_info              , only : Display_header, Display_date_time
-  use mod_constants         , only : DP, dashline
+  use mod_constants         , only : DP
   use mod_error_handling    , only : Normal_termination, Raise_error, error
   use mod_cmd_line          , only : Parse_arguments, irun, grid_type, rad, grid_transl
   use mod_input_read        , only : Read_input_file, ref1, vector1, ref2, vector2, rot1_factor, trans_factor, potential
@@ -99,7 +99,7 @@ program themis
 
       SELECT CASE ( potential )
 
-        CASE ( "lj-coul", "bh-coul", "ljc_pair" )
+        CASE ( "lj-coul", "bh-coul" )
 
           call Calculate_ztotal
 

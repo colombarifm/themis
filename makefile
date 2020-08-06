@@ -34,7 +34,6 @@ OBJS = mod_error_handling.o \
 	mod_grids.o \
 	mod_pot_ljc.o \
 	mod_pot_bhc.o \
-	mod_pot_ljc_pair.o \
 	xdr.o \
 	libxdrfile.a \
 	mod_loops.o \
@@ -56,7 +55,6 @@ MODS =	mod_error_handling.mod \
 	mod_grids.mod \
 	mod_pot_ljc.mod \
 	mod_pot_bhc.mod \
-	mod_pot_ljc_pair.mod \
 	xdr.mod \
 	mod_loops.mod \
 	mod_write_vmd.mod \
@@ -143,13 +141,6 @@ mod_pot_bhc.o: $(SRCDIR)/mod_pot_bhc.f90 \
 	@$(FC) -c $(SRCDIR)/mod_pot_bhc.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"
 
-mod_pot_ljc_pair.o: $(SRCDIR)/mod_pot_ljc_pair.f90 \
-	$(SRCDIR)/mod_input_read.f90 \
-  $(SRCDIR)/mod_read_molecules.f90 \
-	$(SRCDIR)/mod_grids.f90
-	@$(FC) -c $(SRCDIR)/mod_pot_ljc_pair.f90 $(FFLAGS) 
-	@printf "   ** Compiling $@\n"
-
 libxdrfile.a:
 	@cp $(SRCDIR)/libxdrfile.a .
 
@@ -163,7 +154,6 @@ mod_loops.o: $(SRCDIR)/mod_loops.f90 \
 	$(SRCDIR)/mod_grids.f90 \
 	$(SRCDIR)/mod_pot_ljc.f90 \
 	$(SRCDIR)/mod_pot_bhc.f90 \
-	$(SRCDIR)/mod_pot_ljc_pair.f90 \
 	$(SRCDIR)/xdr.f90 
 	@$(FC) -c $(SRCDIR)/mod_loops.f90 $(FFLAGS) 
 	@printf "   ** Compiling $@\n"
@@ -197,7 +187,6 @@ mod_deallocate_all.o: $(SRCDIR)/mod_deallocate_all.f90 \
 	$(SRCDIR)/mod_input_read.f90 \
 	$(SRCDIR)/mod_pot_ljc.f90 \
 	$(SRCDIR)/mod_pot_bhc.f90 \
-	$(SRCDIR)/mod_pot_ljc_pair.f90 \
 	$(SRCDIR)/mod_search_structures.f90
 	@$(FC) -c $(SRCDIR)/mod_deallocate_all.f90 $(FFLAGS)
 	@printf "   ** Compiling $@\n"

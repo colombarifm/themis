@@ -441,6 +441,8 @@ program com
   write(8,*) mol_1 % numat + 1
   write(8,*)
 
+  write(*,*) mol_1 % com(:), mol_1 % mass_components(:)
+
   if ( option == "center" ) then
 
     do i = 1, mol_1 % numat

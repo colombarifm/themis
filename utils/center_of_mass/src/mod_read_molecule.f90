@@ -1,5 +1,5 @@
 !---------------------------------------------------------------------------------------------------
-! SAS_GRID: A code to obtain the solvent accessible surface (SAS) around a given molecular structure                                                  
+! COM: A code to calculate the center of mass of a given molecular structure                                                  
 !---------------------------------------------------------------------------------------------------
 !
 !   Free software, licensed under GNU GPL v3
@@ -10,7 +10,7 @@
 !
 !   Please cite: 
 !
-!   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
+!   This file was written by Felippe M. Colombari.
 !
 !---------------------------------------------------------------------------------------------------
 !
@@ -28,50 +28,35 @@
 !---------------------------------------------------------------------------------------------------
 !> @file   mod_read_molecule.f90
 !> @author Felippe M. Colombari
-!> @brief  This module reads coordinates for a given .xyz file and sets the vdW radii for each atom
-!> @date - Nov, 2019                                                           
+!> @brief  This module reads coordinates for a given .xyz file and sets the mass for each atom
+!> @date - Jan, 2020                                                           
 !> - independent module created                                                
-!> @date - Nov 2019
-!> - update error condition by error_handling module added by Asdrubal Lozada-Blanco
+!> @date - Jan 2020
+!> - update error condition by error_handling module added 
 !---------------------------------------------------------------------------------------------------
 
 module mod_read_molecule
-  use mod_constants, only: DP, PI
+  use mod_constants
 
   implicit none
   
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   type atom 
-    real( kind = dp )                       :: xyz(3), vdw
-    character( len = 2 )                    :: label
+    character(len=3)          :: label
+    real(kind=dp)             :: xyz(3)
   end type atom
 
   type molecule
-    type( atom ), allocatable,dimension(:) :: atoms
+    type(atom), allocatable, dimension(:)  :: atoms
     integer                                :: num_atoms
   contains
     procedure, pass                        :: Read_molecule
-    procedure, pass                        :: Read_vdw_radii
   end type molecule
 
   type( molecule )                         :: mol
 
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  type atom_entry
-    character( len = 2 )                   :: symbol 
-    real( kind = DP )                      :: radii 
-  end type atom_entry
-
-  type atom_list
-    integer                                     :: n_list
-    type(atom_entry), allocatable, dimension(:) :: listed_atoms
-  end type atom_list
-
-  type(atom_list)   :: list
-
-  logical, allocatable, dimension(:) :: radii_found
+  logical, allocatable, dimension(:) :: mass_found
 
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -113,83 +98,18 @@ contains
 
     enddo
 
+    write(666,*) this % num_atoms
+    write(666,*)
+
+    do i = 1, this % num_atoms
+
+      write(666,'(a3,3(f12.7))') this % atoms(i) % label, this % atoms(i) % xyz(:)
+
+    enddo
+
     close(file_unit)
 
     return
   end subroutine Read_molecule
-
-  subroutine Read_vdw_radii( this )
-    use mod_cmd_line , only : radius
-
-    implicit none
-
-    class( molecule ), intent(inout)     :: this
-    integer                              :: i, j
-
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!                                                  !!
-  !!   READ VDW RADII TABLE GIVEN IN vdw-radii.txt    !!
-  !!                                                  !!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  
-  inquire( file = 'vdw-radii.txt' )
-
-  open(10,file='vdw-radii.txt',status='old')
-  
-  read(10,*) list % n_list
- 
-  allocate( list % listed_atoms( list % n_list ) )
-
-  do i = 1, list % n_list
-  
-    read(10,*) list % listed_atoms(i) % symbol, list % listed_atoms(i) % radii
-
-  enddo
-      
-  close (10)
-     
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  !!                                                  !!
-  !!     READ COORDINATES FROM REFERENCE MOLECULE     !!
-  !! AND COMPARE SYMBOLS WITH THOSE IN vdw-radii.txt. !!
-  !!   THEN ASSOCIATE EACH ATOM WITH ITS RESPECTIVE   !!
-  !!                    VDW RADII.                    !!
-  !!                                                  !!
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  allocate( radii_found( mol % num_atoms ) )
-
-  radii_found = .false. 
-
-  do i = 1, mol % num_atoms
-
-    do j = 1, list % n_list
-
-      if ( mol % atoms(i) % label .eq. list % listed_atoms(j) % symbol ) then
-        
-        this % atoms(i) % vdw = list % listed_atoms(j) % radii + radius
-
-        radii_found(i) = .true.
-
-        write(*,'(T5, "Atom ", i4.4,": ", a2, " found!", f7.3)') i, this % atoms(i) % label, &
-        list % listed_atoms(j) % radii
-
-      endif
-
-    enddo
-    
-    if ( radii_found(i) .eqv. .false. ) then
-
-      write(*,'(T5, "Atom ", i4.4,": ", a2, " not found!")') i, this % atoms(i) % label
-      write(*,*)
-      write(*,'(T5, "Check your vdw-radii.txt file for the required entry.")')
-
-      stop
-
-    endif
-
-  enddo
-      
-  end subroutine Read_vdw_radii
 
 end module mod_read_molecule

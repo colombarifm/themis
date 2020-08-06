@@ -3,7 +3,12 @@
 !      Themis: a Software to Assess Association Free Energies Via Direct      !
 !                       Estimative of Partition Functions                     !
 !                                                                             !
-!   Copyright (C) 2000, 2001, 2002, 2003  CP2K developers group               !
+!   Free software, licensed under GNU GPL v3                                  !
+!                                                                             !
+!   Copyright (c) 2017 - 2020 Themis developers                               !
+!                 Laboratory of Theoretical Chemistry (LQT)                   !
+!                 Federal University of São Carlos                            !
+!                 <http://www.lqt.dq.ufscar.br>                               !
 !                                                                             !
 !   This file is part of Themis.                                              !
 !                                                                             !

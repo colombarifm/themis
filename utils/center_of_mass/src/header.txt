@@ -1,5 +1,5 @@
 !---------------------------------------------------------------------------------------------------
-! SAS_GRID: A code to obtain the solvent accessible surface (SAS) around a given molecular structure                                                  
+! COM: A code to calculate the center of mass of a given molecular structure                                                  
 !---------------------------------------------------------------------------------------------------
 !
 !   Free software, licensed under GNU GPL v3
@@ -26,40 +26,3 @@
 !   not, see <https://www.gnu.org/licenses/>.
 !
 !---------------------------------------------------------------------------------------------------
-!> @file   sas_grid.f90
-!> @author Felippe M. Colombari
-!> @brief  Mais module of sas_grid 
-!> @date - ~2018
-!> - first version
-!> @date - Nov, 2019                                                           
-!> - modular version                                                
-!---------------------------------------------------------------------------------------------------
-
-program sas_grid
-
-  use mod_info              , only : Display_header, Display_date_time
-  use mod_constants         , only : dashline
-  use mod_cmd_line          , only : Parse_arguments, filename, factor, radius
-  use mod_read_molecule     , only : mol 
-  use mod_grids             , only : grid_sphere, grid_sas 
-  use mod_deallocate_all    , only : Deallocate_arrays
-
-  implicit none
-
-  call display_header()
-
-  call Parse_arguments
-
-  call mol % Read_molecule( filename )
-
-  call mol % Read_vdw_radii
-
-  call grid_sphere % Build_sphere_grid( factor, radius )
-
-  call grid_sas % Build_sas_grid
-
-  call Deallocate_arrays
-
-  write(*,'(/, T3, A)') dashline
-
-end program sas_grid

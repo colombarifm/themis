@@ -21,16 +21,12 @@ make
 
 #check bin
 
+## 4. Talk to us
+In any case please contact us:
 
+[Felippe Mariano Colombari](colombarifm@hotmail.com)
+[Asdrubal Lozada-Blanco](aslozada@gmail.com)
 
-## 6. Talk to us
-In any case please tell us your comments, praise, criticism, thanks,... see https://www.cp2k.org/
-
-## 7. Manual
-A reference manual of CP2K can be found on the web: https://manual.cp2k.org/ or can be generated using the cp2k executable, see https://manual.cp2k.org/trunk/generate_manual_howto.html
-
-## 8. Happy computing!
-
- The CP2K team.
-
-
+## 5. Manual
+A reference manual of Themis can be found on the web: 
+[LQT webpage](http://www.lqt.dq.ufscar.br/lqt/lqt_software-pt.html)
