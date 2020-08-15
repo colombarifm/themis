@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+  themis@linux:\PYGZti{}\PYGZdl{} cat grid\PYGZus{}log.log
+
+   \PYG{esc}{t point   rejected structures   time (s)}
+\PYG{esc}{         1         0 of    5040      0.020}
+\PYG{esc}{         2         0 of    5040      0.012}
+\PYG{esc}{         3         0 of    5040      0.012}
+\PYG{esc}{         4         0 of    5040      0.013}
+\PYG{esc}{       ...}
+\PYG{esc}{        38         0 of    5040      0.024}
+\PYG{esc}{        39         0 of    5040      0.013}
+\PYG{esc}{        40         0 of    5040      0.013}
+\PYG{esc}{        41         0 of    5040      0.012}
+\PYG{esc}{        42         0 of    5040      0.014}
+
+  themis@linux:\PYGZti{}\PYGZdl{}
+\end{Verbatim}

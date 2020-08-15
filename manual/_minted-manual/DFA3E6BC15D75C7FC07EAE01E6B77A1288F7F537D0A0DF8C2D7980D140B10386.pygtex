@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+  themis@linux:\PYGZti{}\PYGZdl{} cat lowest\PYGZus{}0001.xyz
+
+    \PYG{esc}{         8}
+\PYG{esc}{    Energy =  -2.8350000E+01}
+\PYG{esc}{    O       0.0000     0.0000     0.0000}
+\PYG{esc}{    H      -0.0000    -0.7668    -0.5971}
+\PYG{esc}{    H      -0.0000     0.7668    -0.5971}
+\PYG{esc}{    X      -0.0000    -0.0000    -0.0668}
+\PYG{esc}{    O       1.4720     0.0000     2.3818}
+\PYG{esc}{    H       0.9611     0.0000     1.5551}
+\PYG{esc}{    H       0.7957     0.0000     3.0797}
+\PYG{esc}{    X       1.4056     0.0000     2.3746}
+
+  themis@linux:\PYGZti{}\PYGZdl{}
+\end{Verbatim}

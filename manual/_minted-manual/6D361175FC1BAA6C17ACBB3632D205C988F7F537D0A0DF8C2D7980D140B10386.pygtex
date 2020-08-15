@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+  themis@linux:\PYGZti{}\PYGZdl{} cat INPUT
+
+    \PYG{esc}{rot1_factor : 2           }              \PYG{c+c1}{\PYGZsh{} integer}
+    \PYG{esc}{translation_factor : 2    }              \PYG{c+c1}{\PYGZsh{} integer}
+    \PYG{esc}{rot2_factor :  36         }              \PYG{c+c1}{\PYGZsh{} integer}
+    \PYG{esc}{rot2_range : 360.0        }              \PYG{c+c1}{\PYGZsh{} real}
+    \PYG{esc}{temperature : 300.0       }              \PYG{c+c1}{\PYGZsh{} real}
+    \PYG{esc}{potential : lj-coul       }              \PYG{c+c1}{\PYGZsh{} character. valid strings are: none, lj\PYGZhy{}coul our bh\PYGZhy{}coul}
+    \PYG{esc}{ref_mol1 : 1              }              \PYG{c+c1}{\PYGZsh{} integer}
+    \PYG{esc}{rot_ref_mol1 : 4          }              \PYG{c+c1}{\PYGZsh{} integer}
+    \PYG{esc}{ref_mol2 : 1              }              \PYG{c+c1}{\PYGZsh{} integer}
+    \PYG{esc}{rot_ref_mol2 : 2          }              \PYG{c+c1}{\PYGZsh{} integer}
+    \PYG{esc}{shortest_distance : 0.8   }              \PYG{c+c1}{\PYGZsh{} real}
+    \PYG{esc}{write_xtc : no            }              \PYG{c+c1}{\PYGZsh{} character. valid strings are: no, F, yes or T}
+    \PYG{esc}{lowest_structures : 20    }              \PYG{c+c1}{\PYGZsh{} integer}
+    \PYG{esc}{write_frames : none       }              \PYG{c+c1}{\PYGZsh{} character. valid strings are: none, MOP or XYZ}
+    \PYG{esc}{mopac_job :               }              \PYG{c+c1}{\PYGZsh{} character}
+
+  themis@linux:\PYGZti{}\PYGZdl{}
+\end{Verbatim}

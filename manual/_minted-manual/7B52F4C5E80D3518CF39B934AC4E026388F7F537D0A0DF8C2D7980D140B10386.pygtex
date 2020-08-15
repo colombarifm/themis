@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+    mopac\PYGZus{}job : MOP PM7 1scf output \PYG{n+nv}{threads}\PYG{o}{=}\PYG{l+m}{1} \PYG{n+nv}{shift}\PYG{o}{=}\PYG{l+m}{1}.0 \PYG{n+nv}{itry}\PYG{o}{=}\PYG{l+m}{150} CIS C.I.\PYG{o}{=}\PYG{l+m}{4} MECI \PYG{n+nv}{ROOT}\PYG{o}{=}\PYG{l+m}{2} SINGLET geo\PYGZhy{}ok
+\end{Verbatim}

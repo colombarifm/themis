@@ -307,7 +307,7 @@ contains
             
     implicit none
 
-    write(output_unit,'(/,T10, A)')'   Usage:  themis [RUNTYPE] [GRIDTYPE] [RADIUS|FILENAME]     '
+    write(output_unit,'(/,T10, A)')'   Usage:  themis [RUNTYPE] [GRID]     '
       
     write(output_unit,'(/,T3, A)') dashline
     write(output_unit,'(/,T25, A)')'      [RUNTYPE] options'       

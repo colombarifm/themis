@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+  themis@linux:\PYGZti{}\PYGZdl{} cat parameters2
+
+   \PYG{c+c1}{\PYGZsh{}   q         A(A)      B (A)     C(A\PYGZca{}3 kJ/mol)!}
+   Ti  \PYG{l+m}{2}.1960    \PYG{l+m}{1}.18230   \PYG{l+m}{0}.07700   \PYG{l+m}{22}.5000
+   O  \PYGZhy{}1.0980    \PYG{l+m}{1}.63390   \PYG{l+m}{0}.11700   \PYG{l+m}{54}.0000
+   O  \PYGZhy{}1.0980    \PYG{l+m}{1}.63390   \PYG{l+m}{0}.11700   \PYG{l+m}{54}.0000
+   X   \PYG{l+m}{0}.0000    \PYG{l+m}{0}.00000   \PYG{l+m}{0}.00000   \PYG{l+m}{0}.00000\PYG{err}{!}
+
+  themis@linux:\PYGZti{}\PYGZdl{}
+\end{Verbatim}

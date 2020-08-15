@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+  themis@linux:\PYGZti{}\PYGZdl{} cat INPUT
+
+    rot1\PYGZus{}factor : \PYG{l+m}{4}
+    translation\PYGZus{}factor : \PYG{l+m}{3}
+    rot2\PYGZus{}factor :  \PYG{l+m}{36}
+    rot2\PYGZus{}range : \PYG{l+m}{360}.0
+    temperature : \PYG{l+m}{300}.0
+    potential : none
+    ref\PYGZus{}mol1 : \PYG{l+m}{23}
+    rot\PYGZus{}ref\PYGZus{}mol1 : \PYG{l+m}{1}
+    ref\PYGZus{}mol2 : \PYG{l+m}{23}
+    rot\PYGZus{}ref\PYGZus{}mol2 : \PYG{l+m}{1}
+    shortest\PYGZus{}distance : \PYG{l+m}{1}.2
+    write\PYGZus{}xtc : no
+    lowest\PYGZus{}structures : \PYG{l+m}{10}
+    write\PYGZus{}frames : MOP
+    mopac\PYGZus{}job : MOP PM7 1scf output \PYG{n+nv}{threads}\PYG{o}{=}\PYG{l+m}{1} \PYG{n+nv}{shift}\PYG{o}{=}\PYG{l+m}{1}.0 \PYG{n+nv}{itry}\PYG{o}{=}\PYG{l+m}{150}
+
+  themis@linux:\PYGZti{}\PYGZdl{}
+\end{Verbatim}

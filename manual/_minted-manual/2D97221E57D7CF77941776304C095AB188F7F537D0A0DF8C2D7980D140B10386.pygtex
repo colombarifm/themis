@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+  themis@linux:\PYGZti{}\PYGZdl{} cat INPUT
+
+    rot1\PYGZus{}factor : \PYG{l+m}{2}                             \PYG{esc}{#} integer
+    translation\PYGZus{}factor : \PYG{l+m}{2}                      \PYG{esc}{#} integer
+    rot2\PYGZus{}factor :  \PYG{l+m}{36}                           \PYG{esc}{#} integer
+    rot2\PYGZus{}range : \PYG{l+m}{360}.0                          \PYG{esc}{#} real
+    temperature : \PYG{l+m}{300}.0                         \PYG{esc}{#} real
+    potential : lj\PYGZhy{}coul                         \PYG{esc}{#} character. valid strings are: none, lj\PYGZhy{}coul our bh\PYGZhy{}coul
+    ref\PYGZus{}mol1 : \PYG{l+m}{1}                                \PYG{esc}{#} integer
+    rot\PYGZus{}ref\PYGZus{}mol1 : \PYG{l+m}{4}                            \PYG{esc}{#} integer
+    ref\PYGZus{}mol2 : \PYG{l+m}{1}                                \PYG{esc}{#} integer
+    rot\PYGZus{}ref\PYGZus{}mol2 : \PYG{l+m}{2}                            \PYG{esc}{#} integer
+    shortest\PYGZus{}distance : \PYG{l+m}{0}.8                     \PYG{esc}{#} real
+    write\PYGZus{}xtc : no                              \PYG{esc}{#} character. valid strings are: no, F, yes or T
+    lowest\PYGZus{}structures : \PYG{l+m}{20}                      \PYG{esc}{#} integer
+    write\PYGZus{}frames : none                         \PYG{esc}{#} character. valid strings are: none, MOP or XYZ
+    mopac\PYGZus{}job :                                 \PYG{esc}{#} character
+
+  themis@linux:\PYGZti{}\PYGZdl{}
+\end{Verbatim}

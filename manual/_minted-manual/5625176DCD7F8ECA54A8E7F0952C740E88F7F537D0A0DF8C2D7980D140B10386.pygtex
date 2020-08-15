@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+  themis@linux:\PYGZti{}\PYGZdl{} cat conf2.xyz
+
+    \PYG{esc}{4}
+\PYG{esc}{    *blank line*}
+\PYG{esc}{    OW      0.00000      0.06682      0.00000}
+\PYG{esc}{    HW     -0.76677     -0.53032      0.00000}
+\PYG{esc}{    HW      0.76677     -0.53032      0.00000}
+\PYG{esc}{    X       0.00000      0.00000      0.00000}
+
+  themis@linux:\PYGZti{}\PYGZdl{}
+\end{Verbatim}
