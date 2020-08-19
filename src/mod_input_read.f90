@@ -98,15 +98,15 @@ module mod_input_read
 contains
 
   subroutine Read_input_file
-    use mod_inquire, only: Inquire_file
+    use mod_inquire, only: Inquire_file, Get_new_unit
     use mod_error_handling
 
     implicit none
 
+    integer                          :: file_unit      
     integer                          :: nochar      = 0
     integer                          :: line        = 0
     integer                          :: ios         = 0      
-    integer, parameter               :: file_unit   = 9 
     character( len = 15 ), parameter :: file_access = "sequential"
     character( len = 15 ), parameter :: file_format = "formatted"
     character( len = 40 ), parameter :: file_name   = "INPUT"
@@ -114,7 +114,9 @@ contains
     character( len = 250)            :: buffer, keyword, attribute
     character( len = 10 )            :: line_number
     type(error)                      :: err
-      
+  
+    file_unit = Get_new_unit(10)
+
     call Inquire_file( file_unit , file_name , file_format , file_access )
 
     do while ( ios == 0 )

@@ -85,4 +85,24 @@ contains
     return
   end subroutine Inquire_file
 
+  function Get_new_unit(old_unit) result(new_unit)
+
+    implicit none
+
+    integer, intent(in) :: old_unit
+    integer             :: new_unit
+    logical             :: is_open
+
+    new_unit = old_unit
+   
+    do
+      
+      inquire( unit = new_unit, opened = is_open )
+      if( .not. is_open ) exit
+      new_unit = new_unit + 1
+    
+    end do
+
+  end function Get_new_unit
+
 end module mod_inquire

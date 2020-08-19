@@ -329,7 +329,7 @@ contains
     use mod_input_read, only: rot2_factor, temp, potential, inter_energy, scale_factor
     use mod_grids,      only: Zrot, sumVexpVrot, &
                               Check_Moves, grid_trans, grid_rot1
-    use mod_inquire,    only: Inquire_file             
+    use mod_inquire,    only: Inquire_file, Get_new_unit       
     use mod_error_handling
 
     implicit none
@@ -366,7 +366,7 @@ contains
 
     if ( potential == "none" ) then
 
-      file_unit   = 16
+      file_unit   = Get_new_unit(10)
       file_format = "formatted"
       file_access = "sequential"
       file_name   = "energy.log"
@@ -413,7 +413,7 @@ contains
 
     else
 
-      file_unit   = 271
+      file_unit   = Get_new_unit(10)
       file_format = "unformatted"
       file_access = "stream"
       file_name   = "energy.bin"

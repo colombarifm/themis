@@ -157,7 +157,7 @@ contains
   !> @author Felippe M. Colombari
   !---------------------------------------------------------------------------	
   subroutine Search_structures
-    use mod_inquire        , only: Inquire_file
+    use mod_inquire        , only: Inquire_file, Get_new_unit
     use mod_input_read     , only: nstruc, vector1, ref1, vector2, ref2
     use mod_read_molecules
     use mod_grids
@@ -169,12 +169,14 @@ contains
     integer                                      :: n, r2, r1, t
     integer, allocatable, dimension(:)           :: r2_position, r1_position, t_position
     character( len = 4 )                         :: nfrm
-    integer                                      :: file_unit   = 17        
+    integer                                      :: file_unit          
     character( len = 9 )                         :: file_format = "formatted"
     character( len = 10 )                        :: file_access = "sequential"
     character( len = 15 )                        :: file_name   = "energy-sort.log"
     integer                                      :: ierr
     type(error)                                  :: err
+
+    file_unit = Get_new_unit(10)
 
     call Inquire_file( file_unit, file_name, file_format, file_access )
 

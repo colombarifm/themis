@@ -152,7 +152,7 @@ contains
   !> @author Felippe M. Colombari
   !---------------------------------------------------------------------------	
   subroutine Read_molecule ( this, molecule_filename )
-    use mod_inquire, only: Inquire_file
+    use mod_inquire        , only: Inquire_file, Get_new_unit
     use mod_error_handling
 
     implicit none
@@ -160,13 +160,15 @@ contains
     class( molecule ), intent(inout) :: this
     character( len = * ), intent(in) :: molecule_filename
     integer                          :: i
+    integer                          :: file_unit   
     integer                          :: ios         = 0
-    integer                          :: file_unit   = 10        
     character( len = 15 )            :: file_format = "formatted"
     character( len = 15 )            :: file_access = "sequential"
 
     integer                          :: ierr
     type(error)                      :: err
+
+    file_unit = Get_new_unit(10)
 
     call Inquire_file( file_unit, molecule_filename, file_format, file_access )
 

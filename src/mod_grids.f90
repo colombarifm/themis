@@ -74,7 +74,7 @@ contains
   !> @author Felippe M. Colombari
   !---------------------------------------------------------------------------	
   subroutine Read_grid( this, grid_filename )
-    use mod_inquire        , only : Inquire_file
+    use mod_inquire        , only : Inquire_file, Get_new_unit
     use mod_error_handling
 
     implicit none
@@ -82,14 +82,16 @@ contains
     class( grid ), intent(inout) :: this
     character( len = * ), intent(in) :: grid_filename
     integer                          :: t
+    integer                          :: file_unit        
     integer                          :: ios         = 0
-    integer                          :: file_unit   = 10        
     character( len = 15 )            :: file_format = "formatted"
     character( len = 15 )            :: file_access = "sequential"
 
     integer                          :: ierr
 
     type(error) :: err
+
+    file_unit = Get_new_unit(10)
 
     call Inquire_file( file_unit, grid_filename, file_format, file_access )
 

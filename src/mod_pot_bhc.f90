@@ -80,8 +80,8 @@ contains
   !> - parameters2: contains labels, atomic charges, A, B and C values for molecule 2
   !---------------------------------------------------------------------------	
   subroutine Read_BHC_Params( this, bhc_filename, numat )
-    use mod_constants, only: dashline
-    use mod_inquire, only: Inquire_file
+    use mod_constants      , only: dashline
+    use mod_inquire        , only: Inquire_file, Get_new_unit
     use mod_error_handling
 
     implicit none
@@ -90,14 +90,16 @@ contains
     character( len = * ), intent(IN)     :: bhc_filename
     integer, intent(IN)                  :: numat
     integer                              :: i
+    integer                              :: file_unit           
     integer                              :: ios         = 0
-    integer, parameter                   :: file_unit   = 12            
     character( len = * ), parameter      :: file_format = "formatted"
     character( len = * ), parameter      :: file_access = "sequential"
     character( len = 2 )                 :: dummy
     character( len = 10 )                :: line_number
     integer                              :: ierr
     type(error)                          :: err
+
+    file_unit = Get_new_unit(10)
 
     call Inquire_file( file_unit, bhc_filename, file_format, file_access )
 
