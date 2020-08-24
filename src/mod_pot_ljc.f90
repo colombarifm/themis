@@ -8,8 +8,6 @@
 !                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
 !                 <http://www.lqt.dq.ufscar.br>
 !
-!   Please cite: 
-!
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
 !---------------------------------------------------------------------------------------------------
@@ -92,6 +90,7 @@ contains
     integer                              :: i
     integer                              :: file_unit           
     integer                              :: ios         = 0
+    character( len = * ), parameter      :: file_status = "old"
     character( len = * ), parameter      :: file_format = "formatted"
     character( len = * ), parameter      :: file_access = "sequential"
     character( len = 2 )                 :: dummy
@@ -101,7 +100,7 @@ contains
 
     file_unit = Get_new_unit(10)
 
-    call Inquire_file( file_unit, ljc_filename, file_format, file_access )
+    call Inquire_file( file_unit, ljc_filename, file_status, file_format, file_access )
 
     allocate( this % ljc_atoms( numat ), stat=ierr )
     if(ierr/=0) call err%error('e',message="abnormal memory allocation")
@@ -229,7 +228,7 @@ contains
   !> - dummy sites (X*) are skipped
   !------------------------------------------------------------------------------
   subroutine  Calc_ljc_energy( this, r2, r1, t )
-    use mod_input_read, only: rcut_sqr, atom_overlap, inter_energy, scale_factor
+    use mod_input_read, only: rcut_sqr, atom_overlap, inter_energy
 
     implicit none
 
@@ -292,7 +291,7 @@ contains
 
     enddo jlp
 
-    inter_energy( r2, r1, t ) = ( this % pot_coul + this % pot_lj ) / scale_factor
+    inter_energy( r2, r1, t ) = ( this % pot_coul + this % pot_lj ) 
   
     return
   end subroutine Calc_ljc_energy

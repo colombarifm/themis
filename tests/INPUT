@@ -1,17 +1,16 @@
 rot1_factor : 2
 translation_factor : 2
-rot2_factor :  36
+rot2_factor :  2 
 rot2_range : 360.0
 temperature : 300 
-potential : lj-coul
+potential : none   
 ref_mol1 : 1                  
 rot_ref_mol1 : 4
 ref_mol2 : 1 
 rot_ref_mol2 : 2
-shortest_distance : 0.8
+shortest_distance : 1.2
 write_xtc : no 
 lowest_structures : 10
-write_frames : none
+write_frames : MOP 
 mopac_job : pm7 1scf mop
-scaling_factor : 1
 cutoff_distance : 0.0

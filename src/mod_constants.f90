@@ -8,8 +8,6 @@
 !                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
 !                 <http://www.lqt.dq.ufscar.br>
 !
-!   Please cite: 
-!
 !   This file was written by Felippe M. Colombari.
 !
 !---------------------------------------------------------------------------------------------------

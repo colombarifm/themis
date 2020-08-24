@@ -19,8 +19,6 @@ cd build
 cmake ..
 make
 
-#check bin
-
 ## 4. Talk to us
 In any case please contact us:
 

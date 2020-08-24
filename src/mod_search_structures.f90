@@ -8,8 +8,6 @@
 !                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
 !                 <http://www.lqt.dq.ufscar.br>
 !
-!   Please cite: 
-!
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
 !---------------------------------------------------------------------------------------------------
@@ -99,8 +97,9 @@ contains
   !>   iii) Now the lowest free energy value from array A will be the second value from array B and so on...
   !---------------------------------------------------------------------------	 
   subroutine Sort_energy
-    use mod_input_read, only: nstruc, inter_energy
-    use mod_loops,      only: kBT, min_ener, ztrans
+    use mod_inquire        , only: Inquire_file, Get_new_unit
+    use mod_input_read     , only: nstruc, inter_energy
+    use mod_loops          , only: kBT, min_ener, ztrans
     use mod_error_handling
 
     implicit none
@@ -108,14 +107,18 @@ contains
     integer                                      :: i
     real( kind = DP )                            :: inv_Ztrans
     real( kind = DP ), allocatable, dimension(:) :: prob
-    integer                                      :: file_unit   = 17        
-    character( len = 9 )                         :: file_format = "formatted"
-    character( len = 7 )                         :: file_status = "unknown"
-    character( len = 15 )                        :: file_name   = "energy-sort.log"
+    integer                                      :: file_unit          
+    character( len = * ), parameter              :: file_access = "sequential"
+    character( len = * ), parameter              :: file_format = "formatted"
+    character( len = * ), parameter              :: file_status = "unknown"
+    character( len = * ), parameter              :: file_name   = "energy-sort.log"
     integer                                      :: ierr
     type(error)                                  :: err
 
-    open( unit = file_unit, file = file_name, form = file_format, status = file_status )
+    file_unit = Get_new_unit(10)
+
+    open( unit = file_unit, file = trim(file_name), status = file_status, &
+          form = trim(file_format), access = trim(file_access) ) 
 
     write(file_unit,'(A)') '# inter_energy(g,r,t) # r2  #   r1  #   t   #    prob.   # sum prob.'
 
@@ -170,15 +173,16 @@ contains
     integer, allocatable, dimension(:)           :: r2_position, r1_position, t_position
     character( len = 4 )                         :: nfrm
     integer                                      :: file_unit          
-    character( len = 9 )                         :: file_format = "formatted"
-    character( len = 10 )                        :: file_access = "sequential"
-    character( len = 15 )                        :: file_name   = "energy-sort.log"
+    character( len = * ), parameter              :: file_status = "old"
+    character( len = * ), parameter              :: file_format = "formatted"
+    character( len = * ), parameter              :: file_access = "sequential"
+    character( len = * ), parameter              :: file_name   = "energy-sort.log"
     integer                                      :: ierr
     type(error)                                  :: err
 
     file_unit = Get_new_unit(10)
 
-    call Inquire_file( file_unit, file_name, file_format, file_access )
+    call Inquire_file( file_unit, file_name, file_status, file_format, file_access )
 
     write(output_unit,'(/,T5,a23)',advance="no") "SEARCHING STRUCTURES..."   
 

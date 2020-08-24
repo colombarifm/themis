@@ -8,8 +8,6 @@
 !                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
 !                 <http://www.lqt.dq.ufscar.br>
 !
-!   Please cite: 
-!
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
 !---------------------------------------------------------------------------------------------------
@@ -47,7 +45,7 @@ module mod_input_read
 
   private 
   public Read_input_file, potential, writeframe, wrtxtc, temp, rcut_sqr, cutoff_sqr, rot1_factor, rot2_factor, &
-    trans_factor, max_rot2, ref1, ref2, vector1, vector2, nstruc, atom_overlap, inter_energy, scale_factor
+    trans_factor, max_rot2, ref1, ref2, vector1, vector2, nstruc, atom_overlap, inter_energy, mopac_head
 
   ! Attributes in keyword
     
@@ -62,7 +60,6 @@ module mod_input_read
   real( kind = DP )      :: cutoff       = 0.0
   real( kind = DP )      :: cutoff_sqr   = 0.0
   real( kind = DP )      :: max_rot2     = 0.0
-  integer                :: scale_factor = 0
   integer                :: trans_factor = 0
   integer                :: rot1_factor  = 0
   integer                :: rot2_factor  = 0
@@ -78,7 +75,6 @@ module mod_input_read
   logical                :: key_rot2_factor          = .false.
   logical                :: key_potential            = .false.
   logical                :: key_temperature          = .false.
-  logical                :: key_scale_factor         = .false.
   logical                :: key_write_frames         = .false.
   logical                :: key_ref_mol1             = .false.
   logical                :: key_ref_mol2             = .false.
@@ -107,6 +103,7 @@ contains
     integer                          :: nochar      = 0
     integer                          :: line        = 0
     integer                          :: ios         = 0      
+    character( len = 3 ), parameter  :: file_status = "old"
     character( len = 15 ), parameter :: file_access = "sequential"
     character( len = 15 ), parameter :: file_format = "formatted"
     character( len = 40 ), parameter :: file_name   = "INPUT"
@@ -117,7 +114,7 @@ contains
   
     file_unit = Get_new_unit(10)
 
-    call Inquire_file( file_unit , file_name , file_format , file_access )
+    call Inquire_file( file_unit , file_name , file_status, file_format , file_access )
 
     do while ( ios == 0 )
 
@@ -258,35 +255,6 @@ contains
           else
 
             read(attribute, *, iostat=ios) rot2_factor
-
-          endif
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        else if ( buffer(1:15) == 'scaling_factor ' ) then
-
-          key_scale_factor = .true.
-
-          nochar = verify( trim( attribute ), int_alphabet )
-
-          if ( ( nochar > 0 ) .or. ( len( trim( attribute ) ) == 0 ) ) then
-
-            msg_line = "Please use an integer to define a scaling factor for energy."
-
-            call err%error('e',message="while reading INPUT file.")
-
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
-              &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
-
-            call err%error('e',tip=msg_line)
-
-            call Display_date_time( "FINISHED AT: " )
-            
-            stop
-
-          else
-
-            read(attribute, *, iostat=ios) scale_factor
 
           endif
 
@@ -687,10 +655,6 @@ contains
         call err%error('e',message="Missing valid entry for 'rot2_factor' on INPUT file!")
     else if ( key_rot2_range .eqv. .false. ) then
         call err%error('e',message="Missing valid entry for 'rot2_range' on INPUT file!")
-    else if ( key_scale_factor .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'scaling_factor' on INPUT file!")
-    else if ( key_temperature .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'temperature' on INPUT file!")
     else if ( key_potential .eqv. .false. ) then
         call err%error("Missing valid entry for 'potential' on INPUT file!")
     else if ( key_write_frames .eqv. .false. ) then

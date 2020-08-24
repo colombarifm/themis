@@ -8,8 +8,6 @@
 !                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
 !                 <http://www.lqt.dq.ufscar.br>
 !
-!   Please cite: 
-!
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
 !---------------------------------------------------------------------------------------------------
@@ -82,6 +80,7 @@ contains
 
     real( kind = DP )                 :: lowest
     character( len = 20 )             :: prefix
+    character( len = 128 )            :: header
 
     type( ljc_dimer ), target         :: ljc_target
     type( bhc_dimer ), target         :: bhc_target
@@ -225,6 +224,8 @@ contains
         
                 call dimers % Build_dimer
           
+                call dimers % Write_mop( mopac_head )
+                            
                 close(66)
               
             END SELECT
@@ -326,7 +327,7 @@ contains
   !>   in exponential calculation
   !---------------------------------------------------------------------------	
   subroutine Rerun_loops
-    use mod_input_read, only: rot2_factor, temp, potential, inter_energy, scale_factor
+    use mod_input_read, only: rot2_factor, temp, potential, inter_energy
     use mod_grids,      only: Zrot, sumVexpVrot, &
                               Check_Moves, grid_trans, grid_rot1
     use mod_inquire,    only: Inquire_file, Get_new_unit       
@@ -340,6 +341,7 @@ contains
     character( len = : ), allocatable :: file_format 
     character( len = : ), allocatable :: file_access 
     character( len = : ), allocatable :: file_name   
+    character( len = : ), allocatable :: file_status 
     character( len = 64 )             :: line1
     integer                           :: ierr
     type(error)                       :: err
@@ -370,8 +372,9 @@ contains
       file_format = "formatted"
       file_access = "sequential"
       file_name   = "energy.log"
+      file_status = "old"
 
-      call Inquire_file( file_unit, file_name, file_format, file_access )
+      call Inquire_file( file_unit , file_name , file_status, file_format , file_access )
 
       read(file_unit,*,iostat=ios) line1
   
@@ -390,8 +393,6 @@ contains
           do r2 = 1, rot2_factor
 
             read(file_unit,*,iostat=ios) inter_energy( r2, r1, t )
-
-            inter_energy( r2, r1, t ) = inter_energy( r2, r1, t ) / scale_factor
 
             if ( ios /= 0 ) then
 
@@ -417,8 +418,9 @@ contains
       file_format = "unformatted"
       file_access = "stream"
       file_name   = "energy.bin"
+      file_status = "old"
 
-      call Inquire_file( file_unit, file_name, file_format, file_access )
+      call Inquire_file( file_unit , file_name , file_status, file_format , file_access )
         
       do t = 1, grid_trans % numpoint
 
@@ -428,8 +430,6 @@ contains
 
             read(file_unit, iostat=ios) inter_energy( r2, r1, t )
 
-            inter_energy( r2, r1, t ) = inter_energy( r2, r1, t ) / scale_factor
-              
             if ( ios /= 0 ) then
 
               call err%error('e',message="Error while reading energy.bin file.")

@@ -8,8 +8,6 @@
 !                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
 !                 <http://www.lqt.dq.ufscar.br>
 !
-!   Please cite: 
-!
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
 !---------------------------------------------------------------------------------------------------
@@ -102,6 +100,10 @@ contains
             CASE( '--license' )
 
               call Display_license
+
+            CASE( '--citation' )
+
+              call Display_citation
 
             CASE( '--rerun' )
             
@@ -307,47 +309,44 @@ contains
             
     implicit none
 
-    write(output_unit,'(/,T10, A)')'   Usage:  themis [RUNTYPE] [GRID]     '
+    write(output_unit,'(/,T3,A)')  dashline
+    write(output_unit,'(/,T36,A)') 'Usage:  themis [RUNTYPE] [GRID]     '
       
-    write(output_unit,'(/,T3, A)') dashline
-    write(output_unit,'(/,T25, A)')'      [RUNTYPE] options'       
-    write(output_unit,'(/,T10, A10, 15x, A)') adjustr('--run'), &
-                                 &adjustl('Start new calculation.')
-    write(output_unit,'(/,T10, A10, 15x, A)') adjustr('--rerun'), &
-                                 &adjustl('Calculate properties from:') 
-    write(output_unit,'(T10, A10, 17x, A)') adjustr(''), &
-                                 &adjustl('energy.bin - energies obtained from Themis run;')
-    write(output_unit,'(T10, A10, 17x, A)') adjustr(''), &
-                                 &adjustl('energy.log - energies obtained from external calculation.')
+    write(output_unit,'(/,T3,A)')   dashline
+    write(output_unit,'(/,T30,A)') '[RUNTYPE] options'       
+    write(output_unit,'(/,T8,A18,4x,A)') adjustr('--run'), &
+                                        &adjustl('Start new calculation.')
+    write(output_unit,'(/,T8,A18,4x,A)') adjustr('--rerun'), &
+                                        &adjustl('Calculate properties from:') 
+    write(output_unit,'(T10,A10,12x,A)') adjustr(''), &
+                                        &adjustl('energy.bin - energies obtained from Themis run;')
+    write(output_unit,'(T10,A10,12x,A)') adjustr(''), &
+                                        &adjustl('energy.log - energies obtained from external calculation.')
     
-    write(output_unit,'(/,T3, A)') dashline
+    write(output_unit,'(/,T3,A)')  dashline
+    write(output_unit,'(/,T30,A)') '[GRID] options'       
+    write(output_unit,'(/,T8,A18,4x,A)') adjustr('--shell <radius>'), &
+                                        &adjustl('Translation moves will be performed on a spherical shell generated')
+    write(output_unit,'(T8,A10,12x,A)')  adjustr(''), &
+                                        &adjustl('on the run. The real argument <radius> (in Angstrom) scales its radius.') 
 
-    write(output_unit,'(/,T25, A)')'     [GRID] options'       
-    write(output_unit,'(/,T10, A18, 7x, A)') adjustr('--shell <radius>'), &
-                                 &adjustl('Translation moves will be performed on a spherical shell')
-    write(output_unit,'(T10, A10, 15x, A)') adjustr(''), &
-                                 &adjustl('generated on the run. The real argument <radius> is the') 
-    write(output_unit,'(T10, A10, 15x, A)') adjustr(''), &
-                                 &adjustl('scaling factor for the radius (in Angstrom);')
-
-    write(output_unit,'(/,T10, A18, 7x, A)') adjustr('--user <file.xyz>'), &
-                                & adjustl('Translation moves will be performed on an user-defined')
-    write(output_unit,'(T10, A10, 15x, A)') adjustr(''), &
-                                 &adjustl('grid read from <file.xyz>. It must be aligned with')
-    write(output_unit,'(T10, A10, 15x, A)') adjustr(''), &
-                                 &adjustl('molecule 1;')
+    write(output_unit,'(/,T8,A18,4x,A)') adjustr('--user <file.xyz>'), &
+                                        &adjustl('Translation moves will be performed on an user-defined grid read from')
+    write(output_unit,'(T8,A10,12x,A)')  adjustr(''), &
+                                        &adjustl('<file.xyz> that must be aligned with molecule 1.')
       
-    write(output_unit,'(/,T3, A)') dashline
-    write(output_unit,'(/,T25, A)')'        Other options'       
-    write(output_unit,'(/,T10, A10, 15x, A)') adjustr('--help'), &
-                                 &adjustl('Display this help')
-    write(output_unit,'(/,T10, A10, 15x, A)') adjustr('--version'), &
-                                 &adjustl('Display the version')
-    write(output_unit,'(/,T3, A)') dashline
+    write(output_unit,'(/,T3,A,/)') dashline
+    write(output_unit,'(T8,A18,4x,A)') adjustr('--help'), &
+                                      &adjustl('Display this help')
+    write(output_unit,'(T8,A18,4x,A)') adjustr('--license'), &
+                                      &adjustl('Display the license')
+    write(output_unit,'(T8,A18,4x,A)') adjustr('--citation'), &
+                                      &adjustl('Display Themis papers')
+    write(output_unit,'(/,T3,A)') dashline
 
     write(output_unit,'(/,T3, A)') '   Report bugs to:'
-    write(output_unit,'(T10, A)') '   Felippe M. Colombari   - colombarifm@hotmail.com'
-    write(output_unit,'(T10, A)') '   Asdrubal Lozada-Blanco - aslozada@gmail.com'
+    write(output_unit,'(T10, A)')  '   Felippe M. Colombari   - colombarifm@hotmail.com'
+    write(output_unit,'(T10, A)')  '   Asdrubal Lozada-Blanco - aslozada@gmail.com'
 
     write(output_unit,'(/,T3, A,/)') dashline
     
@@ -365,28 +364,66 @@ contains
 
     implicit none
    
-    write(output_unit,'(/,T3, A,/)') dashline
-    write(output_unit,'(T36, A)')'Copyright 2020 Felippe M. Colombari'
-    write(output_unit,'(/,T33, A)')'License GPLv3+: GNU GPL version 3 or later' 
-    write(output_unit,'(/,T6, A)')' This program is free software: you can redistribute it and/or modify it &
-                      &under the terms of the'
-    write(output_unit,'(T5, A)')'GNU General Public License as published by the Free Software Foundation, &
-                      &either version 3 of the'
-    write(output_unit,'(T30, A)')'License, or (at your option) any later version.'
-    write(output_unit,'(/,T5, A)')'This program is distributed in the hope that it will be useful, but &
-                      &WITHOUT ANY WARRANTY; without'
-    write(output_unit,'(T12, A)')'even the implied warranty of MERCHANTABILITY or FITNESS FOR A &
-                      &PARTICULAR PURPOSE.'
-    write(output_unit,'(T26, A)')'See the GNU General Public License for more details.'
-    write(output_unit,'(/,T4, A)')'You should have received a copy of the GNU General Public License along & 
-                      &with this program. If not,'
-    write(output_unit,'(T34, A)')'see <https://www.gnu.org/licenses/>.'
-    write(output_unit,'(/,T3, A,/)') dashline
+    write(output_unit,'(/,T3,A,/)') dashline
+    write(output_unit,'(T36,A)')    'Copyright 2020 Felippe M. Colombari'
+    write(output_unit,'(/,T33,A)')  'License GPLv3+: GNU GPL version 3 or later' 
+    write(output_unit,'(/,T6,A)')   ' This program is free software: you can redistribute it and/or modify it &
+                                   &under the terms of the'
+    write(output_unit,'(T5,A)')     'GNU General Public License as published by the Free Software Foundation, &
+                                   &either version 3 of the'
+    write(output_unit,'(T30,A)')   'License, or (at your option) any later version.'
+    write(output_unit,'(/,T5,A)')  'This program is distributed in the hope that it will be useful, but &
+                                   &WITHOUT ANY WARRANTY; without'
+    write(output_unit,'(T12,A)')   'even the implied warranty of MERCHANTABILITY or FITNESS FOR A &
+                                   &PARTICULAR PURPOSE.'
+    write(output_unit,'(T26,A)')   'See the GNU General Public License for more details.'
+    write(output_unit,'(/,T4,A)')  'You should have received a copy of the GNU General Public License along & 
+                                   &with this program. If not,'
+    write(output_unit,'(T34,A)')   'see <https://www.gnu.org/licenses/>.'
+    write(output_unit,'(/,T3,A,/)') dashline
 
     if ( allocated(arg) ) deallocate(arg)
 
     call err%termination(0,'f')
 
   end subroutine Display_license
+
+  subroutine Display_citation
+
+    implicit none
+
+    write(output_unit,'(/,T3, A)') dashline
+
+    write(output_unit,'(/,T5, A)') '***** This version of THEMIS uses:'
+    write(output_unit,'(/,T5, A)') 'SPHERE_GRID library (John Burkardt)'
+    write(output_unit,'(T5, A)')   'https://people.sc.fsu.edu/~jburkardt/f_src/sphere_grid/sphere_grid.html'
+    write(output_unit,'(/,T5, A)') 'XDR library (James Barnett)'
+    write(output_unit,'(T5, A)')   'https://github.com/kmtu/xdrfort/blob/master/xdr.F90'
+
+    write(output_unit,'(/,T5, A)') '***** Detailed information about the methodology:'
+    write(output_unit,'(/,T5, A)') 'Themis: a Software to Assess Association Free Energies Via Direct Estimative of Partition'
+    write(output_unit,'(T5, A)')   'Functions. ref..., doi....'
+
+    write(output_unit,'(/,T5, A)') '***** Papers that used earlier or adapted Themis versions:'
+    write(output_unit,'(/,T5, A)') 'Emergence of complexity in hierarchically organized chiral particles.' 
+    write(output_unit,'(T5, A)')   'Science, v. 368, p. 642, 2020, doi: 10.1126/science.aaz7949' 
+
+    write(output_unit,'(/,T5, A)') 'Solvent effect on the regulation of urea hydrolysis reactions by copper complexes.'
+    write(output_unit,'(T5, A)')   'Chemistry, v. 2, p. 525, 2020, doi: 10.3390/chemistry2020032'
+
+    write(output_unit,'(/,T5, A)') 'Graphitic Carbon Nitrides as Platforms for Single-Atom Photocatalysis.'
+    write(output_unit,'(T5, A)')   'Faraday Discussions, v. xxx, p. xxx, 2020, doi: 10.1039/C9FD00112C'
+
+    write(output_unit,'(/,T5, A)') 'Site-selective photoinduced cleavage and profiling of DNA by chiral semiconductor&
+                                    & nanoparticles.'
+    write(output_unit,'(T5, A)')   'Nature Chemistry, v. 10, p. 821, 2018, doi: 10.1038/s41557-018-0083-y'
+    
+    write(output_unit,'(/,T3, A,/)') dashline
+
+    if ( allocated(arg) ) deallocate(arg)
+
+    call err%termination(0,'f')
+
+  end subroutine Display_citation
 
 end module mod_cmd_line

@@ -8,8 +8,6 @@
 !                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
 !                 <http://www.lqt.dq.ufscar.br>
 !
-!   Please cite: 
-!
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
 !---------------------------------------------------------------------------------------------------
@@ -42,15 +40,15 @@ module mod_inquire
 
 contains
 
-  subroutine Inquire_file(file_unit,file_name,file_format,file_access)
+  subroutine Inquire_file( file_unit, file_name, file_status, file_format, file_access )
       
     implicit none
 
-    logical                          :: lexists
-    integer                          :: ios
-    integer, intent(IN)              :: file_unit             
-    character( len = * ), intent(IN) :: file_format, file_access, file_name
-    type(error)                      :: err
+    logical                                    :: lexists
+    integer                                    :: ios
+    integer, intent(IN)                        :: file_unit             
+    character( len = * ), optional, intent(IN) :: file_format, file_access, file_name, file_status
+    type(error)                                :: err
     
     ios = 0
 
@@ -60,7 +58,7 @@ contains
         
       if ( lexists ) then 
 
-        open( unit = file_unit, file = trim(file_name), status = 'old', &
+        open( unit = file_unit, file = trim(file_name), status = file_status, &
               form = trim(file_format), access = trim(file_access) ) 
 
         rewind(file_unit)

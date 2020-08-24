@@ -8,8 +8,6 @@
 !                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
 !                 <http://www.lqt.dq.ufscar.br>
 !
-!   Please cite: 
-!
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
 !---------------------------------------------------------------------------------------------------
@@ -84,8 +82,9 @@ contains
     integer                          :: t
     integer                          :: file_unit        
     integer                          :: ios         = 0
-    character( len = 15 )            :: file_format = "formatted"
-    character( len = 15 )            :: file_access = "sequential"
+    character( len = * ), parameter  :: file_status = "old"
+    character( len = * ), parameter  :: file_format = "formatted"
+    character( len = * ), parameter  :: file_access = "sequential"
 
     integer                          :: ierr
 
@@ -93,7 +92,7 @@ contains
 
     file_unit = Get_new_unit(10)
 
-    call Inquire_file( file_unit, grid_filename, file_format, file_access )
+    call Inquire_file( file_unit , grid_filename , file_status, file_format , file_access )
 
     read(file_unit,*,iostat=ios) this % numpoint
     read(file_unit,*)

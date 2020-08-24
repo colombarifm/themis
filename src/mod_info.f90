@@ -8,8 +8,6 @@
 !                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
 !                 <http://www.lqt.dq.ufscar.br>
 !
-!   Please cite: 
-!
 !   This file was written by Asdrubal Lozada-Blanco and Felippe M. Colombari.
 !
 !---------------------------------------------------------------------------------------------------
@@ -55,9 +53,16 @@ contains
     write(output_unit,'(/,T8, A)')" A Software to Assess Association Free Energies via Direct Estimative of Partion Function"
     write(output_unit,'(/,T40, A, A)') "Author: Felippe M. Colombari"
     write(output_unit,'(T50, A, A)') "Brazil"
-    write(output_unit,'(/,T42, A, A)') "Program version: ",trim(version)
-    write(output_unit,'(T44, A, A)') "Revision: ", revision
+    write(output_unit,'(/,T43, A, A)') "Program version: ",trim(version)
+    write(output_unit,'(T46, A, A)') "Revision ", revision
     write(output_unit,'(T3, A)') dashline
+
+  end subroutine Display_header
+
+  subroutine Display_contributions()
+
+    implicit none
+
     write(output_unit,'(/,T5, A)') "Contributions" 
     write(output_unit,'(T8, A, A)') "Asdrubal Lozada: ", "Error handling revision"
     write(output_unit,'(/,T5, A)') "This version of THEMIS uses:"
@@ -68,7 +73,7 @@ contains
     write(output_unit,'(T10,A)') "https://github.com/kmtu/xdrfort/blob/master/xdr.F90"
     write(output_unit,'(/,T3, A)') dashline
       
-  end subroutine Display_header
+  end subroutine Display_contributions
 
   subroutine Display_date_time( string )
 
