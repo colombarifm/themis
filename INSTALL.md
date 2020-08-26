@@ -3,7 +3,7 @@
 ##  1. Download the code
 
 The source code of Themis, some utilities and documentation is available on 
-[Felippe M. Colombari repository](https://github.com/colombarifm/themis)
+[Themis repository](https://github.com/colombarifm/themis)
 
 ## 2. Install prerequisites
 
@@ -22,5 +22,5 @@ make
 ## 4. Talk to us
 In any case please contact us:
 
-[Felippe Mariano Colombari](colombarifm@hotmail.com)
-[Asdrubal Lozada-Blanco](aslozada@gmail.com)
+Felippe Mariano Colombari (colombarifm@hotmail.com)
+Asdrubal Lozada-Blanco (aslozada@gmail.com)
