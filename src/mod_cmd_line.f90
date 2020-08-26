@@ -1,12 +1,10 @@
 !---------------------------------------------------------------------------------------------------
-! THEMIS: A code to study intermolecular recognition via direct partition function estimation                                                  
+! THEMIS: A software to assess association free energies via direct estimative of partition functions                                                  
 !---------------------------------------------------------------------------------------------------
 !
 !   Free software, licensed under GNU GPL v3
 !
 !   Copyright (c) 2017 - 2020 Themis developers
-!                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
-!                 <http://www.lqt.dq.ufscar.br>
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -401,8 +399,9 @@ contains
     write(output_unit,'(T5, A)')   'https://github.com/kmtu/xdrfort/blob/master/xdr.F90'
 
     write(output_unit,'(/,T5, A)') '***** Detailed information about the methodology:'
-    write(output_unit,'(/,T5, A)') 'Themis: a Software to Assess Association Free Energies Via Direct Estimative of Partition'
-    write(output_unit,'(T5, A)')   'Functions. ref..., doi....'
+    write(output_unit,'(/,T5, A)') 'Themis:'
+    write(output_unit,'(T5, A)')   'a software to assess association free energies via direct estimative of partition functions.'
+    write(output_unit,'(T5, A)')   'ref..., doi....'
 
     write(output_unit,'(/,T5, A)') '***** Papers that used earlier or adapted Themis versions:'
     write(output_unit,'(/,T5, A)') 'Emergence of complexity in hierarchically organized chiral particles.' 
@@ -413,6 +412,12 @@ contains
 
     write(output_unit,'(/,T5, A)') 'Graphitic Carbon Nitrides as Platforms for Single-Atom Photocatalysis.'
     write(output_unit,'(T5, A)')   'Faraday Discussions, v. xxx, p. xxx, 2020, doi: 10.1039/C9FD00112C'
+
+    write(output_unit,'(/,T5, A)') 'Ion pair free energy surface as a probe of ionic liquid structure.'
+    write(output_unit,'(T5, A)')   'The Journal of Chemical Physics, v. 152, p. 014103, 2020, doi: 10.1063/1.5128693.'
+
+    write(output_unit,'(/,T5, A)') 'Low-Temperature Phase Transitions of the Ionic Liquid 1-Ethyl-3-methylimidazolium Dicyanamide'
+    write(output_unit,'(T5, A)')   'The Journal of Physical Chemistry B, v. 123, p. 9418, 2019, doi: 10.1021/acs.jpcb.9b07654.'
 
     write(output_unit,'(/,T5, A)') 'Site-selective photoinduced cleavage and profiling of DNA by chiral semiconductor&
                                     & nanoparticles.'

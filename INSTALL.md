@@ -3,7 +3,7 @@
 ##  1. Download the code
 
 The source code of Themis, some utilities and documentation is available on 
-[LQT webpage](http://www.lqt.dq.ufscar.br/lqt/lqt_software-pt.html)
+[Felippe M. Colombari repository](https://github.com/colombarifm/themis)
 
 ## 2. Install prerequisites
 
@@ -24,7 +24,3 @@ In any case please contact us:
 
 [Felippe Mariano Colombari](colombarifm@hotmail.com)
 [Asdrubal Lozada-Blanco](aslozada@gmail.com)
-
-## 5. Manual
-A reference manual of Themis can be found on the web: 
-[LQT webpage](http://www.lqt.dq.ufscar.br/lqt/lqt_software-pt.html)

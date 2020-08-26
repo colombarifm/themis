@@ -2,7 +2,7 @@
 
 ## Initial ideas and development
 
-Felippe Mariano Colombari <colombarifm@hotmail.com>  
+Felippe Mariano Colombari <colombarifm@hotmail.com> 
 André Farias de Moura     <afdemoura@gmail.com>  
 
 ## Active Developers

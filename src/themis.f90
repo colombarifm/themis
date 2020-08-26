@@ -1,12 +1,10 @@
 !---------------------------------------------------------------------------------------------------
-! THEMIS: A code to study intermolecular recognition via direct partition function estimation                                                  
+! THEMIS: A software to assess association free energies via direct estimative of partition functions                                                  
 !---------------------------------------------------------------------------------------------------
 !
 !   Free software, licensed under GNU GPL v3
 !
 !   Copyright (c) 2017 - 2020 Themis developers
-!                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
-!                 <http://www.lqt.dq.ufscar.br>
 !
 !   This file was written by Felippe M. Colombari.
 !
@@ -53,7 +51,7 @@ program themis
   
   real( kind = DP )                :: timet
   integer                          :: finish, start, rate2
-  type(error)                                      :: err
+  type(error)                      :: err
   
   call display_header()
   call Parse_arguments
@@ -117,7 +115,7 @@ program themis
 
           call Ending( timet )
 
-      end SELECT
+      END SELECT
 
     CASE ( "RERUN", "rerun" )
 
@@ -139,7 +137,7 @@ program themis
           call grid_trans % Align_grid 
           call grid_trans % Rotate_grid 
 
-      end SELECT
+      END SELECT
       
       call mol2 % Read_molecule ( "conf2.xyz" )
       call mol2 % Translate_molecule( ref2 )
@@ -160,7 +158,7 @@ program themis
       call Sort_output
       call Deallocate_arrays
 
-  end SELECT
+  END SELECT
 
   call Display_date_time( "FINISHED AT: " )           
   call err%termination(0,'f')

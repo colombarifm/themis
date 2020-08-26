@@ -7,7 +7,7 @@
 !> @date - 2014                                                           
 !> - module created                                                
 !> @date - Jan, 2018                                                           
-!> - .trr functions removed; read options removed
+!> - .trr functions removed; read options removed (Felippe M. Colombari)
 !---------------------------------------------------------------------------------------------------
 
 module xdr

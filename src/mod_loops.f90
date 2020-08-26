@@ -1,12 +1,10 @@
 !---------------------------------------------------------------------------------------------------
-! THEMIS: A code to study intermolecular recognition via direct partition function estimation                                                  
+! THEMIS: A software to assess association free energies via direct estimative of partition functions                                                  
 !---------------------------------------------------------------------------------------------------
 !
 !   Free software, licensed under GNU GPL v3
 !
 !   Copyright (c) 2017 - 2020 Themis developers
-!                 Laboratory of Theoretical Chemistry (LQT) - Federal University of São Carlos 
-!                 <http://www.lqt.dq.ufscar.br>
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -80,7 +78,6 @@ contains
 
     real( kind = DP )                 :: lowest
     character( len = 20 )             :: prefix
-    character( len = 128 )            :: header
 
     type( ljc_dimer ), target         :: ljc_target
     type( bhc_dimer ), target         :: bhc_target
