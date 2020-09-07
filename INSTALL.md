@@ -15,8 +15,11 @@ Themis compilation process require the following packages:
 ## 3. CMAKE installation
 
   `mkdir build`
+  
   `cd build`
+  
   `cmake ..`
+  
   `make`
 
 ## 4. Talk to us
