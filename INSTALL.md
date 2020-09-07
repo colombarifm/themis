@@ -10,7 +10,7 @@ The source code of Themis, some utilities and documentation is available on
 Themis compilation process require the following packages:
   * gfortran 5.4+ 
   * gcc 5.4+ 
-  * cmake
+  * cmake 2.6+
 
 ## 3. CMAKE installation
 
