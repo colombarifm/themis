@@ -20,7 +20,7 @@ See [installation instructions](./INSTALL.md)
 
 # Links for useful programs
 
-* [CENTER_OF_MASS](https://github.com/colombarifm/com) program to calculate the center of mass of molecular structures
+* [CENTER_OF_MASS](https://github.com/colombarifm/center_of_mass) program to calculate the center of mass of molecular structures
 * [SAS_GRID](https://github.com/colombarifm/sas_grid) program to generate the solvent accessible surface translation grid for molecular structures
 
 # Directory organization
