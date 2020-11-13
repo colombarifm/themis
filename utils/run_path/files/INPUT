@@ -1,6 +1,6 @@
-rot1_factor : 2
-translation_factor : 2
-rot2_factor :  36
+translation_factor : 4
+rot1_factor : 4
+rot2_factor :  120
 rot2_range : 360.0
 temperature : 300 
 potential : lj-coul
@@ -13,5 +13,4 @@ write_xtc : no
 lowest_structures : 10
 write_frames : none
 mopac_job : pm7 1scf mop
-scaling_factor : 1
 cutoff_distance : 0.0
