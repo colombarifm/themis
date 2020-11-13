@@ -203,7 +203,7 @@ contains
               
             SELECT CASE (writeframe)
 
-              CASE ("XYZ", "xyz")
+              CASE ("XYZ", "xyz", "Xyz")
 
                 open( unit = 66, file = prefix//'.xyz', status = 'unknown' )
 
@@ -215,7 +215,7 @@ contains
                             
                 close(66)
 
-              CASE ("MOP", "mop")
+              CASE ("MOP", "mop", "Mop")
   
                 open( unit = 66, file = prefix//'.mop', status = 'unknown' )
         
