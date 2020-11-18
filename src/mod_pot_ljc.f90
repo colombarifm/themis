@@ -56,6 +56,7 @@ module mod_pot_ljc
   type, extends( dimer ), public                     :: ljc_dimer
     real( kind = DP )                                :: pot_lj, pot_coul
     real( kind = DP ), allocatable, dimension(:,:)   :: eps_ij, sig_ij, q_ij
+    logical, allocatable, dimension(:,:)             :: dummy
   contains
     procedure, pass, public                        :: Calc_cross  => Calc_LJC_cross
     procedure, pass, public                        :: Calc_energy => Calc_LJC_energy 
@@ -198,10 +199,15 @@ contains
     allocate(     this % eps_ij( mol1 % num_atoms, mol2 % num_atoms ), stat=ierr )
     if(ierr/=0) call err%error('e',message="abnormal memory allocation")
 
+    allocate(     this % dummy( mol1 % num_atoms, mol2 % num_atoms ), stat=ierr )
+    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+
     this % eps_ij     = 0.0_DP
     this % sig_ij     = 0.0_DP
     this % q_ij       = 0.0_DP
-      
+    
+    this % dummy      = .false.
+
     do j = 1, mol2 % num_atoms
         
       do i = 1, mol1 % num_atoms
@@ -209,6 +215,12 @@ contains
         this % eps_ij(i,j)     = 4.0_DP * dsqrt( ( mol1_ljc % ljc_atoms(i) % eps * mol2_ljc % ljc_atoms(j) % eps ) )
         this % sig_ij(i,j)     =                   mol1_ljc % ljc_atoms(i) % sig * mol2_ljc % ljc_atoms(j) % sig
         this % q_ij(i,j)       =            CCON * mol1_ljc % ljc_atoms(i) % q   * mol2_ljc % ljc_atoms(j) % q
+
+        if ( ( mol1 % atoms(i) % symbol(1:1) == 'X') .or. ( mol2 % atoms(j) % symbol(1:1) == 'X' ) ) then
+
+          this % dummy(i,j) = .true.
+
+        endif
 
       enddo 
 
@@ -247,7 +259,7 @@ contains
         rijrij = sum( ( mol1 % atoms(i) % xyz(:) - mol2 % atoms(j) % xyz(:) ) * &
                       ( mol1 % atoms(i) % xyz(:) - mol2 % atoms(j) % xyz(:) ) )
 
-        if ( ( rijrij < rcut_sqr ) .and. ( mol2 % atoms(j) % symbol(1:1) /= 'X' ) ) then
+        if ( ( rijrij <= rcut_sqr ) .and. ( this % dummy(i,j) .eqv. .false. ) ) then 
 
           atom_overlap( r2, r1, t ) = .true.
 
@@ -257,31 +269,23 @@ contains
 
           exit jlp
 
-        else if ( ( rijrij < rcut_sqr ) .and. ( mol2 % atoms(j) % symbol(1:1) == 'X' ) ) then
-
-          continue
-
-        else if ( ( rijrij < rcut_sqr ) .and. ( mol2 % atoms(j) % symbol(1:1) == 'X' ) ) then
-
-          continue
-
-        else if ( ( rijrij > rcut_sqr ) .and. ( mol2 % atoms(j) % symbol(1:1) /= 'X' ) ) then
+        else if ( ( rijrij > rcut_sqr ) .and. ( this % dummy(i,j) .eqv. .false. ) ) then
 
           lj_factor_cube = ( this % sig_ij(i,j) / rijrij ) ** 3
 
           this % pot_lj = this % pot_lj + this % eps_ij(i,j) * ( lj_factor_cube * ( lj_factor_cube - 1 ) )
 
-        endif
-
-        if ( dabs(this % q_ij(i,j)) < 1.0d-6 ) then
-
-          continue
-
-        else
-
           rij = dsqrt(rijrij)
             
           this % pot_coul = this % pot_coul + this % q_ij(i,j) / rij
+
+        else if ( ( rijrij <= rcut_sqr ) .and. ( this % dummy(i,j) .eqv. .true. ) ) then
+
+          cycle
+
+        else if ( ( rijrij > rcut_sqr ) .and. ( this % dummy(i,j) .eqv. .true. ) ) then
+
+          cycle
 
         endif
 
