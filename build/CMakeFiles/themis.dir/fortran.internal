@@ -1,0 +1,19 @@
+# The fortran modules provided by this target.
+provides
+ mod_cmd_line
+ mod_constants
+ mod_deallocate_all
+ mod_error_handling
+ mod_grids
+ mod_info
+ mod_input_read
+ mod_inquire
+ mod_loops
+ mod_pot_bhc
+ mod_pot_ljc
+ mod_read_molecules
+ mod_resume
+ mod_search_structures
+ mod_spherical_grids
+ mod_write_vmd
+ xdr
