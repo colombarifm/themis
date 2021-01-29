@@ -1,3 +1,0 @@
-/home/felippe/themis-dev_december/build/CMakeFiles/rebuild_cache.dir
-/home/felippe/themis-dev_december/build/CMakeFiles/themis.dir
-/home/felippe/themis-dev_december/build/CMakeFiles/edit_cache.dir

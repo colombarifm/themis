@@ -30,13 +30,13 @@ import re
 #####################################################################################
 # assign the correct number of moves according to THEMIS run.
 # number of translations
-nt=     
+nt=  
 
 # number of rotations
-nr1=  
+nr1=
 
 # number of precession
-nr2= 
+nr2=
 
 # THEMIS used the interaction energy Eint = Edimer - Einf:
 
@@ -48,6 +48,9 @@ Einf_Eh=
 
 # string to be searched in QM output file
 string="TOTAL ENERGY"   
+
+# string to check SCC convergence in xTB
+check="Self consistent charge iterator did not converge"
 
 # conversion factor: hartree to kJ/mol
 Eh2kj_mol=2625.5
@@ -106,10 +109,14 @@ for t in range(1,nt+1):
  
                         energy = float(fields[3])*float(Eh2kj_mol) - float(Einf) 
 
-                        fout.write('%15.6f\t\t%04d\t%04d\t%04d\n' % (energy,r2,r1,t))
-
                         found = True
 
+                    if re.search(check, line):
+
+                        energy = float(1000000) 
+
+                fout.write('%15.6f\t\t%04d\t%04d\t%04d\n' % (energy,r2,r1,t))
+  
                 if not found:
 
                     energy = float(1000000) 
