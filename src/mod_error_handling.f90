@@ -31,7 +31,7 @@
 !---------------------------------------------------------------------------------------------------
 
 module mod_error_handling
-  use iso_fortran_env, only: output_unit
+  use iso_fortran_env, only: output_unit, error_unit
 
   implicit none
   private
@@ -71,7 +71,7 @@ contains
         if(present(code)) write(output_unit,'("Code: ",i0)') self%code
       case('e')
         !if(.not.present(message)) write(output_unit,'("Error: abnormal condition.")')     
-        if(present(message)) write(output_unit,'(/,T5,"Error: abnormal condition ",a)') self%message
+        if(present(message)) write(error_unit,'(/,T5,"Error: abnormal condition ",a)') self%message
         if(present(check)) write(output_unit,'(/,T5,"Please check ",a)') self%check
         if(present(tip)) write(output_unit,'(/,T5,"TIP: ",a)') self%tip
         if(present(code)) write(output_unit,'("Code: ",i0)') code
