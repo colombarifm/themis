@@ -66,7 +66,7 @@ if os.path.exists("energy.log"):
 fout = open("energy.log","a")
 
 # write header to file
-fout.write('%15s\t\t%04s\t%04s\t%04s\n' % ("energy","r2","r1","t"))
+fout.write('%15s\t\t%04s\t%04s\t%05s\n' % ("energy","r2","r1","t"))
 
 #############################################################################################
 #####       perform loops over all t, r1 and r2 moves according to THEMIS INPUT file    #####
@@ -93,7 +93,7 @@ for t in range(1,nt+1):
 
         for r2 in range(1,nr2+1):
 
-            filename = 'point_%04d_%04d_%04d.log' % (t, r1, r2) 
+            filename = 'point_%05d_%04d_%04d.log' % (t, r1, r2) 
 
             if os.path.exists(filename): 
 
@@ -115,13 +115,13 @@ for t in range(1,nt+1):
 
                         energy = float(1000000) 
 
-                fout.write('%15.6f\t\t%04d\t%04d\t%04d\n' % (energy,r2,r1,t))
+                fout.write('%15.6f\t\t%04d\t%04d\t%05d\n' % (energy,r2,r1,t))
   
                 if not found:
 
                     energy = float(1000000) 
                 
-                    fout.write('%15.6f\t\t%04d\t%04d\t%04d\n' % (energy,r2,r1,t))
+                    fout.write('%15.6f\t\t%04d\t%04d\t%05d\n' % (energy,r2,r1,t))
   
                     f.close()
 
@@ -129,6 +129,6 @@ for t in range(1,nt+1):
 
                 energy = float(1000000) 
 
-                fout.write('%15.6f\t\t%04d\t%04d\t%04d\n' % (energy,r2,r1,t))
+                fout.write('%15.6f\t\t%04d\t%04d\t%05d\n' % (energy,r2,r1,t))
 
 fout.close()
