@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2020 Themis developers
+!   Copyright (c) 2017 - 2021 Themis developers
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -103,7 +103,7 @@ contains
     implicit none
   
     integer                                      :: i
-    real( kind = DP )                            :: inv_Ztrans
+    real( kind = DP )                            :: inv_Ztrans, delta_E
     real( kind = DP ), allocatable, dimension(:) :: prob
     integer                                      :: file_unit          
     character( len = * ), parameter              :: file_access = "sequential"
@@ -118,7 +118,7 @@ contains
     open( unit = file_unit, file = trim(file_name), status = file_status, &
           form = trim(file_format), access = trim(file_access) ) 
 
-    write(file_unit,'(A)') '# inter_energy(g,r,t) # r2  #   r1  #   t   #    prob.   # sum prob.'
+    write(file_unit,'(A)') '# energy(r2,r1,t) #   r2 #   r1 #     t #      delta_E #        prob. #    sum_prob.'
 
     allocate( energy_ordered ( nstruc ), stat=ierr )
     if(ierr/=0) call err%error('e',message="abnormal memory allocation")
@@ -136,13 +136,15 @@ contains
 
       energy_ordered(i) = minval(inter_energy)
 
+      delta_E = energy_ordered(i) - energy_ordered(1)
+
       prob(i) = inv_Ztrans * dexp( ( -energy_ordered(i) + min_ener ) / kBT )
 
       pos_min_energy = minloc(inter_energy)
 
       inter_energy(pos_min_energy(1),pos_min_energy(2),pos_min_energy(3)) = FPINF
 
-      write(file_unit,'(4x,es13.5E3,3x,3(i5,3x),2(2x,es10.3E3))') energy_ordered(i), pos_min_energy, prob(i), sum(prob)
+      write(file_unit,'(es16.5E3,1x,2i7,i8,3es15.5E3))') energy_ordered(i), pos_min_energy, delta_E, prob(i), sum(prob)
 
     enddo
 
