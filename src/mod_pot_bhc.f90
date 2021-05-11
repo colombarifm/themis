@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2020 Themis developers
+!   Copyright (c) 2017 - 2021 Themis developers
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
