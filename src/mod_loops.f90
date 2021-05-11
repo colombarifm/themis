@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2020 Themis developers
+!   Copyright (c) 2017 - 2021 Themis developers
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -77,7 +77,7 @@ contains
     integer                           :: frame, i, j, r2, r1, t
 
     real( kind = DP )                 :: lowest
-    character( len = 20 )             :: prefix
+    character( len = 21 )             :: prefix
 
     type( ljc_dimer ), target         :: ljc_target
     type( bhc_dimer ), target         :: bhc_target
@@ -199,7 +199,7 @@ contains
 
           if ( atom_overlap( r2, r1, t ) .eqv. .false. ) then
             
-            write(prefix,'("point_",I4.4,"_",I4.4,"_",I4.4)') t, r1, r2 
+            write(prefix,'("point_",I5.5,"_",I4.4,"_",I4.4)') t, r1, r2 
               
             SELECT CASE (writeframe)
 
