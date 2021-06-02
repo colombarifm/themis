@@ -1,4 +1,6 @@
-# Themis
+<img src="https://github.com/colombarifm/themis/blob/master/logo_themis.png" width="75%" height="75%">
+
+<br />
 
 Themis is a statistichal mechanics software designed to obtain the association
 thermodynamics of two structures (ions, molecules, crystals, nanoparticles, etc). 
