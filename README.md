@@ -2,7 +2,7 @@
 
 <br />
 
-Themis is a statistichal mechanics software designed to obtain the association
+Themis is a statistical mechanics software designed to obtain the association
 thermodynamics of two structures (ions, molecules, crystals, nanoparticles, etc). 
 It generates a configurational partition function by systematically sampling 
 the phase space using discrete grids to perform translations and rotations of 
