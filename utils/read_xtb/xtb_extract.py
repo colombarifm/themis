@@ -111,11 +111,11 @@ for t in range(1,nt+1):
 
                         found = True
 
-                    if re.search(check, line):
+                        if re.search(check, line):
 
-                        energy = float(1000000) 
+                            energy = float(1000000) 
 
-                fout.write('%15.6f\t\t%04d\t%04d\t%05d\n' % (energy,r2,r1,t))
+                        fout.write('%15.6f\t\t%04d\t%04d\t%05d\n' % (energy,r2,r1,t))
   
                 if not found:
 
