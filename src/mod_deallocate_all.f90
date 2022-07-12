@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2021 Themis developers
+!   Copyright (c) 2017 - 2022 Themis developers
 !
 !   This file was written by Felippe M. Colombari.
 !
@@ -52,15 +52,39 @@ contains
     use MOD_READ_MOLECULES , only : mol1, mol2
     use MOD_GRIDS          , only : grid_trans, grid_rot1, rr, thetar, phir, Zrot, sumVexpVrot, probT
     use MOD_POT_LJC        , only : mol1_ljc, mol2_ljc, ljc_dimer
-    use MOD_POT_BHC        , only : mol1_bhc, mol2_bhc, bhc_dimer
+    !use MOD_POT_BHC        , only : mol1_bhc, mol2_bhc, bhc_dimer
     use MOD_LOOPS          , only : min_ener_t
 
     implicit none
+
+    deallocate( mol1 % conf_energy )
+    deallocate( mol2 % conf_energy )
+
+    deallocate( mol1 % rot_vector )
+    deallocate( mol1 % dphi )
+    deallocate( mol1 % dtheta )
+    deallocate( mol1 % cosphi )
+    deallocate( mol1 % sinphi )
+    deallocate( mol1 % costheta )
+    deallocate( mol1 % sintheta )
+
+    deallocate( mol2 % rot_vector )
+    deallocate( mol2 % dphi )
+    deallocate( mol2 % dtheta )
+    deallocate( mol2 % cosphi )
+    deallocate( mol2 % sinphi )
+    deallocate( mol2 % costheta )
+    deallocate( mol2 % sintheta )
 
     !!!!! ARRAYS FROM MOD_READ_XYZ !!!!!
 
     deallocate( mol1 % atoms )
     deallocate( mol2 % atoms )
+
+    deallocate( mol1 % atom_ref1 )
+    deallocate( mol1 % atom_ref2 )
+    deallocate( mol2 % atom_ref1 )
+    deallocate( mol2 % atom_ref2 )
 
     !!!!! ARRAYS FROM MOD_INPUT_READ !!!!!
 
@@ -96,12 +120,12 @@ contains
   
         !!!!! ARRAYS FROM MOD_POT_BHC.F90 !!!!!
 
-        if ( irun .eq. "run" ) then
+     !   if ( irun .eq. "run" ) then
 
-          deallocate( mol1_bhc % bhc_atoms )
-          deallocate( mol2_bhc % bhc_atoms )
+     !     deallocate( mol1_bhc % bhc_atoms )
+     !     deallocate( mol2_bhc % bhc_atoms )
 
-        endif
+     !   endif
 
       CASE ("none")
 

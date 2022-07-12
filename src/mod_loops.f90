@@ -29,20 +29,25 @@
 !> - independent module created     
 !> @date - Nov 2019
 !> - update error condition by error_handling module added by Asdrubal Lozada-Blanco
+!> @date - Apr, 2020
+!> - major revision
+!> @date - May, 2021
+!> - added support for ensemble of structures of molecule 2
+!> @date - Jul, 2022
+!> - added support to PDB files (read and write)
 !---------------------------------------------------------------------------------------------------
 
 module mod_loops
-  use iso_fortran_env, only: output_unit
+  use iso_fortran_env , only: output_unit
   use mod_constants
 
   implicit none
 
-  character( len = 4 )                         :: ntra, nrot1, nrot2
+  integer                                      :: tini, tend, rate
   real( kind = DP )                            :: t0, time, kBT, min_ener
   real( kind = DP )                            :: ATOTAL, mTSTOTAL, ETOTALavg
   real( kind = DP )                            :: Ztrans, sumVexpVtrans
   real( kind = DP ), allocatable, dimension(:) :: min_ener_t
-  integer                                      :: tini, tend, rate
 
 contains
 
@@ -64,8 +69,8 @@ contains
     use mod_read_molecules
     use mod_grids
     use mod_pot_ljc
-    use mod_pot_bhc
-    use xdr,           only: xtcfile
+    !use mod_pot_bhc
+    use xdr                , only : xtcfile
     use mod_error_handling
 
     implicit none
@@ -74,68 +79,68 @@ contains
     real( kind = SP ), dimension(:,:) :: pos(3,mol1 % num_atoms + mol2 % num_atoms)
     real( kind = SP ), dimension(3,3) :: box
     real( kind = SP )                 :: frametime, prec
-    integer                           :: frame, i, j, r2, r1, t
+    integer                           :: frame, n_atom_1, n_atom_2, n_rot2, n_rot1, n_conf, n_trans
 
     real( kind = DP )                 :: lowest
-    character( len = 21 )             :: prefix
+    character( len = 24 )             :: prefix
 
     type( ljc_dimer ), target         :: ljc_target
-    type( bhc_dimer ), target         :: bhc_target
+    !type( bhc_dimer ), target         :: bhc_target
     type( dimer ), target             :: none_target
     class( dimer ), pointer           :: potential_pointer
 
-    integer                                      :: ierr
-    type(error)                                  :: err
+    integer                           :: ierr
+    type(error)                       :: err
 
-    allocate( inter_energy( rot2_factor, grid_rot1 % numpoint, grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( inter_energy( axis_rot_moves, grid_rot1 % numpoint, nconf2, grid_trans % numpoint ), stat=ierr )
+    if(ierr/=0) call err % error( 'e', message = "abnormal memory allocation" )
       
-    allocate( atom_overlap( rot2_factor, grid_rot1 % numpoint, grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( atom_overlap( axis_rot_moves, grid_rot1 % numpoint, nconf2, grid_trans % numpoint ), stat=ierr )
+    if(ierr/=0) call err % error( 'e', message = "abnormal memory allocation" )
 
-    allocate(        Zrot( grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( Zrot( grid_trans % numpoint ), stat=ierr )
+    if(ierr/=0) call err % error( 'e', message = "abnormal memory allocation" )
 
-    allocate(  min_ener_t( grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( min_ener_t( grid_trans % numpoint ), stat=ierr )
+    if(ierr/=0) call err % error( 'e', message = "abnormal memory allocation" )
       
     allocate( sumVexpVrot( grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if(ierr/=0) call err % error( 'e', message = "abnormal memory allocation" )
 
-    frame         = 1
-    min_ener      = 0.0_DP
-    min_ener_t    = 0.0_DP
-    Zrot          = 0.0_DP
-    sumVexpVrot   = 0.0_DP
-    t0            = 0.0_DP
-    inter_energy  = 0.0_DP
-    atom_overlap  = .false.
-    kBT           = KB * temp
+    frame        = 1
+    min_ener     = 0.0_DP
+    min_ener_t   = 0.0_DP
+    Zrot         = 0.0_DP
+    sumVexpVrot  = 0.0_DP
+    t0           = 0.0_DP
+    inter_energy = 0.0_DP
+    atom_overlap = .false.
+    kBT          = KB * temp
       
-    SELECT CASE (wrtxtc)
+    select case ( wrtxtc )
 
-      CASE ("yes", "true", "T")
+      case ( "yes", "true", "T" )
 
-        box      = 0.0_SP
-        prec     = 1000.0_SP
+        box  = 0.0_SP
+        prec = 1000.0_SP
           
         call xtc_out % init( "full_ensemble.xtc", "w" )
-
-    end SELECT
+  
+    end select
   
     open( unit = 79, file = 'grid_log.log', status = 'replace' )
 
-    write(79,'("t point   rejected structures   time (s)")') 
+    write( 79,'("#n_trans  rejected structures   time (s)")' ) 
         
-    flush(79)
+    flush( 79 )
       
     ! WRITE ENERGY VALUES ON BINARY FILE (FASTER WRITING AND +80% SPACE SAVING!):
       
     open( unit = 271, file = 'energy.bin', form = 'unformatted', access = 'stream', status = 'replace' )
 
-    SELECT CASE (potential)
+    select case ( potential )
 
-      CASE ("lj-coul")
+      case ( "lj-coul" )
 
         potential_pointer => ljc_target
 
@@ -145,169 +150,205 @@ contains
         call mol1_ljc % Check_LJC_params( 1, mol1 % num_atoms, "parameters1" )
         call mol2_ljc % Check_LJC_params( 2, mol2 % num_atoms, "parameters2" )
 
-      CASE ("bh-coul")
+      !TO DO
+      !CASE ("lj")
+      !CASE ("lj-coul_AB")
+      !CASE ("lj_AB")
 
-        potential_pointer => bhc_target
+      case ( "bh-coul" )
 
-        call mol1_bhc % Read_BHC_params( "parameters1", mol1 % num_atoms )
-        call mol2_bhc % Read_BHC_params( "parameters2", mol2 % num_atoms )
+        !potential_pointer => bhc_target
 
-        call mol1_bhc % Check_BHC_params( 1, mol1 % num_atoms, "parameters1" )
-        call mol2_bhc % Check_BHC_params( 2, mol2 % num_atoms, "parameters2" )
+        !call mol1_bhc % Read_BHC_params( "parameters1", mol1 % num_atoms )
+        !call mol2_bhc % Read_BHC_params( "parameters2", mol2 % num_atoms )
 
-      CASE ("none")
+        !call mol1_bhc % Check_BHC_params( 1, mol1 % num_atoms, "parameters1" )
+        !call mol2_bhc % Check_BHC_params( 2, mol2 % num_atoms, "parameters2" )
+
+      case ( "none" )
 
         potential_pointer => none_target
 
-    end SELECT
+    end select
 
     call Check_moves
     call potential_pointer % Calc_cross
 
-    write(output_unit,'(/,T5,a17)',advance='no') "ENTERING LOOPS..."
+    write( output_unit, '(/,T5,a17)', advance = 'no' ) "ENTERING LOOPS..."
     
-    call system_clock(tini, rate)
+    call system_clock( tini, rate )
 
-    tlp: do t = 1, grid_trans % numpoint
+!    do n_conf = 1, nconf2
 
-      call mol2 % Translate_molecule( ref2 )
+!      write(666,*) mol2 % num_atoms
+!      write(666,*) 
       
-      grid_rot1 % points(:) % grid_xyz(1) = grid_rot1 % points(:) % grid_xyz(1) * mol2 % rot_vector
-      grid_rot1 % points(:) % grid_xyz(2) = grid_rot1 % points(:) % grid_xyz(2) * mol2 % rot_vector
-      grid_rot1 % points(:) % grid_xyz(3) = grid_rot1 % points(:) % grid_xyz(3) * mol2 % rot_vector
+!      do n_atom_2 = 1, mol2 % num_atoms
+
+!        write(666,'(a3,3f12.6)') mol2 % atoms( n_conf, n_atom_2 ) % symbol, mol2 % atoms( n_conf, n_atom_2 ) % xyz(:)
+
+!      enddo
+
+!    enddo
+
+    tlp: do n_trans = 1, grid_trans % numpoint
+
+      clp: do n_conf = 1, nconf2  ! mol2 % nconf
+
+        call mol2 % Translate_molecule( ref2, n_conf )
+      
+        grid_rot1 % points(:) % grid_xyz(1) = grid_rot1 % points(:) % grid_xyz(1) * mol2 % rot_vector( n_conf )
+        grid_rot1 % points(:) % grid_xyz(2) = grid_rot1 % points(:) % grid_xyz(2) * mol2 % rot_vector( n_conf )
+        grid_rot1 % points(:) % grid_xyz(3) = grid_rot1 % points(:) % grid_xyz(3) * mol2 % rot_vector( n_conf )
           
-      r1lp: do r1 = 1, grid_rot1 % numpoint
+        r1lp: do n_rot1 = 1, grid_rot1 % numpoint
 
-        costhetar = dcos(thetar(r1))
-        sinthetar = dsin(thetar(r1))
-        cosphir   = dcos(phir(r1))
-        sinphir   = dsin(phir(r1))
+          costhetar = dcos(thetar( n_rot1 ))
+          sinthetar = dsin(thetar( n_rot1 ))
+          cosphir   = dcos(phir( n_rot1 ))
+          sinphir   = dsin(phir( n_rot1 ))
 
-        r2lp: do r2 = 1, rot2_factor
+          r2lp: do n_rot2 = 1, axis_rot_moves
 
-          call mol2 % Rotate_molecule( r2 ) 
+            call mol2 % Rotate_molecule( n_rot2, n_conf ) 
 
-          do j = 1, mol2 % num_atoms
+            do n_atom_2 = 1, mol2 % num_atoms
 
-            mol2 % atoms(j) % xyz(:) = mol2 % atoms(j) % xyz(:) + grid_trans % points(t) % grid_xyz(:)
+              mol2 % atoms( n_conf, n_atom_2 ) % xyz(:) = mol2 % atoms( n_conf, n_atom_2 ) % xyz(:) &
+                                                        + grid_trans % points( n_trans ) % grid_xyz(:)
 
-          enddo
+            enddo
 
-          call potential_pointer % Calc_energy( r2, r1, t )
+            call potential_pointer % Calc_energy( n_rot2, n_rot1, n_conf, n_trans )
 
-          write(271) inter_energy( r2, r1, t )
+            inter_energy( n_rot2, n_rot1, n_conf, n_trans ) = inter_energy( n_rot2, n_rot1, n_conf, n_trans ) &
+                                                            + mol2 % conf_energy( n_conf )
 
-          if ( atom_overlap( r2, r1, t ) .eqv. .false. ) then
+            write( 271 ) inter_energy( n_rot2, n_rot1, n_conf, n_trans )
+
+            if ( atom_overlap( n_rot2, n_rot1, n_conf, n_trans ) .eqv. .false. ) then
             
-            write(prefix,'("point_",I5.5,"_",I4.4,"_",I4.4)') t, r1, r2 
+              write( prefix, '("point_",I5.5,"_",I2.2,"_",I4.4,"_",I4.4)' ) n_trans, n_conf, n_rot1, n_rot2 
               
-            SELECT CASE (writeframe)
+              select case ( writeframe )
 
-              CASE ("XYZ", "xyz", "Xyz")
+                case ( "XYZ", "xyz", "Xyz" )
 
-                open( unit = 66, file = prefix//'.xyz', status = 'unknown' )
+                  open( unit = 66, file = prefix//'.xyz', status = 'unknown' )
 
-                lowest = 0.0_DP
+                  lowest = 0.0_DP
 
-                call dimers % Build_dimer
+                  call dimers % Build_dimer( n_conf, "XYZ" )
              
-                call dimers % Write_xyz( lowest )
+                  call dimers % Write_xyz( lowest, n_conf )
                             
-                close(66)
+                  close( 66 )
 
-              CASE ("MOP", "mop", "Mop")
+                case ( "PDB", "pdb", "Pdb" )
+
+                  open( unit = 66, file = prefix//'.pdb', status = 'unknown' )
+
+                  call dimers % Build_dimer( n_conf, "PDB" )
+             
+                  call dimers % Write_pdb( n_conf )
+                           
+                  close( 66 )
+
+                case ( "MOP", "mop", "Mop" )
   
-                open( unit = 66, file = prefix//'.mop', status = 'unknown' )
+                  open( unit = 66, file = prefix//'.mop', status = 'unknown' )
         
-                call dimers % Build_dimer
+                  call dimers % Build_dimer( n_conf, "XYZ" )
           
-                call dimers % Write_mop( mopac_head )
+                  call dimers % Write_mop( mopac_head, n_conf )
                             
-                close(66)
+                  close( 66 )
               
-            END SELECT
+              end select
 
-          endif 
+            endif 
 
-          SELECT CASE (wrtxtc)
+            select case ( wrtxtc )
 
-            CASE ( "yes", "true", "T" )
+              case ( "yes", "true", "T" )
 
-              do i = 1, mol1 % num_atoms
+                do n_atom_1 = 1, mol1 % num_atoms
 
-                pos(:,i) = mol1 % atoms(i) % xyz(:) / 10.0_SP
+                  pos( :, n_atom_1 ) = mol1 % atoms( 1, n_atom_1 ) % xyz(:) / 10.0_SP
 
-              enddo
+                enddo
 
-              do j = 1, mol2 % num_atoms
+                do n_atom_2 = 1, mol2 % num_atoms
 
-                pos(:,j+mol1 % num_atoms) = mol2 % atoms(j) % xyz(:) / 10.0_SP
+                  pos( :, n_atom_2+mol1 % num_atoms ) = mol2 % atoms( n_conf, n_atom_2 ) % xyz(:) / 10.0_SP
 
-              enddo
+                enddo
 
-              frametime = frame / 1000.0_SP
+                frametime = frame / 1000.0_SP
 
-              call xtc_out % write( mol1 % num_atoms + mol2 % num_atoms, frame, frametime, box, pos, prec )
+                call xtc_out % write( mol1 % num_atoms + mol2 % num_atoms, frame, frametime, box, pos, prec )
 
-              frame = frame + 1
+                frame = frame + 1
 
-          end SELECT
+            end select
 
-          mol2 % atoms(:) % xyz(1) = mol2 % atoms(:) % xyz_old(1)
-          mol2 % atoms(:) % xyz(2) = mol2 % atoms(:) % xyz_old(2)
-          mol2 % atoms(:) % xyz(3) = mol2 % atoms(:) % xyz_old(3)
+            mol2 % atoms(n_conf,:) % xyz(1) = mol2 % atoms(n_conf,:) % xyz_old(1)
+            mol2 % atoms(n_conf,:) % xyz(2) = mol2 % atoms(n_conf,:) % xyz_old(2)
+            mol2 % atoms(n_conf,:) % xyz(3) = mol2 % atoms(n_conf,:) % xyz_old(3)
 
-        enddo r2lp
+          enddo r2lp
 
-      enddo r1lp
+        enddo r1lp
 
-      grid_rot1 % points(:) % grid_xyz(1) = grid_rot1 % points(:) % grid_xyz(1) / mol2 % rot_vector
-      grid_rot1 % points(:) % grid_xyz(2) = grid_rot1 % points(:) % grid_xyz(2) / mol2 % rot_vector
-      grid_rot1 % points(:) % grid_xyz(3) = grid_rot1 % points(:) % grid_xyz(3) / mol2 % rot_vector
-          
+        grid_rot1 % points(:) % grid_xyz(1) = grid_rot1 % points(:) % grid_xyz(1) / mol2 % rot_vector( n_conf )
+        grid_rot1 % points(:) % grid_xyz(2) = grid_rot1 % points(:) % grid_xyz(2) / mol2 % rot_vector( n_conf )
+        grid_rot1 % points(:) % grid_xyz(3) = grid_rot1 % points(:) % grid_xyz(3) / mol2 % rot_vector( n_conf )
+        
+      enddo clp
+      
       call system_clock(tend)
 
       time = real( tend - tini, DP ) / real( rate, DP ) 
 
-      write(79,'(i7,3x,i7," of ", i7,1x,f10.3)') t, count( atom_overlap(:,:,t) ), rot_total, time-t0
+      write( 79,'(i7,3x,i7," of ", i7,1x,f10.3)' ) n_trans, count( atom_overlap(:,:,:,n_trans) ), conf_total, time-t0
 
-      flush(79)
+      flush( 79 )
 
       t0 = time
 
-      min_ener_t(t) = minval( inter_energy(:,:,t) )
+      min_ener_t( n_trans ) = minval( inter_energy(:,:,:,n_trans) )
 
     enddo tlp
 
-    SELECT CASE (wrtxtc)
+    select case ( wrtxtc )
 
-      CASE ("yes", "true", "T")
+      case ( "yes", "true", "T" )
 
         call xtc_out % close
 
-    end SELECT
+    end select
 
-    close(79)
-    close(271)
+    close( 79 )
+    close( 271 )
 
     min_ener = minval( inter_energy )
 
-    do t = 1, grid_trans % numpoint
+    do n_trans = 1, grid_trans % numpoint
 
-      SELECT CASE (potential)
+      select case ( potential )
 
-        CASE ("lj-coul", "bh-coul")
+        case ( "lj-coul", "bh-coul" )
 
-          Zrot(t) = sum( dexp( -( inter_energy(:,:,t) - min_ener_t(t) ) / kBT ) )
+          Zrot( n_trans ) = sum( dexp( -( inter_energy(:,:,:,n_trans) - min_ener_t(n_trans) ) / kBT ) )
             
-          sumVexpVrot(t) = sum( ( inter_energy(:,:,t) - min_ener_t(t) ) * &
-            dexp( -( inter_energy(:,:,t) - min_ener_t(t) ) / kBT ) ) 
+          sumVexpVrot( n_trans ) = sum( ( inter_energy(:,:,:,n_trans) - min_ener_t(n_trans) ) * &
+            dexp( -( inter_energy(:,:,:,n_trans) - min_ener_t(n_trans) ) / kBT ) ) 
 
-      end SELECT
+      end select
 
     enddo 
 
-    write(output_unit,'(T76,A)') "DONE"
+    write( output_unit,'(T76,A)' ) "DONE"
 
     return
   end subroutine Run_loops
@@ -324,15 +365,14 @@ contains
   !>   in exponential calculation
   !---------------------------------------------------------------------------	
   subroutine Rerun_loops
-    use mod_input_read, only: rot2_factor, temp, potential, inter_energy
-    use mod_grids,      only: Zrot, sumVexpVrot, &
-                              Check_Moves, grid_trans, grid_rot1
-    use mod_inquire,    only: Inquire_file, Get_new_unit       
+    use mod_input_read     , only : axis_rot_moves, nconf2, temp, potential, inter_energy
+    use mod_grids          , only : Zrot, sumVexpVrot, Check_Moves, grid_trans, grid_rot1
+    use mod_inquire        , only : Inquire_file, Get_new_unit       
     use mod_error_handling
 
     implicit none
 
-    integer                           :: r2, r1, t
+    integer                           :: n_rot2, n_rot1, n_conf, n_trans
     integer                           :: ios         = 0
     integer                           :: file_unit   
     character( len = : ), allocatable :: file_format 
@@ -343,24 +383,24 @@ contains
     integer                           :: ierr
     type(error)                       :: err
 
-    allocate(        Zrot( grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( Zrot( grid_trans % numpoint ), stat=ierr )
+    if ( ierr/= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
-    allocate(  min_ener_t( grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( min_ener_t( grid_trans % numpoint ), stat=ierr )
+    if ( ierr/= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
     allocate( sumVexpVrot( grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if ( ierr/= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
-    allocate( inter_energy( rot2_factor, grid_rot1 % numpoint , grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( inter_energy( axis_rot_moves, grid_rot1 % numpoint , nconf2, grid_trans % numpoint ), stat=ierr )
+    if ( ierr/= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
     kBT = KB * temp
       
-    ios         = 0
-    Zrot        = 0.0_DP
-    min_ener    = 0.0_DP
-    sumVexpVrot = 0.0_DP
+    ios           = 0
+    Zrot          = 0.0_DP
+    min_ener      = 0.0_DP
+    sumVexpVrot   = 0.0_DP
     inter_energy  = 0.0_DP
 
     if ( potential == "none" ) then
@@ -373,37 +413,41 @@ contains
 
       call Inquire_file( file_unit , file_name , file_status, file_format , file_access )
 
-      read(file_unit,*,iostat=ios) line1
+      read( file_unit, *, iostat = ios ) line1
   
       if ( ios /= 0 ) then
 
-        call err%error('e',message="Error while reading energy.log file reader.")
+        call err % error( 'e', message = "Error while reading energy.log file reader." )
 
         stop
 
       endif
 
-      do t = 1, grid_trans % numpoint
+      do n_trans = 1, grid_trans % numpoint
 
-        do r1 = 1, grid_rot1 % numpoint
+        do n_conf = 1, nconf2
 
-          do r2 = 1, rot2_factor
+          do n_rot1 = 1, grid_rot1 % numpoint
 
-            read(file_unit,*,iostat=ios) inter_energy( r2, r1, t )
+            do n_rot2 = 1, axis_rot_moves
 
-            if ( ios /= 0 ) then
+              read( file_unit, *, iostat = ios ) inter_energy( n_rot2, n_rot1, n_conf, n_trans )
 
-              call err%error('e',message="Error while reading energy.log file.")
+              if ( ios /= 0 ) then
 
-              stop
+                call err % error( 'e', message = "Error while reading energy.log file." )
 
-            endif
+                stop
+
+              endif
+
+            enddo 
 
           enddo 
 
-        enddo 
+        enddo
 
-        min_ener_t(t) = minval( inter_energy(:,:,t) )
+        min_ener_t(n_trans) = minval( inter_energy(:,:,:,n_trans) )
 
       enddo 
 
@@ -419,41 +463,46 @@ contains
 
       call Inquire_file( file_unit , file_name , file_status, file_format , file_access )
         
-      do t = 1, grid_trans % numpoint
+      do n_trans = 1, grid_trans % numpoint
 
-        do r1 = 1, grid_rot1 % numpoint
+        do n_conf = 1, nconf2
 
-          do r2 = 1, rot2_factor
+          do n_rot1 = 1, grid_rot1 % numpoint
 
-            read(file_unit, iostat=ios) inter_energy( r2, r1, t )
+            do n_rot2 = 1, axis_rot_moves
 
-            if ( ios /= 0 ) then
+              read( file_unit, iostat = ios ) inter_energy( n_rot2, n_rot1, n_conf, n_trans )
 
-              call err%error('e',message="Error while reading energy.bin file.")
+              if ( ios /= 0 ) then
 
-              stop
+                call err % error( 'e', message = "Error while reading energy.bin file." )
 
-            endif
+                stop
 
-          enddo 
+              endif
+
+            enddo 
+
+          enddo
 
         enddo 
 
-        min_ener_t(t) = minval( inter_energy(:,:,t) )
+        min_ener_t(n_trans) = minval( inter_energy(:,:,:,n_trans) )
 
       enddo 
 
-      close(file_unit)
+      close( file_unit )
 
     endif
 
     min_ener = minval( inter_energy )
 
-    do t = 1, grid_trans % numpoint
+    do n_trans = 1, grid_trans % numpoint
 
-      Zrot(t) = sum( dexp( -( inter_energy(:,:,t) - min_ener_t(t) ) / kBT ) )
+      Zrot(n_trans) = sum( dexp( -( inter_energy(:,:,:,n_trans) - min_ener_t(n_trans) ) / kBT ) )
             
-      sumVexpVrot(t) = sum( ( inter_energy(:,:,t) - min_ener_t(t) ) * dexp( -( inter_energy(:,:,t) - min_ener_t(t) ) / kBT ) )
+      sumVexpVrot(n_trans) = sum( ( inter_energy(:,:,:,n_trans) - min_ener_t(n_trans) ) &
+        * dexp( -( inter_energy(:,:,:,n_trans) - min_ener_t(n_trans) ) / kBT ) )
 
     enddo 
       
@@ -473,48 +522,48 @@ contains
   !> - -TdS from ideal gas is subtracted from free energy
   !---------------------------------------------------------------------------	
   subroutine Calculate_ztotal
-    use mod_input_read, only: temp, rot2_factor, inter_energy
-    use mod_grids,      only: probT, Zrot, A, Eavg, mTS, sumVexpVrot, grid_trans, grid_rot1
+    use mod_input_read     , only : temp, axis_rot_moves, nconf2, inter_energy
+    use mod_grids          , only : probT, Zrot, A, Eavg, mTS, sumVexpVrot, grid_trans, grid_rot1
     use mod_error_handling
 
     implicit none
 
-    integer                       :: t
-    character(len=:), allocatable :: write_fmt
-    real(kind=DP)                 :: mTS_ideal, mTS_ideal_t
-    integer                       :: ierr
-    type(error)                   :: err
+    integer                           :: n_trans
+    character( len = : ), allocatable :: write_fmt
+    real( kind = DP )                 :: mTS_ideal, mTS_ideal_t
+    integer                           :: ierr
+    type( error )                     :: err
 
     kBT = KB * temp
 
-    allocate(     A( grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( A( grid_trans % numpoint ), stat=ierr )
+    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
       
-    allocate(   mTS( grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( mTS( grid_trans % numpoint ), stat=ierr )
+    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
       
-    allocate(  Eavg( grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( Eavg( grid_trans % numpoint ), stat=ierr )
+    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
       
     allocate( probT( grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
-    A             = 0.0_DP
-    Eavg          = 0.0_DP
-    mTS           = 0.0_DP
-    probT         = 0.0_DP
-    mTS_ideal     = -kBT * log ( real(grid_trans % numpoint * grid_rot1 % numpoint * rot2_factor) )
-    mTS_ideal_t   = -kBT * log ( real(grid_rot1 % numpoint * rot2_factor) )
+    A           = 0.0_DP
+    Eavg        = 0.0_DP
+    mTS         = 0.0_DP
+    probT       = 0.0_DP
+    mTS_ideal   = -kBT * log ( real(grid_trans % numpoint * nconf2 * grid_rot1 % numpoint * axis_rot_moves) )
+    mTS_ideal_t = -kBT * log ( real(nconf2 * grid_rot1 % numpoint * axis_rot_moves) )
 
     open( unit = 20, file = 'output.log', position = 'append', status = 'replace' )
 
     write_fmt = '(a1,2x,3(a11,1x),3x,a5,3x,4(a13,3x))'
 
-    write(20,*) grid_trans % numpoint
-    write(20, write_fmt ) " ", "X (A)", "Y (A)", "Z (A)", "point", "PROB", "A (kJ/mol)", "-TS (kJ/mol)", "E (kJ/mol)"
+    write( 20, * ) grid_trans % numpoint
+    write( 20, write_fmt ) " ", "X (A)", "Y (A)", "Z (A)", "point", "PROB", "A (kJ/mol)", "-TS (kJ/mol)", "E (kJ/mol)"
 
-    write(output_unit,*)
-    write(output_unit,'(T5,a23)',advance="no") "CALCULATING Z(N,V,T)..."   
+    write( output_unit, * )
+    write( output_unit, '(T5,a23)', advance = "no" ) "CALCULATING Z(N,V,T)..."   
 
     Ztrans = sum( dexp( -( inter_energy - min_ener ) / kBT ) ) 
 
@@ -522,17 +571,18 @@ contains
 
     write_fmt = '(A,2x,3(f11.5,1x),3x,i5,3x,4(es13.5E3,3x))'
 
-    do t = 1, grid_trans % numpoint
+    do n_trans = 1, grid_trans % numpoint
 
-      probT(t) = Zrot(t) / Ztrans * dexp( ( min_ener - min_ener_t(t) ) / kBT ) 
+      probT( n_trans ) = Zrot( n_trans ) / Ztrans * dexp( ( min_ener - min_ener_t( n_trans ) ) / kBT ) 
 
-      A(t) = -kBT * dlog( Zrot(t) ) + min_ener_t(t) - mTS_ideal_t
+      A( n_trans ) = -kBT * dlog( Zrot( n_trans ) ) + min_ener_t( n_trans ) - mTS_ideal_t
 
-      Eavg(t) = sumVexpVrot(t) / Zrot(t) + min_ener_t(t)
+      Eavg( n_trans ) = sumVexpVrot( n_trans ) / Zrot( n_trans ) + min_ener_t( n_trans )
 
-      mTS(t) = A(t) - Eavg(t)
+      mTS( n_trans ) = A( n_trans ) - Eavg( n_trans )
 
-      write( 20, write_fmt ) "X", grid_trans % points(t) % grid_xyz(:), t, probT(t), A(t), mTS(t), Eavg(t)
+      write( 20, write_fmt ) "X", grid_trans % points( n_trans ) % grid_xyz(:), n_trans, probT( n_trans ), &
+        A( n_trans ), mTS( n_trans ), Eavg( n_trans )
 
     enddo 
 
@@ -544,12 +594,12 @@ contains
 
     write_fmt = '(9x,"TOTAL OVER TRANSLATIONAL GRID",12x,5(es13.5E3,3x))'
 
-    write(20,'(a)') repeat('-',152)
-    write(20, write_fmt) sum(probT), ATOTAL, mTSTOTAL, ETOTALavg
+    write( 20, '(a)' ) repeat('-',152)
+    write( 20, write_fmt ) sum(probT), ATOTAL, mTSTOTAL, ETOTALavg
 
-    close(20)
+    close( 20 )
 
-    write(output_unit,'(T70,A)') "DONE"
+    write( output_unit, '(T70,A)' ) "DONE"
 
     return
   end subroutine Calculate_ztotal

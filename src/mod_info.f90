@@ -30,11 +30,10 @@
 !---------------------------------------------------------------------------------------------------
 
 module mod_info
-  use iso_fortran_env, only: output_unit
-  use mod_constants, only: dashline, DP, version, revision
+  use iso_fortran_env , only : output_unit
+  use mod_constants   , only : dashline, DP, version, revision
   ! TODO: include in makefile 
   !   include 'revision.inc'     
-
   implicit none
   private
 
@@ -43,22 +42,21 @@ module mod_info
 contains
 
   subroutine Display_header()
-
     implicit none
 
     write(output_unit,'(T3, A)') dashline
-    write(output_unit,'(T50, A, A)') "THEMIS"
-    write(output_unit,'(/,T7, A)')" A software to assess association free energies via direct estimative of partition functions"
+    write(output_unit,'(T50, A, A)'  ) "THEMIS"
+    write(output_unit,'(/,T7, A)'    ) " A software to assess association free energies via direct estimative of&
+                                        &partition functions"
     write(output_unit,'(/,T40, A, A)') "Author: Felippe M. Colombari"
     write(output_unit,'(/,T36, A, A)') "Contributions: Asdrubal Lozada-Blanco"
     write(output_unit,'(/,T43, A, A)') "Program version: ",trim(version)
-    write(output_unit,'(T46, A, A)') "Revision ", revision
+    write(output_unit,'(T46, A, A)'  ) "Revision ", revision
     write(output_unit,'(T3, A)') dashline
 
   end subroutine Display_header
 
   subroutine Display_date_time( string )
-
     implicit none
 
     character( len = * ), intent(IN) :: string

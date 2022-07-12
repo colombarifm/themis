@@ -29,15 +29,21 @@
 !> - independent module created                                                
 !> @date - Nov 2019
 !> - update error condition by error_handling module added by Asdrubal Lozada-Blanco
+!> @date - Apr, 2020
+!> - major revision
+!> @date - May, 2021
+!> - added support for ensemble of structures of molecule 2
+!> @date - Jul, 2022
+!> - added support to PDB files (read and write)
 !---------------------------------------------------------------------------------------------------
 
 module mod_search_structures
-  use iso_fortran_env, only: output_unit
-  use mod_constants, only: DP, FPINF
+  use iso_fortran_env , only : output_unit
+  use mod_constants   , only : DP, FPINF
 
   implicit none
 
-  integer                                      :: pos_min_energy(3), n
+  integer                                      :: pos_min_energy(4), n
   real( kind = DP )                            :: lowest
   real( kind = DP ), allocatable, dimension(:) :: energy_ordered
 
@@ -49,27 +55,31 @@ contains
   !> @author Felippe M. Colombari
   !---------------------------------------------------------------------------	
   subroutine Count_structures
-    use mod_input_read, only: rot2_factor, inter_energy 
-    use mod_grids,      only: grid_trans, grid_rot1
-    use mod_loops,      only: min_ener, kBT
+    use mod_input_read , only : axis_rot_moves, nconf2, inter_energy 
+    use mod_grids      , only : grid_trans, grid_rot1
+    use mod_loops      , only : min_ener, kBT
 
     implicit none
 
-    integer :: t, r1, r2
+    integer :: n_trans, n_conf, n_rot1, n_rot2
 
     n = 0
 
-    do t = 1, grid_trans % numpoint
+    do n_trans = 1, grid_trans % numpoint
 
-      do r1 = 1, grid_rot1 % numpoint
+      do n_conf = 1, nconf2
 
-        do r2 = 1, rot2_factor
+        do n_rot1 = 1, grid_rot1 % numpoint
 
-          if ( dabs( min_ener - inter_energy(r2,r1,t) ) <= kBT/2 ) then
+          do n_rot2 = 1, axis_rot_moves
 
-            n = n + 1
+            if ( dabs( min_ener - inter_energy( n_rot2, n_rot1, n_conf, n_trans ) ) <= kBT/2 ) then
 
-          endif
+              n = n + 1
+
+            endif
+
+          enddo
 
         enddo
 
@@ -102,7 +112,7 @@ contains
 
     implicit none
   
-    integer                                      :: i
+    integer                                      :: n
     real( kind = DP )                            :: inv_Ztrans, delta_E
     real( kind = DP ), allocatable, dimension(:) :: prob
     integer                                      :: file_unit          
@@ -118,13 +128,13 @@ contains
     open( unit = file_unit, file = trim(file_name), status = file_status, &
           form = trim(file_format), access = trim(file_access) ) 
 
-    write(file_unit,'(A)') '# energy(r2,r1,t) #   r2 #   r1 #     t #      delta_E #        prob. #    sum_prob.'
+    write( file_unit, '(A)' ) '# energy(r2,r1,c,t) #   r2 #   r1 #  c #     t #      delta_E #        prob. #    sum_prob.'
 
     allocate( energy_ordered ( nstruc ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
     allocate( prob ( nstruc ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
     energy_ordered = 0.0_dp
 
@@ -132,19 +142,19 @@ contains
 
     inv_Ztrans = 1.0_DP / Ztrans 
 
-    do i = 1, nstruc
+    do n = 1, nstruc
 
-      energy_ordered(i) = minval(inter_energy)
+      energy_ordered(n) = minval(inter_energy)
 
-      delta_E = energy_ordered(i) - energy_ordered(1)
+      delta_E = energy_ordered(n) - energy_ordered(1)
 
-      prob(i) = inv_Ztrans * dexp( ( -energy_ordered(i) + min_ener ) / kBT )
+      prob(n) = inv_Ztrans * dexp( ( -energy_ordered(n) + min_ener ) / kBT )
 
       pos_min_energy = minloc(inter_energy)
 
-      inter_energy(pos_min_energy(1),pos_min_energy(2),pos_min_energy(3)) = FPINF
+      inter_energy( pos_min_energy(1), pos_min_energy(2), pos_min_energy(3), pos_min_energy(4) ) = FPINF
 
-      write(file_unit,'(es16.5E3,1x,2i7,i8,3es15.5E3))') energy_ordered(i), pos_min_energy, delta_E, prob(i), sum(prob)
+      write( file_unit, '(es16.5E3,3x,2i7,i5,i8,3es15.5E3)' ) energy_ordered(n), pos_min_energy, delta_E, prob(n), sum(prob)
 
     enddo
 
@@ -161,7 +171,7 @@ contains
   !---------------------------------------------------------------------------	
   subroutine Search_structures
     use mod_inquire        , only: Inquire_file, Get_new_unit
-    use mod_input_read     , only: nstruc, vector1, ref1, vector2, ref2
+    use mod_input_read     , only: nstruc, vector1, ref1, vector2, ref2, nconf2, file_type
     use mod_read_molecules
     use mod_grids
     use mod_loops
@@ -169,8 +179,8 @@ contains
 
     implicit none
 
-    integer                                      :: n, r2, r1, t
-    integer, allocatable, dimension(:)           :: r2_position, r1_position, t_position
+    integer                                      :: n, n_rot2, n_rot1, n_conf, n_trans
+    integer, allocatable, dimension(:)           :: rot2_position, rot1_position, conf_position, trans_position
     character( len = 4 )                         :: nfrm
     integer                                      :: file_unit          
     character( len = * ), parameter              :: file_status = "old"
@@ -178,97 +188,132 @@ contains
     character( len = * ), parameter              :: file_access = "sequential"
     character( len = * ), parameter              :: file_name   = "energy-sort.log"
     integer                                      :: ierr
-    type(error)                                  :: err
+    type( error )                                :: err
 
     file_unit = Get_new_unit(10)
 
     call Inquire_file( file_unit, file_name, file_status, file_format, file_access )
 
-    write(output_unit,'(/,T5,a23)',advance="no") "SEARCHING STRUCTURES..."   
+    write( output_unit, '(/,T5,a23)', advance = "no" ) "SEARCHING STRUCTURES..."   
 
-    allocate( r2_position( nstruc ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( rot2_position( nstruc ), stat=ierr )
+    if( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
-    allocate( r1_position( nstruc ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( rot1_position( nstruc ), stat=ierr )
+    if( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
-    allocate( t_position( nstruc ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    allocate( conf_position( nstruc ), stat=ierr )
+    if( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
-    read(file_unit,*)
+    allocate( trans_position( nstruc ), stat=ierr )
+    if( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
+
+    read( file_unit, * )
 
     costhetar = -1.0_DP
     sinthetar =  0.0_DP
     cosphir   =  0.0_DP
     sinphir   =  1.0_DP
 
-    call mol1 % Read_molecule( "conf1.xyz" )
-    call mol1 % Translate_molecule( ref1 )
-    call mol1 % Align_molecule( vector1, ref1 )
-    call mol1 % Rotate_molecule( 1 ) 
+    
+    if ( file_type == "XYZ" ) then
 
-    call mol2 % Read_molecule( "conf2.xyz" )
-    call mol2 % Translate_molecule( ref2 )
-    call mol2 % Align_molecule( vector2, ref2 )
+      call mol1 % Read_molecule( "conf1.xyz", 1, "XYZ" )
+      call mol2 % Read_molecule( "conf2.xyz", nconf2, "XYZ" )
+
+    else if ( file_type == "PDB" ) then
+
+      call mol1 % Read_molecule( "conf1.pdb", 1, "PDB" )
+      call mol2 % Read_molecule( "conf2.pdb", nconf2, "PDB" )
+
+    endif
+
+    call mol1 % Translate_molecule( ref1, 1 )
+    call mol1 % Align_molecule( vector1, ref1, 1 )
+    call mol1 % Rotate_molecule( 1, 1 ) 
+    
+    do n_conf = 1, nconf2
+    
+      call mol2 % Translate_molecule( ref2, n_conf )
+      call mol2 % Align_molecule( vector2, ref2, n_conf )
+
+    enddo
  
     do n = 1, nstruc
 
-      read(file_unit,*) energy_ordered(n), r2_position(n), r1_position(n), t_position(n)
+      read( file_unit, * ) energy_ordered(n), rot2_position(n), rot1_position(n), conf_position(n), trans_position(n)
 
-      t = t_position(n)
+      n_trans = trans_position(n)
 
-      call mol2 % Translate_molecule ( ref2 )
+      n_conf = conf_position(n)
 
-      grid_rot1 % points(:) % grid_xyz(1) = grid_rot1 % points(:) % grid_xyz(1) * mol2 % rot_vector
-      grid_rot1 % points(:) % grid_xyz(2) = grid_rot1 % points(:) % grid_xyz(2) * mol2 % rot_vector
-      grid_rot1 % points(:) % grid_xyz(3) = grid_rot1 % points(:) % grid_xyz(3) * mol2 % rot_vector
+      call mol2 % Translate_molecule ( ref2, n_conf )
 
-      r1 = r1_position(n)
+      grid_rot1 % points(:) % grid_xyz(1) = grid_rot1 % points(:) % grid_xyz(1) * mol2 % rot_vector( n_conf )
+      grid_rot1 % points(:) % grid_xyz(2) = grid_rot1 % points(:) % grid_xyz(2) * mol2 % rot_vector( n_conf )
+      grid_rot1 % points(:) % grid_xyz(3) = grid_rot1 % points(:) % grid_xyz(3) * mol2 % rot_vector( n_conf )
+
+      n_rot1 = rot1_position(n)
             
-      costhetar = dcos(thetar(r1))
-      sinthetar = dsin(thetar(r1))
-      cosphir   = dcos(phir(r1))
-      sinphir   = dsin(phir(r1))
+      costhetar = dcos(thetar( n_rot1 ))
+      sinthetar = dsin(thetar( n_rot1 ))
+      cosphir   = dcos(phir( n_rot1 ))
+      sinphir   = dsin(phir( n_rot1 ))
 
-      r2 = r2_position(n)
+      n_rot2 = rot2_position(n)
 
-      call mol2 % Rotate_molecule( r2 )
+      call mol2 % Rotate_molecule( n_rot2, n_conf )
 
-      mol2 % atoms(:) % xyz(1) = mol2 % atoms(:) % xyz(1) + grid_trans % points(t) % grid_xyz(1)
-      mol2 % atoms(:) % xyz(2) = mol2 % atoms(:) % xyz(2) + grid_trans % points(t) % grid_xyz(2)
-      mol2 % atoms(:) % xyz(3) = mol2 % atoms(:) % xyz(3) + grid_trans % points(t) % grid_xyz(3)
+      mol2 % atoms( n_conf, : ) % xyz(1) = mol2 % atoms( n_conf, : ) % xyz(1) + grid_trans % points( n_trans ) % grid_xyz(1)
+      mol2 % atoms( n_conf, : ) % xyz(2) = mol2 % atoms( n_conf, : ) % xyz(2) + grid_trans % points( n_trans ) % grid_xyz(2)
+      mol2 % atoms( n_conf, : ) % xyz(3) = mol2 % atoms( n_conf, : ) % xyz(3) + grid_trans % points( n_trans ) % grid_xyz(3)
 
-      write(nfrm,'(I4.4)') n
+      write( nfrm, '(I4.4)' ) n
 
       lowest = energy_ordered(n)
 
-      open( unit = 66, file = 'lowest_'//nfrm//'.xyz', status = 'unknown' )
- 
-      call dimers % Build_dimer
+      if ( file_type == "XYZ" ) then
 
-      call dimers % Write_xyz( lowest )
+        open( unit = 66, file = 'lowest_'//nfrm//'.xyz', status = 'unknown' )
+
+        call dimers % Build_dimer( n_conf, "XYZ" )
+
+        call dimers % Write_xyz( lowest, n_conf )
  
-      close(66)
+        close( 66 )
+
+      else if ( file_type == "PDB" ) then
+
+        open( unit = 66, file = 'lowest_'//nfrm//'.pdb', status = 'unknown' )
+
+        call dimers % Build_dimer( n_conf, "PDB" )
+
+        call dimers % Write_pdb( n_conf )
+ 
+        close( 66 )
+
+      endif
                 
-      mol2 % atoms(:) % xyz(1) = mol2 % atoms(:) % xyz_old(1)
-      mol2 % atoms(:) % xyz(2) = mol2 % atoms(:) % xyz_old(2)
-      mol2 % atoms(:) % xyz(3) = mol2 % atoms(:) % xyz_old(3)
+      mol2 % atoms( n_conf, : ) % xyz(1) = mol2 % atoms( n_conf, : ) % xyz_old(1)
+      mol2 % atoms( n_conf, : ) % xyz(2) = mol2 % atoms( n_conf, : ) % xyz_old(2)
+      mol2 % atoms( n_conf, : ) % xyz(3) = mol2 % atoms( n_conf, : ) % xyz_old(3)
 
-      grid_rot1 % points(:) % grid_xyz(1) = grid_rot1 % points(:) % grid_xyz(1) / mol2 % rot_vector
-      grid_rot1 % points(:) % grid_xyz(2) = grid_rot1 % points(:) % grid_xyz(2) / mol2 % rot_vector
-      grid_rot1 % points(:) % grid_xyz(3) = grid_rot1 % points(:) % grid_xyz(3) / mol2 % rot_vector
+      grid_rot1 % points(:) % grid_xyz(1) = grid_rot1 % points(:) % grid_xyz(1) / mol2 % rot_vector( n_conf )
+      grid_rot1 % points(:) % grid_xyz(2) = grid_rot1 % points(:) % grid_xyz(2) / mol2 % rot_vector( n_conf )
+      grid_rot1 % points(:) % grid_xyz(3) = grid_rot1 % points(:) % grid_xyz(3) / mol2 % rot_vector( n_conf )
 
     enddo
 
-    if ( allocated(r2_position) ) deallocate( r2_position )
-    if ( allocated(r1_position) ) deallocate( r1_position )
-    if ( allocated(t_position) ) deallocate( t_position )
+    if ( allocated(rot2_position) )  deallocate( rot2_position )
+    if ( allocated(rot1_position) )  deallocate( rot1_position )
+    if ( allocated(conf_position) )  deallocate( conf_position )
+    if ( allocated(trans_position) ) deallocate( trans_position )
     if ( allocated(energy_ordered) ) deallocate( energy_ordered )
 
     close(file_unit)
 
-    write(output_unit,'(T70,A)') "DONE"
-    write(output_unit,'(/,T3,A)') dashline
+    write( output_unit, '(T70,A)' ) "DONE"
+    write( output_unit, '(/,T3,A)' ) dashline
 
     return
   end subroutine Search_structures

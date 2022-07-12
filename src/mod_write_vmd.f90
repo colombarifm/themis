@@ -46,8 +46,9 @@ contains
   !> - TCL script written by Asdrubal Lozada-Blanco
   !---------------------------------------------------------------------------	
   subroutine Write_vmd_files
-    use mod_constants, only: DP
-    use mod_grids,     only: A, mTS, Eavg
+    use mod_constants , only : DP
+    use mod_input_read, only : file_type
+    use mod_grids     , only : A, mTS, Eavg
 
     implicit none
 
@@ -55,18 +56,35 @@ contains
     character( len = 18 ), dimension(3) :: property
     real( kind = DP ), dimension(3)     :: min_val, max_val
 
+    character( len = 3 )                :: vmd_format
+    character( len = 15 )               :: best_config_file
+
     property(1) = "free-energy"
     property(2) = "entropic-penalty"
     property(3) = "energy"
 
-    min_val(1) = minval(A)
-    max_val(1) = maxval(A)
-    min_val(2) = minval(mTS)
-    max_val(2) = maxval(mTS)
-    min_val(3) = minval(Eavg)
-    max_val(3) = maxval(Eavg)
+    min_val(1)  = minval(A)
+    max_val(1)  = maxval(A)
+    min_val(2)  = minval(mTS)
+    max_val(2)  = maxval(mTS)
+    min_val(3)  = minval(Eavg)
+    max_val(3)  = maxval(Eavg)
 
     do i = 1, 3
+
+      if ( file_type == "XYZ" ) then
+
+        vmd_format = "xyz"
+
+        best_config_file = "lowest_0001.xyz"
+
+      else if ( file_type == "PDB" ) then
+
+        vmd_format = "pdb"
+
+        best_config_file = "lowest_0001.pdb"
+
+      endif
 
       open( unit = 666, file = "surf_"//trim(property(i))//".vmd", status = "replace" )
 
@@ -90,7 +108,7 @@ contains
       write(666,'("  $atomsel set user $value")')
       write(666,'("  $atomsel delete")')
       write(666,'("}", /)')
-      write(666,'("mol new lowest_0001.xyz type xyz waitfor all")')
+      write(666,'("mol new ", a15, " type ", a3, " waitfor all")') best_config_file, vmd_format
       write(666,'("mol delrep 0 top")')
       write(666,'("mol modcolor 0 top Name")')
       write(666,'("mol representation VDW 1.0 50")')

@@ -34,8 +34,8 @@
 !---------------------------------------------------------------------------------------------------
 
 module mod_grids
-  use iso_fortran_env, only: output_unit
-  use mod_constants , only : DP
+  use iso_fortran_env , only : output_unit
+  use mod_constants   , only : DP
 
   implicit none
 
@@ -61,7 +61,7 @@ module mod_grids
   real( kind = DP ), allocatable, dimension(:)     :: A, mTS, Eavg
   real( kind = DP ), allocatable, dimension(:)     :: Zrot, sumVexpVrot, probT
   real( kind = DP ), allocatable, dimension(:)     :: rr, thetar, phir
-  integer                                          :: ntotal, rot_total
+  integer                                          :: ntotal, conf_total
 
 contains
 
@@ -75,37 +75,35 @@ contains
 
     implicit none
 
-    class( grid ), intent(inout) :: this
-    character( len = * ), intent(in) :: grid_filename
-    integer                          :: t
-    integer                          :: file_unit        
-    integer                          :: ios         = 0
-    character( len = * ), parameter  :: file_status = "old"
-    character( len = * ), parameter  :: file_format = "formatted"
-    character( len = * ), parameter  :: file_access = "sequential"
-
-    integer                          :: ierr
-
-    type(error) :: err
+    class( grid ), intent( inout )     :: this
+    character( len = * ), intent( in ) :: grid_filename
+    integer                            :: n_trans
+    integer                            :: file_unit        
+    integer                            :: ios         = 0
+    character( len = * ), parameter    :: file_status = "old"
+    character( len = * ), parameter    :: file_format = "formatted"
+    character( len = * ), parameter    :: file_access = "sequential"
+    integer                            :: ierr
+    type(error)                        :: err
 
     file_unit = Get_new_unit(10)
 
     call Inquire_file( file_unit , grid_filename , file_status, file_format , file_access )
 
-    read(file_unit,*,iostat=ios) this % numpoint
-    read(file_unit,*)
+    read( file_unit, *, iostat = ios ) this % numpoint
+    read( file_unit, * )
 
     if ( allocated ( this % points ) ) deallocate ( this % points )
     allocate( this % points( this % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if (ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
-    do t = 1, this % numpoint
+    do n_trans = 1, this % numpoint
 
-      read(file_unit,*,iostat=ios) this % points(t) % grid_symbol, this % points(t) % grid_xyz(:)
+      read( file_unit, *, iostat = ios ) this % points( n_trans ) % grid_symbol, this % points( n_trans ) % grid_xyz(:)
 
     enddo
 
-    close(file_unit)
+    close( file_unit )
 
     return
   end subroutine Read_grid
@@ -119,12 +117,12 @@ contains
 
     implicit none
 
-    class( grid ), intent(inout) :: this
-    integer                      :: t
+    class( grid ), intent( inout ) :: this
+    integer                        :: n_trans
 
-    do t = 1, this % numpoint
+    do n_trans = 1, this % numpoint
 
-      this % points(t) % grid_xyz(:) = this % points(t) % grid_xyz(:) - mol1 % atom_ref1(:)
+      this % points( n_trans ) % grid_xyz(:) = this % points( n_trans ) % grid_xyz(:) - mol1 % atom_ref1(1,:)
 
     enddo
 
@@ -136,26 +134,26 @@ contains
   !> @author Felippe M. Colombari
   !---------------------------------------------------------------------------	
   subroutine Align_grid( this ) 
-    use mod_read_molecules , only: sinphi, cosphi
+    use mod_read_molecules !, only: sinphi, cosphi
 
     implicit none
 
-    class( grid ), intent(inout) :: this
-    integer                          :: t
+    class( grid ), intent( inout ) :: this
+    integer                        :: n_trans
 
-    do t = 1, this % numpoint
+    do n_trans = 1, this % numpoint
 
-      this % points(t) % grid_xyz_rot(1) = this % points(t) % grid_xyz(1) * cosphi - &
-                                           this % points(t) % grid_xyz(2) * sinphi
+      this % points( n_trans ) % grid_xyz_rot(1) = this % points( n_trans ) % grid_xyz(1) * mol1 % cosphi( 1 ) - &
+                                                   this % points( n_trans ) % grid_xyz(2) * mol1 % sinphi( 1 )
 
-      this % points(t) % grid_xyz_rot(2) = this % points(t) % grid_xyz(1) * sinphi + &
-                                           this % points(t) % grid_xyz(2) * cosphi
+      this % points( n_trans ) % grid_xyz_rot(2) = this % points( n_trans ) % grid_xyz(1) * mol1 % sinphi( 1 ) + &
+                                                   this % points( n_trans ) % grid_xyz(2) * mol1 % cosphi( 1 )
 
-      this % points(t) % grid_xyz_rot(3) = this % points(t) % grid_xyz(3)
+      this % points( n_trans ) % grid_xyz_rot(3) = this % points( n_trans ) % grid_xyz(3)
 
-      this % points(t) % grid_xyz(:)     = this % points(t) % grid_xyz_rot(:)
+      this % points( n_trans ) % grid_xyz(:)     = this % points( n_trans ) % grid_xyz_rot(:)
 
-      this % points(t) % grid_xyz_old(:) = this % points(t) % grid_xyz(:)
+      this % points( n_trans ) % grid_xyz_old(:) = this % points( n_trans ) % grid_xyz(:)
 
     enddo
 
@@ -167,62 +165,62 @@ contains
   !> @author Felippe M. Colombari
   !---------------------------------------------------------------------------	
   subroutine Rotate_grid( this ) 
-    use mod_read_molecules  , only: costheta, sintheta, cosalpha, sinalpha, costhetar, sinthetar, cosphir, sinphir
+    use mod_read_molecules  !, only: costheta, sintheta, cosalpha, sinalpha, costhetar, sinthetar, cosphir, sinphir
 
     implicit none
 
-    class( grid ), intent(inout) :: this
-    integer                      :: t
+    class( grid ), intent( inout ) :: this
+    integer                        :: n_trans
 
-    do t = 1, this % numpoint
+    do n_trans = 1, this % numpoint
    
       !! ROTATE AROUND x AXIS: PLACE ROTATION VECTOR AT z AXIS
 
-      this % points(t) % grid_xyz_rot(1) = this % points(t) % grid_xyz(1)
+      this % points( n_trans ) % grid_xyz_rot(1) = this % points( n_trans ) % grid_xyz(1)
 
-      this % points(t) % grid_xyz_rot(2) = this % points(t) % grid_xyz(2) * costheta - &
-                                           this % points(t) % grid_xyz(3) * sintheta
+      this % points( n_trans ) % grid_xyz_rot(2) = this % points( n_trans ) % grid_xyz(2) * mol1 % costheta( 1 ) - &
+                                                   this % points( n_trans ) % grid_xyz(3) * mol1 % sintheta( 1 )
 
-      this % points(t) % grid_xyz_rot(3) = this % points(t) % grid_xyz(2) * sintheta + &
-                                           this % points(t) % grid_xyz(3) * costheta
+      this % points( n_trans ) % grid_xyz_rot(3) = this % points( n_trans ) % grid_xyz(2) * mol1 % sintheta( 1 ) + &
+                                                   this % points( n_trans ) % grid_xyz(3) * mol1 % costheta( 1 )
 
-      this % points(t) % grid_xyz(:)     = this % points(t) % grid_xyz_rot(:)
+      this % points( n_trans ) % grid_xyz(:)     = this % points( n_trans ) % grid_xyz_rot(:)
 
       !! DONE: ROTATION VECTOR IS AT ORIGIN !! PRECESSION MOVES AROUND z AXIS
 
-      this % points(t) % grid_xyz_rot(1) = this % points(t) % grid_xyz(1) * cosalpha - &
-                                           this % points(t) % grid_xyz(2) * sinalpha
+      this % points( n_trans ) % grid_xyz_rot(1) = this % points( n_trans ) % grid_xyz(1) * cosalpha - &
+                                                   this % points( n_trans ) % grid_xyz(2) * sinalpha
 
-      this % points(t) % grid_xyz_rot(2) = this % points(t) % grid_xyz(1) * sinalpha + &
-                                           this % points(t) % grid_xyz(2) * cosalpha
+      this % points( n_trans ) % grid_xyz_rot(2) = this % points( n_trans ) % grid_xyz(1) * sinalpha + &
+                                                   this % points( n_trans ) % grid_xyz(2) * cosalpha
 
-      this % points(t) % grid_xyz_rot(3) = this % points(t) % grid_xyz(3)
+      this % points( n_trans ) % grid_xyz_rot(3) = this % points( n_trans ) % grid_xyz(3)
 
-      this % points(t) % grid_xyz(:)     = this % points(t) % grid_xyz_rot(:)
+      this % points( n_trans ) % grid_xyz(:)     = this % points( n_trans ) % grid_xyz_rot(:)
 
       !! ROTATION MOVE TO rth POINT OF THE SPHERICAL GRID !! ROTATION AROUND y AXIS
 
-      this % points(t) % grid_xyz_rot(1) =  this % points(t) % grid_xyz(1) * costhetar + &
-                                            this % points(t) % grid_xyz(3) * sinthetar
+      this % points( n_trans ) % grid_xyz_rot(1) =  this % points( n_trans ) % grid_xyz(1) * costhetar + &
+                                                    this % points( n_trans ) % grid_xyz(3) * sinthetar
 
-      this % points(t) % grid_xyz_rot(2) =  this % points(t) % grid_xyz(2)
+      this % points( n_trans ) % grid_xyz_rot(2) =  this % points( n_trans ) % grid_xyz(2)
 
-      this % points(t) % grid_xyz_rot(3) = -this % points(t) % grid_xyz(1) * sinthetar + &
-                                            this % points(t) % grid_xyz(3) * costhetar
+      this % points( n_trans ) % grid_xyz_rot(3) = -this % points( n_trans ) % grid_xyz(1) * sinthetar + &
+                                                    this % points( n_trans ) % grid_xyz(3) * costhetar
 
-      this % points(t) % grid_xyz(:)     = this % points(t) % grid_xyz_rot(:)
+      this % points( n_trans ) % grid_xyz(:)     = this % points( n_trans ) % grid_xyz_rot(:)
 
       !! ROTATION AROUND z AXIS TO PLACE ROTATION VECTOR AT THE rth SPHERE POINT !!
 
-      this % points(t) % grid_xyz_rot(1) = this % points(t) % grid_xyz(1) * cosphir - &
-                                           this % points(t) % grid_xyz(2) * sinphir
+      this % points( n_trans ) % grid_xyz_rot(1) = this % points( n_trans ) % grid_xyz(1) * cosphir - &
+                                                   this % points( n_trans ) % grid_xyz(2) * sinphir
 
-      this % points(t) % grid_xyz_rot(2) = this % points(t) % grid_xyz(1) * sinphir + &
-                                           this % points(t) % grid_xyz(2) * cosphir
+      this % points( n_trans ) % grid_xyz_rot(2) = this % points( n_trans ) % grid_xyz(1) * sinphir + &
+                                                   this % points( n_trans ) % grid_xyz(2) * cosphir
 
-      this % points(t) % grid_xyz_rot(3) = this % points(t) % grid_xyz(3) 
+      this % points( n_trans ) % grid_xyz_rot(3) = this % points( n_trans ) % grid_xyz(3) 
 
-      this % points(t) % grid_xyz(:)     = this % points(t) % grid_xyz_rot(:)
+      this % points( n_trans ) % grid_xyz(:)     = this % points( n_trans ) % grid_xyz_rot(:)
 
     enddo
 
@@ -239,13 +237,13 @@ contains
 
     implicit none
 
-    class( grid ), intent(inout)                   :: this
-    integer, intent(IN)                            :: trans_factor
-    real( kind = DP ), intent(IN)                  :: rad
-    integer                                        :: node_num
-    real( kind = DP ), allocatable, dimension(:,:) :: node_xyz
-    integer                                        :: ierr
-    type(error)                                    :: err
+    class( grid ), intent( inout )                   :: this
+    integer, intent( in )                            :: trans_factor
+    real( kind = DP ), intent( in )                  :: rad
+    real( kind = DP ), allocatable, dimension(:,:)   :: node_xyz
+    integer                                          :: node_num
+    integer                                          :: ierr
+    type(error)                                      :: err
 
     node_num = 12 + 10 * 3 * ( trans_factor - 1 ) + 10 * ( trans_factor - 2 ) * ( trans_factor - 1 )
     !edge_num = 30 * factor * factor
@@ -254,10 +252,10 @@ contains
     this % numpoint = node_num
 
     allocate( node_xyz(3,node_num), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
     allocate( this % points( node_num ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
     call sphere_icos1_points ( trans_factor, node_num, node_xyz )
 
@@ -270,59 +268,59 @@ contains
     return
   end subroutine Build_translation_sphere
 
-  subroutine Build_rotation1_sphere( this, rot1_factor )
+  subroutine Build_rotation1_sphere( this, point_rot_factor )
     use mod_read_molecules
     use mod_spherical_grids
     use mod_error_handling
       
     implicit none
 
-    class( grid ), intent(inout)                   :: this
-    integer, intent(IN)                            :: rot1_factor
-    integer                                        :: r
-    integer                                        :: node_num
-    real( kind = DP ), allocatable, dimension(:,:) :: node_xyz
-    integer                                        :: ierr
-    type(error)                                    :: err
+    class( grid ), intent( inout )                   :: this
+    integer, intent( in )                            :: point_rot_factor
+    integer                                          :: n_rot1
+    integer                                          :: node_num
+    real( kind = DP ), allocatable, dimension(:,:)   :: node_xyz
+    integer                                          :: ierr
+    type(error)                                      :: err
 
     ! if parameter is zero, do not perform molecular reorientations, just align it along Z !
 
-    if ( rot1_factor == 0 ) then
+    if ( point_rot_factor == 0 ) then
 
       node_num = 1
 
       this % numpoint = node_num
 
       allocate( this % points( node_num ), stat=ierr )
-      if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+      if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
         
       allocate(     rr( node_num ), stat=ierr )
-      if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+      if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
         
       allocate(   phir( node_num ), stat=ierr )
-      if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+      if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
         
       allocate( thetar( node_num ), stat=ierr )
-      if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+      if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
-      phir(1) = PI / 2
+      phir(1)   = PI / 2.0_DP
       thetar(1) = PI
 
     else
 
-      node_num = 12 + 10 * 3 * ( rot1_factor - 1 ) + 10 * ( rot1_factor - 2 ) * ( rot1_factor - 1 )
+      node_num = 12 + 10 * 3 * ( point_rot_factor - 1 ) + 10 * ( point_rot_factor - 2 ) * ( point_rot_factor - 1 )
       ! edge_num = 30 * factor * factor
       ! face_num = 20 * factor * factor
 
       this % numpoint = node_num
 
       allocate( node_xyz(3,node_num), stat=ierr )
-      if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+      if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
         
       allocate( this % points( node_num ), stat=ierr )
-      if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+      if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
-      call sphere_icos1_points ( rot1_factor, node_num, node_xyz )
+      call sphere_icos1_points ( point_rot_factor, node_num, node_xyz )
 
       this % points(:) % grid_xyz(1) = node_xyz(1,:) 
       this % points(:) % grid_xyz(2) = node_xyz(2,:)
@@ -330,25 +328,25 @@ contains
 
       if ( allocated(node_xyz) ) deallocate(node_xyz)
 
-      allocate(     rr( node_num ), stat=ierr )
-      if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+      allocate( rr( node_num ), stat=ierr )
+      if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
-      allocate(   phir( node_num ), stat=ierr )
-      if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+      allocate( phir( node_num ), stat=ierr )
+      if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
         
       allocate( thetar( node_num ), stat=ierr )
-      if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+      if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
       !! CONVERTS ROTATION GRID CARTESIAN COORDS DO SPHERICAL COORDS
 
-      do r = 1, node_num
+      do n_rot1 = 1, node_num
 
-        rr(r) = dsqrt( this % points(r) % grid_xyz(1)**2 &
-                     + this % points(r) % grid_xyz(2)**2 &
-                     + this % points(r) % grid_xyz(3)**2 )
+        rr( n_rot1 ) = dsqrt( this % points( n_rot1 ) % grid_xyz(1)**2 &
+                            + this % points( n_rot1 ) % grid_xyz(2)**2 &
+                            + this % points( n_rot1 ) % grid_xyz(3)**2 )
 
-        phir(r) = datan2( this % points(r) % grid_xyz(2) , this % points(r) % grid_xyz(1) )
-        thetar(r) = dacos( this % points(r) % grid_xyz(3) / rr(r) )
+        phir( n_rot1 )   = datan2( this % points( n_rot1 ) % grid_xyz(2) , this % points( n_rot1 ) % grid_xyz(1) )
+        thetar( n_rot1 ) = dacos( this % points( n_rot1 ) % grid_xyz(3) / rr( n_rot1 ) )
 
       enddo
 
@@ -362,29 +360,31 @@ contains
   !> @author Felippe M. Colombari
   !---------------------------------------------------------------------------	
   subroutine Check_moves
-    use mod_constants,  only: dashline
-    use mod_input_read, only: rot2_factor, max_rot2
+    use mod_constants  , only : dashline
+    use mod_input_read , only : nconf2, axis_rot_moves, axis_rot_range
 
     implicit none
 
-    character( len = 10 ) :: var_nt, var_nr1, var_nr2, var_max_r2
+    character( len = 10 ) :: var_nt, var_nconf, var_nr1, var_nr2, var_max_r2
 
-    write(var_nt,'(i10)') grid_trans % numpoint
-    write(var_nr1,'(i10)') grid_rot1 % numpoint
-    write(var_nr2,'(i10)') rot2_factor
-    write(var_max_r2,'(f6.2)') max_rot2
+    write(var_nt,    '(i10)' ) grid_trans % numpoint
+    write(var_nconf, '(i10)' ) nconf2
+    write(var_nr1,   '(i10)' ) grid_rot1 % numpoint
+    write(var_nr2,   '(i10)' ) axis_rot_moves
+    write(var_max_r2,'(f6.2)') axis_rot_range
 
-    rot_total = grid_rot1 % numpoint * rot2_factor
-    ntotal    = rot_total * grid_trans % numpoint 
+    conf_total = nconf2 * grid_rot1 % numpoint * axis_rot_moves
+    ntotal     = conf_total * grid_trans % numpoint 
 
     write(output_unit,'(/, T3, A)') dashline      
     write(output_unit,'(T5, "Phase space discretization"                     )') 
     write(output_unit,'(T3, A)') dashline      
     write(output_unit,'(/, T5, "Translation grid points:", T91, A)') trim(var_nt)
+    write(output_unit,'(/, T5, "Molecule 2 conformations:", T91, A)') trim(var_nconf)
     write(output_unit,'(/, T5, "Reorientation grid points:", T91, A)') trim(var_nr1)
     write(output_unit,'(/, T5, "Rotation moves around mol2 axis (from 0 to ", A, " degree):", T91,  A)') &
              & trim(var_max_r2), trim(var_nr2)
-    write(output_unit,'(/, T9, "Total number of rotations:", T91, i10)') rot_total
+    write(output_unit,'(/, T9, "Total number of rotations:", T91, i10)') conf_total
     write(output_unit,'(/, T5, "TOTAL NUMBER OF CONFIGURATIONS:", T91, i10 )') ntotal
     write(output_unit,'(/, T3, A)') dashline
 

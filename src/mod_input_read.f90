@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2021 Themis developers
+!   Copyright (c) 2017 - 2022 Themis developers
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -31,68 +31,79 @@
 !> - improved read of keywords and attributes. error messages added.
 !> @date - Nov 2019
 !> - update error condition by error_handling module added by Asdrubal Lozada-Blanco
+!> @date - Apr, 2020
+!> - major revision
+!> @date - May, 2021
+!> - added support for ensemble of structures of molecule 2
+!> @date - Jul, 2022
+!> - added support to PDB files (read and write)
 !---------------------------------------------------------------------------------------------------
 
 module mod_input_read
-  use iso_fortran_env, only: output_unit
-  use mod_info       , only: Display_date_time
-  use mod_constants  , only: dp, int_alphabet, float_alphabet, char_alphabet, dashline, fpinf
+  use iso_fortran_env    , only : output_unit
+  use mod_info           , only : Display_date_time
+  use mod_constants      , only : dp, int_alphabet, float_alphabet, char_alphabet, dashline, fpinf
   use mod_error_handling
 
   implicit none
 
   private 
-  public Read_input_file, potential, writeframe, wrtxtc, temp, rcut_sqr, cutoff_sqr, rot1_factor, rot2_factor, &
-    trans_factor, max_rot2, ref1, ref2, vector1, vector2, nstruc, atom_overlap, inter_energy, mopac_head
+  public Read_input_file, potential, writeframe, wrtxtc, temp, rcut_sqr, cutoff_sqr, point_rot_factor, axis_rot_moves, &
+    trans_factor, axis_rot_range, ref1, ref2, vector1, vector2, nconf2, nstruc, atom_overlap, inter_energy, mopac_head, &
+    file_type
 
   ! Attributes in keyword
     
-  character( len = 250 ) :: msg_line     = char(0) 
-  character( len = 240 ) :: mopac_head   = char(0)
-  character( len = 10 )  :: potential    = char(0) 
-  character( len = 10 )  :: writeframe   = char(0) 
-  character( len = 5 )   :: wrtxtc       = char(0)
-  real( kind = DP )      :: temp         = 0.0
-  real( kind = DP )      :: rcut         = 0.0
-  real( kind = DP )      :: rcut_sqr     = 0.0
-  real( kind = DP )      :: cutoff       = 0.0
-  real( kind = DP )      :: cutoff_sqr   = 0.0
-  real( kind = DP )      :: max_rot2     = 0.0
-  integer                :: trans_factor = 0
-  integer                :: rot1_factor  = 0
-  integer                :: rot2_factor  = 0
-  integer                :: ref1         = 0
-  integer                :: ref2         = 0
-  integer                :: vector1      = 0
-  integer                :: vector2      = 0
-  integer                :: nstruc       = 0
+  character( len = 250 ) :: msg_line         = char(0) 
+  character( len = 240 ) :: mopac_head       = char(0)
+  character( len = 10 )  :: potential        = char(0) 
+  character( len = 10 )  :: writeframe       = char(0) 
+  character( len = 5 )   :: wrtxtc           = char(0)
+  character( len = 3 )   :: file_type        = char(0)
+  real( kind = DP )      :: temp             = 0.0
+  real( kind = DP )      :: rcut             = 0.0
+  real( kind = DP )      :: rcut_sqr         = 0.0
+  real( kind = DP )      :: cutoff           = 0.0
+  real( kind = DP )      :: cutoff_sqr       = 0.0
+  real( kind = DP )      :: axis_rot_range   = 0.0
+  integer                :: trans_factor     = 0
+  integer                :: point_rot_factor = 0
+  integer                :: axis_rot_moves   = 0
+  integer                :: ref1             = 0
+  integer                :: ref2             = 0
+  integer                :: vector1          = 0
+  integer                :: vector2          = 0
+  integer                :: nconf2           = 0
+  integer                :: nstruc           = 0
 
-  logical                :: key_translation_factor   = .false.
-  logical                :: key_rot1_factor          = .false.
-  logical                :: key_rot2_range           = .false.
-  logical                :: key_rot2_factor          = .false.
-  logical                :: key_potential            = .false.
-  logical                :: key_temperature          = .false.
-  logical                :: key_write_frames         = .false.
-  logical                :: key_ref_mol1             = .false.
-  logical                :: key_ref_mol2             = .false.
-  logical                :: key_rot_ref_mol1         = .false.
-  logical                :: key_rot_ref_mol2         = .false.
-  logical                :: key_shortest_distance    = .false.
-  logical                :: key_cutoff_distance      = .false.
-  logical                :: key_write_xtc            = .false.
-  logical                :: key_lowest_structures    = .false.
-  logical                :: key_mopac_job            = .false.
+  logical                :: key_translation_factor = .false.
+  logical                :: key_point_rot_factor   = .false.
+  logical                :: key_axis_rot_moves     = .false.
+  logical                :: key_axis_rot_range     = .false.
+  logical                :: key_potential          = .false.
+  logical                :: key_temperature        = .false.
+  logical                :: key_write_frames       = .false.
+  logical                :: key_ref_mol1           = .false.
+  logical                :: key_ref_mol2           = .false.
+  logical                :: key_rot_ref_mol1       = .false.
+  logical                :: key_rot_ref_mol2       = .false.
+  logical                :: key_mol2_conf          = .false.
+  logical                :: key_shortest_distance  = .false.
+  logical                :: key_cutoff_distance    = .false.
+  logical                :: key_write_xtc          = .false.
+  logical                :: key_file_format        = .false.
+  logical                :: key_lowest_structures  = .false.
+  logical                :: key_mopac_job          = .false.
 
-  logical, allocatable, dimension(:,:,:)           :: atom_overlap 
-  real( kind = DP ), allocatable, dimension(:,:,:) :: inter_energy
+  logical, allocatable, dimension(:,:,:,:)           :: atom_overlap 
+  real( kind = DP ), allocatable, dimension(:,:,:,:) :: inter_energy
 
   type(error) :: err
 
 contains
 
   subroutine Read_input_file
-    use mod_inquire, only: Inquire_file, Get_new_unit
+    use mod_inquire        , only : Inquire_file, Get_new_unit
     use mod_error_handling
 
     implicit none
@@ -106,7 +117,7 @@ contains
     character( len = 15 ), parameter :: file_format = "formatted"
     character( len = 40 ), parameter :: file_name   = "INPUT"
     integer                          :: c_pos
-    character( len = 250)            :: buffer, keyword, attribute
+    character( len = 250 )           :: buffer, keyword, attribute
     character( len = 10 )            :: line_number
     type(error)                      :: err
   
@@ -125,7 +136,7 @@ contains
 
         line = line + 1
 
-        write(line_number,'(i3)') line
+        write( line_number, '(i3)' ) line
 
         c_pos     = scan( buffer , ':' )
 
@@ -150,12 +161,12 @@ contains
 
             msg_line = "Please use an integer ( > 0 ) to define the dodecahedron tesselation level."
 
-            call err%error('e',message="while reading INPUT file.")
+            call err % error( 'e', message = "while reading INPUT file." )
 
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
-              &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
+            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+              &has an invalid attribute '"//trim(adjustl(attribute))//"'." )
 
-            call err%error('e',tip=msg_line)
+            call err % error( 'e', tip = msg_line )
 
             call Display_date_time( "FINISHED AT: " )
 
@@ -169,9 +180,9 @@ contains
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        else if ( buffer(1:12) == 'rot1_factor ' ) then
+        else if ( buffer(1:17) == 'point_rot_factor ' ) then
 
-          key_rot1_factor = .true.
+          key_point_rot_factor = .true.
 
           nochar = verify( trim(attribute),int_alphabet)
 
@@ -179,12 +190,12 @@ contains
 
             msg_line = "Please use an integer ( >= 0 ) to define the dodecahedron tesselation level."
 
-            call err%error('e',message="while reading INPUT file.")
+            call err % error( 'e', message = "while reading INPUT file.")
 
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
-              &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
+            call err % error('e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+              &has an invalid attribute '"//trim(adjustl(attribute))//"'." )
 
-            call err%error('e',tip=msg_line)
+            call err % error( 'e', tip = msg_line )
 
             call Display_date_time( "FINISHED AT: " )
 
@@ -192,15 +203,15 @@ contains
 
           else
 
-            read( attribute, *, iostat=ios ) rot1_factor
+            read( attribute, *, iostat=ios ) point_rot_factor
 
           endif
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        else if ( buffer(1:11) == 'rot2_range ' ) then
+        else if ( buffer(1:15) == 'axis_rot_range ' ) then
 
-          key_rot2_range = .true.
+          key_axis_rot_range = .true.
 
           nochar = verify( trim( attribute ), float_alphabet )
 
@@ -209,12 +220,12 @@ contains
             msg_line = "Please use a float to specify a maximum value for &
                        &rotation around mol2 axis (in degree)."
 
-            call err%error('e',message="while reading INPUT file.")
+            call err % error( 'e', message = "while reading INPUT file." )
 
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
-              &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
+            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+              &has an invalid attribute '"//trim(adjustl(attribute))//"'." )
 
-            call err%error('e',tip=msg_line)
+            call err % error( 'e', tip = msg_line )
 
             call Display_date_time( "FINISHED AT: " )
 
@@ -222,15 +233,15 @@ contains
 
           else
 
-            read(attribute, *, iostat=ios) max_rot2
+            read(attribute, *, iostat=ios) axis_rot_range
 
           endif
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        else if ( buffer(1:12) == 'rot2_factor ' ) then
+        else if ( buffer(1:15) == 'axis_rot_moves ' ) then
 
-          key_rot2_factor = .true.
+          key_axis_rot_moves = .true.
 
           nochar = verify( trim( attribute ), int_alphabet )
 
@@ -239,12 +250,12 @@ contains
             msg_line = "Please use an integer to specify the number of &
                        &rotation points around mol2 axis."
 
-            call err%error('e',message="while reading INPUT file.")
+            call err % error( 'e', message = "while reading INPUT file." )
 
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
               &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
 
-            call err%error('e',tip=msg_line)
+            call err % error( 'e', tip = msg_line )
 
             call Display_date_time( "FINISHED AT: " )
 
@@ -252,7 +263,7 @@ contains
 
           else
 
-            read(attribute, *, iostat=ios) rot2_factor
+            read(attribute, *, iostat=ios) axis_rot_moves
 
           endif
 
@@ -268,12 +279,12 @@ contains
 
             msg_line = "Please use a float for temperature."
 
-            call err%error('e',message="while reading INPUT file.")
+            call err % error( 'e', message = "while reading INPUT file.")
 
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
               &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
 
-            call err%error('e',tip=msg_line)
+            call err % error( 'e', tip = msg_line )
 
             call Display_date_time( "FINISHED AT: " )
             
@@ -302,12 +313,12 @@ contains
               msg_line = "Please enter a valid potential function. Options&
                          & are 'lj-coul', 'bh-coul', and 'none'."
 
-              call err%error('e',message="while reading INPUT file.")
+              call err % error( 'e', message = "while reading INPUT file.")
 
-              call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+              call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
                 &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
 
-              call err%error('e',tip=msg_line)
+              call err % error( 'e', tip = msg_line )
 
               call Display_date_time( "FINISHED AT: " )
             
@@ -323,7 +334,7 @@ contains
 
           select case( attribute )
 
-            case( 'XYZ', 'xyz', 'MOP', 'mop', 'none' )
+            case( 'XYZ', 'xyz', 'PDB', 'pdb', 'MOP', 'mop', 'none' )
 
               read(attribute, '(A)', iostat=ios) writeframe
 
@@ -332,12 +343,42 @@ contains
               msg_line = "Please enter a valid option for frame writing.&
                          & Options are 'XYZ', 'MOP' and 'none'."
 
-              call err%error('e',message="while reading INPUT file.")
+              call err % error( 'e', message = "while reading INPUT file.")
 
-              call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+              call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
                 &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
 
-              call err%error('e',tip=msg_line)
+              call err % error( 'e', tip = msg_line )
+
+              call Display_date_time( "FINISHED AT: " )
+            
+              stop
+
+          end select
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        else if ( buffer(1:13) == 'coord_format ' ) then
+
+          key_file_format = .true.
+
+          select case( attribute )
+
+            case( 'XYZ', 'xyz', 'PDB', 'pdb' )
+
+              read(attribute, '(A)', iostat=ios) file_type
+
+            case default
+
+              msg_line = "Please enter a valid option for coordinate format of input molecules.&
+                         & Options are 'XYZ' and 'PDB'."
+
+              call err % error( 'e', message = "while reading INPUT file.")
+
+              call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+                &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
+
+              call err % error( 'e', tip = msg_line )
 
               call Display_date_time( "FINISHED AT: " )
             
@@ -366,11 +407,11 @@ contains
             msg_line = "Please use an integer ( n > 0 ) to specify the index &
                        & of atomic site from molecule 1 for centering."
 
-            call err%error('e',message="while reading INPUT file.")
+            call err % error( 'e', message = "while reading INPUT file.")
 
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
               &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
-            call err%error('e',tip=msg_line)
+            call err % error( 'e', tip = msg_line )
 
             call Display_date_time( "FINISHED AT: " )
             
@@ -395,12 +436,12 @@ contains
             msg_line = "Please use an integer ( n > 0 ) to specify the index &
                        & of atomic site from molecule 1 for centering."
 
-            call err%error('e',message="while reading INPUT file.")
+            call err % error( 'e', message = "while reading INPUT file.")
 
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
               &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
 
-            call err%error('e',tip=msg_line)
+            call err % error( 'e', tip = msg_line )
 
             call Display_date_time( "FINISHED AT: " )
             
@@ -425,12 +466,12 @@ contains
             msg_line = "Please use an integer to specify which atom from &
                        &molecule 1 will be the rotation reference."
              
-            call err%error('e',message="while reading INPUT file.")
+            call err % error( 'e', message = "while reading INPUT file.")
 
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
                  &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
 
-            call err%error('e',tip=msg_line)
+            call err % error( 'e', tip = msg_line )
 
             call Display_date_time( "FINISHED AT: " )
             
@@ -455,12 +496,12 @@ contains
             msg_line = "Please use an integer to specify which atom from &
                        &molecule 2 will be the rotation reference."
 
-            call err%error('e',message="while reading INPUT file.")
+            call err % error( 'e', message = "while reading INPUT file.")
 
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
               &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
 
-            call err%error('e',tip=msg_line)
+            call err % error( 'e', tip = msg_line )
 
             call Display_date_time( "FINISHED AT: " )
             
@@ -469,6 +510,36 @@ contains
           else
 
             read(attribute, *, iostat=ios) vector2
+
+          endif
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        else if ( buffer(1:11) == 'nconf_mol2 ' ) then
+
+          key_mol2_conf = .true.
+
+          nochar = verify( trim( attribute ), int_alphabet )
+
+          if ( ( nochar > 0 ) .or. ( len( trim(attribute) ) == 0 ) ) then
+
+            msg_line = "Please use an integer to specify the number of &
+                       & structures of molecule 2 to read."
+
+            call err % error( 'e', message = "while reading INPUT file.")
+
+            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+              &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
+
+            call err % error( 'e', tip = msg_line )
+
+            call Display_date_time( "FINISHED AT: " )
+           
+            stop
+
+          else
+
+            read(attribute, *, iostat=ios) nconf2
 
           endif
 
@@ -486,12 +557,12 @@ contains
                        &distance (in Angstrom) to calculate pair energies. &
                        &"//new_line('a')   
 
-            call err%error('e',message="while reading INPUT file.")
+            call err % error( 'e', message = "while reading INPUT file.")
 
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
               &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
 
-            call err%error('e',tip=msg_line)
+            call err % error( 'e', tip = msg_line )
 
             call Display_date_time( "FINISHED AT: " )
             
@@ -529,12 +600,12 @@ contains
                        &contact below such value are skipped and a strongly &
                        &repulsive energy value is considered."
 
-            call err%error('e',message="while reading INPUT file.")
+            call err % error( 'e', message = "while reading INPUT file.")
 
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
               &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
 
-            call err%error('e',tip=msg_line)
+            call err % error( 'e', tip = msg_line )
   
             call Display_date_time( "FINISHED AT: " )
             
@@ -565,12 +636,12 @@ contains
               msg_line = "Please enter any valid option for this keyword: &
                          &yes/true/T or no/false/F."
 
-              call err%error('e',message="while reading INPUT file.")
+              call err % error( 'e', message = "while reading INPUT file.")
 
-              call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+              call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
                 &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
 
-              call err%error('e',tip=msg_line)
+              call err % error( 'e', tip = msg_line )
 
               call Display_date_time( "FINISHED AT: " )
             
@@ -591,12 +662,12 @@ contains
             msg_line = "use an integer ( > 0 ) to specify the number of lowest-&
                        &energy structures to write."
 
-            call err%error('e',message="while reading INPUT file.")
+            call err % error( 'e', message = "while reading INPUT file.")
 
-            call err%error('e',check="line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
+            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
               &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
 
-            call err%error('e',tip=msg_line)
+            call err % error( 'e', tip = msg_line )
 
             call Display_date_time( "FINISHED AT: " )
             
@@ -640,48 +711,102 @@ contains
   end subroutine Read_input_file
 
   subroutine Check_keys
-    USE mod_cmd_line, only: grid_type
+    USE mod_cmd_line , only : grid_type
     implicit none
 
     if ( ( key_translation_factor .eqv. .false. ) .and. ( grid_type == "shell" ) ) then
-        call err%error('e',message="Missing valid entry for 'translation_factor' on INPUT file!")
+        
+      call err % error('e',message="Missing valid entry for 'translation_factor' on INPUT file!")
+    
     else if ( ( key_translation_factor .eqv. .true. ) .and. ( grid_type /= "shell" ) ) then
-        call err%error('w',message="NOTE: Ignoring unused INPUT entry 'translation_factor'")
-    else if ( key_rot1_factor .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'rot1_factor' on INPUT file!")
-    else if ( key_rot2_factor .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'rot2_factor' on INPUT file!")
-    else if ( key_rot2_range .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'rot2_range' on INPUT file!")
+    
+      call err % error('w',message="NOTE: Ignoring unused INPUT entry 'translation_factor'")
+    
+    else if ( key_point_rot_factor .eqv. .false. ) then
+    
+      call err % error('e',message="Missing valid entry for 'point_rot_factor' on INPUT file!")
+    
+    else if ( key_axis_rot_moves .eqv. .false. ) then
+    
+      call err % error('e',message="Missing valid entry for 'axis_rot_moves' on INPUT file!")
+    
+    else if ( key_axis_rot_range .eqv. .false. ) then
+    
+      call err % error('e',message="Missing valid entry for 'axis_rot_range' on INPUT file!")
+    
     else if ( key_potential .eqv. .false. ) then
-        call err%error("Missing valid entry for 'potential' on INPUT file!")
+    
+      call err % error("Missing valid entry for 'potential' on INPUT file!")
+    
     else if ( key_write_frames .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'write_frames' on INPUT file!")
+    
+      call err % error('e',message="Missing valid entry for 'write_frames' on INPUT file!")
+    
     else if ( key_ref_mol1 .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'ref_mol1' on INPUT file!")
+    
+      call err % error('e',message="Missing valid entry for 'ref_mol1' on INPUT file!")
+    
     else if ( key_ref_mol2 .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'ref_mol2' on INPUT file!")
+    
+      call err % error('e',message="Missing valid entry for 'ref_mol2' on INPUT file!")
+    
     else if ( key_rot_ref_mol1 .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'rot_ref_mol1' on INPUT file!")
+    
+      call err % error('e',message="Missing valid entry for 'rot_ref_mol1' on INPUT file!")
+    
     else if ( key_rot_ref_mol2 .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'rot_ref_mol2' on INPUT file!")
+    
+      call err % error('e',message="Missing valid entry for 'rot_ref_mol2' on INPUT file!")
+    
+    else if ( key_mol2_conf .eqv. .false. ) then
+    
+      call err % error('e',message="Missing valid entry for 'nconf_mol2' on INPUT file!")
+    
     else if ( key_shortest_distance .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'shortest_distances' on INPUT file!")
+    
+      call err % error('e',message="Missing valid entry for 'shortest_distances' on INPUT file!")
+    
     else if ( key_cutoff_distance .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'cutoff_distances' on INPUT file!")
+    
+      call err % error('e',message="Missing valid entry for 'cutoff_distances' on INPUT file!")
+    
     else if ( key_write_xtc .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'write_xtc' on INPUT file!")
+    
+      call err % error('e',message="Missing valid entry for 'write_xtc' on INPUT file!")
+   
+    else if ( key_file_format .eqv. .false. ) then
+
+      call err % error('e',message="Missing valid entry for 'coord_format' on INPUT file!")
+   
     else if ( key_lowest_structures .eqv. .false. ) then
-        call err%error('e',message="Missing valid entry for 'lowest_structures' on INPUT file!")
+    
+      call err % error('e',message="Missing valid entry for 'lowest_structures' on INPUT file!")
+    
     endif
 
     if ( ( writeframe == "MOP" ) .and. ( key_mopac_job .eqv. .false. ) ) then
-        call err%error('e',message="MOPAC input files will be written but no 'mopac_job' entry &
-                 &was found on INPUT file!")
+    
+      call err % error('e',message="MOPAC input files will be written but no 'mopac_job' entry &
+                                   &was found on INPUT file!", tip="check mopac_job entry.")
+
     else if ( ( writeframe /= "MOP" ) .and. ( key_mopac_job .eqv. .true. ) ) then
-        call err%error('w',message="Ignoring unused INPUT entry 'mopac_job'")
+        
+      call err % error('w',message="Ignoring unused INPUT entry 'mopac_job'")
+    
     endif
-          
+
+    if ( ( file_type == "PDB" ) .and. ( writeframe == "XYZ" ) ) then
+
+      call err % error('w',message="Reading PDB files and writting XYZ files. Useful information &
+                                   & will be lost!'")
+
+    else if ( ( file_type == "XYZ" ) .and. ( writeframe == "PDB" ) ) then
+
+      call err % error('e',message="Reading XYZ files and writting PDB files. Structural data is &
+                                   &missing!", tip="check writeframe entry.")
+
+    endif
+
     call Display_date_time( "FINISHED AT: " )
 
   end subroutine Check_keys

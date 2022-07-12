@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2021 Themis developers
+!   Copyright (c) 2017 - 2022 Themis developers
 !
 !   This file was written by Asdrubal Lozada-Blanco.
 !
@@ -31,7 +31,7 @@
 !---------------------------------------------------------------------------------------------------
 
 module mod_error_handling
-  use iso_fortran_env, only: output_unit, error_unit
+  use iso_fortran_env , only : output_unit, error_unit
 
   implicit none
   private
@@ -41,8 +41,8 @@ module mod_error_handling
     character                     :: type
     character(len=:), allocatable :: message, check, tip
   contains
-    procedure :: error        => raise_error
-    procedure :: termination  => normal_termination
+    procedure                     :: error       => raise_error
+    procedure                     :: termination => normal_termination
   end type error
 
   public :: Normal_termination, Raise_error
@@ -50,39 +50,39 @@ module mod_error_handling
 contains
 
   subroutine Raise_error(self, type, code, message, check, tip)
-    class(error), intent(inout)            :: self
-    character,  intent(in)                 :: type        
-    integer, optional,  intent(in)         :: code        
-    character(*), optional, intent(in)     :: message, check, tip
+    class(error), intent(inout)        :: self
+    character, intent(in)              :: type        
+    integer, optional, intent(in)      :: code        
+    character(*), optional, intent(in) :: message, check, tip
 
     self%type = type
 
-    if(present(code)) self%code = code
-    if(present(message)) self%message = message
-    if(present(check)) self%check = check
-    if(present(tip)) self%tip = tip
+    if (present( message )) self % message = message
+    if (present( check ))   self % check   = check
+    if (present( tip ))     self % tip     = tip
+    if (present( code ))    self % code    = code
 
     select case(type)
       case('w')
         !if(.not.present(message)) write(output_unit,'("Warning: unexpected event.")')     
-        if(present(message)) write(output_unit,'(/,T5,"Warning: ",a)') self%message
-        if(present(check)) write(output_unit,'(/,T5,"Warning: ",a)') self%check
-        if(present(tip)) write(output_unit,'(/,T5,"Warning: ",a)') self%tip
-        if(present(code)) write(output_unit,'("Code: ",i0)') self%code
+        if (present( message )) write(output_unit,'(/,T5,"Warning: ",a)') self % message
+        if (present( check ))   write(output_unit,'(/,T5,"Warning: ",a)') self % check
+        if (present( tip ))     write(output_unit,'(/,T5,"Warning: ",a)') self % tip
+        if (present( code ))    write(output_unit,'("Code: ",i0)')        self % code
       case('e')
         !if(.not.present(message)) write(output_unit,'("Error: abnormal condition.")')     
-        if(present(message)) write(error_unit,'(/,T5,"Error: abnormal condition ",a)') self%message
-        if(present(check)) write(output_unit,'(/,T5,"Please check ",a)') self%check
-        if(present(tip)) write(output_unit,'(/,T5,"TIP: ",a)') self%tip
-        if(present(code)) write(output_unit,'("Code: ",i0)') code
+        if (present( message )) write(output_unit,'(/,T5,"Error: abnormal condition ",a)') self % message
+        if (present( check ))   write(output_unit,'(/,T5,"Please check ",a)')             self % check
+        if (present( tip ))     write(output_unit,'(/,T5,"TIP: ",a)')                     self % tip
+        if (present( code ))    write(output_unit,'("Code: ",i0)')                        self % code
     end select
 
   end subroutine Raise_error   
 
   subroutine Normal_termination(self,iostat,status)
-    class(error), intent(inout)            :: self
-    integer, intent(in)      :: iostat
-    character(*), intent(in) :: status
+    class(error), intent(inout) :: self
+    integer, intent(in)         :: iostat
+    character(*), intent(in)    :: status
 
     if(iostat == 0) then
       select case(status)

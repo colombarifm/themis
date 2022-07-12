@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2021 Themis developers
+!   Copyright (c) 2017 - 2022 Themis developers
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -32,8 +32,8 @@
 !---------------------------------------------------------------------------------------------------
 
 module mod_resume
-  use iso_fortran_env, only: output_unit
-  use mod_constants, only: DP, FPINF, DASHLINE
+  use iso_fortran_env , only : output_unit
+  use mod_constants   , only : DP, FPINF, DASHLINE
 
   implicit none 
 
@@ -47,11 +47,11 @@ contains
   !> @author Felippe M. Colombari
   !---------------------------------------------------------------------------	
   subroutine Ending( timet )
-    use mod_cmd_line,          only: grid_type, rad, irun
-    use mod_input_read,        only: potential, atom_overlap
-    use mod_grids,             only: A
-    use mod_loops,             only: min_ener
-    use mod_search_structures, only: n
+    use mod_cmd_line          , only : grid_type, rad, irun
+    use mod_input_read        , only : potential, atom_overlap
+    use mod_grids             , only : A
+    use mod_loops             , only : min_ener
+    use mod_search_structures , only : n
 
     implicit none
 
@@ -61,11 +61,11 @@ contains
 
       case( "shell" )
 
-        write(output_unit,'(/, T5, A, T93, f6.2, A)') "Shell mapping done for r: ", rad, " A" 
+        write( output_unit, '(/, T5, A, T93, f6.2, A)' ) "Shell mapping done for r: ", rad, " A" 
 
       case ( "user" )
 
-        write(output_unit,'(/, T5, A, T93, f6.2, A)') "Grid mapping done."
+        write( output_unit, '(/, T5, A, T93, f6.2, A)' ) "Grid mapping done."
 
       case default
 
@@ -75,28 +75,27 @@ contains
 
     if ( irun == "run" ) then
 
-      write(output_unit,'(/,T5,A,T92,i9,/)') "Skipped configurations:", count(atom_overlap)
+      write( output_unit, '(/,T5,A,T92,i9,/)' ) "Skipped configurations:", count(atom_overlap)
 
     else
 
-      write(output_unit,*)
+      write( output_unit, * )
 
     endif
 
     if ( potential /= "none" ) then
 
-      write(output_unit,'(T5,a34,T88,es13.5e3,/)') "Lowest energy structure (kJ/mol): ", min_ener
-      write(output_unit,'(T5,a39,T94, i7,/)') "Number of structures within 0.5 * kBT: ", n
-
-      write(output_unit,'(T5,a30,T96,i5,/)') "Lowest free energy grid point: ", minloc(A)
-      write(output_unit,'(T9,a28,T88,es13.5E3,/)') "Free energy value (kJ/mol): ", minval(A)
-      write(output_unit,'(T5,a31,T96,i5,/)') "Highest free energy grid point: ", maxloc(A)
-      write(output_unit,'(T9,a28,T88,es13.5E3,/)') "Free energy value (kJ/mol): ", maxval(A)
+      write( output_unit, '(T5,a34,T88,es13.5e3,/)' ) "Lowest energy structure (kJ/mol): "     , min_ener
+      write( output_unit, '(T5,a39,T94,i7,/)' )       "Number of structures within 0.5 * kBT: ", n
+      write( output_unit, '(T5,a30,T96,i5,/)' )       "Lowest free energy grid point: "        , minloc(A)
+      write( output_unit, '(T9,a28,T88,es13.5E3,/)' ) "Free energy value (kJ/mol): "           , minval(A)
+      write( output_unit, '(T5,a31,T96,i5,/)' )       "Highest free energy grid point: "       , maxloc(A)
+      write( output_unit, '(T9,a28,T88,es13.5E3,/)' ) "Free energy value (kJ/mol): "           , maxval(A)
 
     endif
 
-    write(output_unit,'(T3, A,/)') dashline
-    write(output_unit,'(T5,a20,T83,f10.2,a8,/)') "Total running time: ", timet, " seconds."
+    write( output_unit, '(T3, A,/)' ) dashline
+    write( output_unit, '(T5,a20,T83,f10.2,a8,/)' ) "Total running time: ", timet, " seconds."
 
     return
   end subroutine Ending
@@ -113,36 +112,36 @@ contains
   !---------------------------------------------------------------------------	 
   subroutine Sort_output
     use mod_grids
-    use mod_loops, only: ATOTAL, mTSTOTAL, ETOTALavg, Ztrans, kBT, min_ener
+    use mod_loops          , only : ATOTAL, mTSTOTAL, ETOTALavg, Ztrans, kBT, min_ener
     use mod_error_handling
     
     implicit none
 
-    integer                           :: t
+    integer                           :: n_trans
     real( kind = DP )                 :: log_Z
     character( len = : ), allocatable :: write_fmt
 
     integer                           :: ierr
     type(error)                       :: err
 
-    open(unit=21,file='output-sort.log',position='append',status='replace')
+    open( unit = 21, file = 'output-sort.log', position = 'append', status = 'replace' )
 
     write_fmt = '(a1,2x,3(a11,1x),3x,a5,3x,4(a13,3x))'
 
-    write(21,*) grid_trans % numpoint
+    write( 21, * ) grid_trans % numpoint
 
-    write(21, write_fmt ) " ", "X (A)", "Y (A)", "Z (A)", "point", "PROB", "A (kJ/mol)", "-TS (kJ/mol)", "E (kJ/mol)"
+    write( 21, write_fmt ) " ", "X (A)", "Y (A)", "Z (A)", "point", "PROB", "A (kJ/mol)", "-TS (kJ/mol)", "E (kJ/mol)"
 
     allocate( A_min( grid_trans % numpoint ), stat=ierr )
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
     A_min = 0.0_dp
 
     write_fmt = '(A,2x,3(f11.5,1x),3x,i5,3x,4(es13.5E3,3x))'
       
-    do t = 1, grid_trans % numpoint
+    do n_trans = 1, grid_trans % numpoint
 
-      A_min(t) = minval(A) 
+      A_min( n_trans ) = minval(A) 
 
       pos_A_min = minloc(A)
 
@@ -151,19 +150,19 @@ contains
       write( 21, write_fmt ) "X", grid_trans % points(pos_A_min) % grid_xyz(1), &
                                   grid_trans % points(pos_A_min) % grid_xyz(2), & 
                                   grid_trans % points(pos_A_min) % grid_xyz(3), &
-                                  pos_A_min, probT(pos_A_min), A_min(t), mTS(pos_A_min), Eavg(pos_A_min)
+                                  pos_A_min, probT(pos_A_min), A_min(n_trans), mTS(pos_A_min), Eavg(pos_A_min)
 
     enddo
 
-    write(21,'(a)') dashline
+    write( 21, '(a)' ) dashline
 
     log_Z = dlog(Ztrans) - min_ener / kBT
 
     write_fmt = '(9x,"TOTAL OVER TRANSLATIONAL GRID",12x,4(es13.5E3,3x))'
       
-    write(21, write_fmt) sum(probT), ATOTAL, mTSTOTAL, ETOTALavg
+    write( 21, write_fmt ) sum(probT), ATOTAL, mTSTOTAL, ETOTALavg
 
-    close(21)
+    close( 21 )
 
     deallocate( A_min )
     deallocate( A )

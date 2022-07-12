@@ -71,7 +71,7 @@ contains
   !    Input, integer ( kind = 4 ) FACE_NUM, the number of faces (20).
   !    Input, integer ( kind = 4 ) FACE_ORDER_MAX, the maximum number of vertices per face (3).
   !
-  !    Output, real(kind=DP) POINT_COORD(3,POINT_NUM), the points.
+  !    Output, real( kind = DP ) POINT_COORD(3,POINT_NUM), the points.
   !    Output, integer ( kind = 4 ) EDGE_POINT(2,EDGE_NUM), the points that make up each edge, 
   !    listed in ascending order of their indexes.
   !
@@ -86,21 +86,20 @@ contains
 
    implicit none
 
-   integer(kind=4)             ::  edge_num
-   integer(kind=4), parameter  ::  edge_order = 2
-   integer(kind=4)             ::  face_num
-   integer(kind=4)             ::  face_order_max
-   integer(kind=4)             ::  point_num
-
-   real(kind=DP)               ::  a
-   real(kind=DP)               ::  b
-   integer(kind=4)             ::  edge_point(edge_order,edge_num)
-   integer(kind=4)             ::  face_order(face_num)
-   integer(kind=4)             ::  face_point(face_order_max,face_num)
-   real(kind=DP)               ::  phi
-   real(kind=DP)               ::  point_coord(3,point_num)
-   real(kind=DP)               ::  z
-
+   integer( kind = 4 ), parameter :: edge_order = 2
+   integer( kind = 4 )            :: edge_num
+   integer( kind = 4 )            :: face_num
+   integer( kind = 4 )            :: face_order_max
+   integer( kind = 4 )            :: point_num
+   integer( kind = 4 )            :: edge_point(edge_order,edge_num)
+   integer( kind = 4 )            :: face_order(face_num)
+   integer( kind = 4 )            :: face_point(face_order_max,face_num)
+   
+   real( kind = DP )              :: a
+   real( kind = DP )              :: b
+   real( kind = DP )              :: phi
+   real( kind = DP )              :: point_coord(3,point_num)
+   real( kind = DP )              :: z
 
    !Set the point coordinates.
 
@@ -222,14 +221,14 @@ contains
     
     implicit none
 
-    integer(kind=4)       ::  edge_num
-    integer(kind=4)       ::  face_num
-    integer(kind=4)       ::  face_order_max
-    integer(kind=4)       ::  point_num
+    integer( kind = 4 ) :: edge_num
+    integer( kind = 4 ) :: face_num
+    integer( kind = 4 ) :: face_order_max
+    integer( kind = 4 ) :: point_num
 
-    point_num = 12
-    edge_num = 30
-    face_num = 20
+    point_num      = 12
+    edge_num       = 30
+    face_num       = 20
     face_order_max = 3
   
     return
@@ -261,18 +260,18 @@ contains
   !  Parameters:
   !
   !    Input, integer ( kind = 4 ) N, the number of entries in A.
-  !    Input, real(kind=DP) A(N), the vector whose L2 norm is desired.
-  !    Output, real(kind=DP) R8VEC_NORM, the L2 norm of A.
+  !    Input, real( kind = DP ) A(N), the vector whose L2 norm is desired.
+  !    Output, real( kind = DP ) R8VEC_NORM, the L2 norm of A.
   !
   !---------------------------------------------------------------------------------------------------
   FUNCTION R8vec_norm(n,a)
 
     implicit none
 
-    integer(kind=4)       ::  n
+    integer( kind = 4 ) :: n
 
-    real(kind=DP)         ::  a(n)
-    real(kind=DP)         ::  r8vec_norm
+    real( kind = DP )   :: a(n)
+    real( kind = DP )   :: r8vec_norm
 
     r8vec_norm = sqrt ( sum ( a(1:n)**2 ) )
   
@@ -332,7 +331,7 @@ contains
   !    Input, integer ( kind = 4 ) NODE_NUM, the number of nodes, as reported
   !    by SPHERE_GRID_ICOS_SIZE.
   !
-  !    Output, real(kind=DP) NODE_XYZ(3,NODE_NUM), the node coordinates.
+  !    Output, real( kind = DP ) NODE_XYZ(3,NODE_NUM), the node coordinates.
   !
   !  Local Parameters:
   !
@@ -350,30 +349,31 @@ contains
       
     implicit none
 
-    integer(kind=4)       ::  node_num
-    integer(kind=4)       ::  a
-    integer(kind=4)       ::  b
-    integer(kind=4)       ::  c
-    integer(kind=4)       ::  edge
-    integer(kind=4)       ::  edge_num
-    integer(kind=4), allocatable, dimension(:,:)  ::  edge_point
-    integer(kind=4)       ::  f
-    integer(kind=4)       ::  f1
-    integer(kind=4)       ::  f2
-    integer(kind=4)       ::  face
-    integer(kind=4)       ::  face_num
-    integer(kind=4), allocatable, dimension(:) ::   face_order
-    integer(kind=4), allocatable, dimension ( :, : ) :: face_point
-    integer(kind=4)       ::  face_order_max
-    integer(kind=4)       ::  factor
-    integer(kind=4)       ::  node
-    real(kind=DP)         ::  node_norm
-    real(kind=DP)         ::  node_xyz(3,node_num)
-    real(kind=DP), allocatable, dimension(:,:)  ::  point_coord
-    integer(kind=4)       ::  point_num
+    integer( kind = 4 )                              :: node_num
+    integer( kind = 4 )                              :: a
+    integer( kind = 4 )                              :: b
+    integer( kind = 4 )                              :: c
+    integer( kind = 4 )                              :: edge
+    integer( kind = 4 )                              :: edge_num
+    integer( kind = 4 ), allocatable, dimension(:,:) :: edge_point
+    integer( kind = 4 )                              :: f
+    integer( kind = 4 )                              :: f1
+    integer( kind = 4 )                              :: f2
+    integer( kind = 4 )                              :: face
+    integer( kind = 4 )                              :: face_num
+    integer( kind = 4 ), allocatable, dimension(:)   :: face_order
+    integer( kind = 4 ), allocatable, dimension(:,:) :: face_point
+    integer( kind = 4 )                              :: face_order_max
+    integer( kind = 4 )                              :: factor
+    integer( kind = 4 )                              :: node
+    integer( kind = 4 )                              :: point_num
+    
+    real( kind = DP )                                :: node_norm
+    real( kind = DP )                                :: node_xyz(3,node_num)
+    real( kind = DP ), allocatable, dimension(:,:)   :: point_coord
 
-    integer               :: ierr
-    type(error)           :: err
+    integer                                          :: ierr
+    type(error)                                      :: err
 
     !Size the icosahedron.
 
@@ -382,16 +382,16 @@ contains
     !Set the icosahedron.
 
     allocate(point_coord(1:3,1:point_num),stat=ierr)
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
       
     allocate(edge_point(1:2,1:edge_num),stat=ierr)  
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
     
     allocate(face_order(1:face_num),stat=ierr)
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
     allocate(face_point(1:face_order_max,1:face_num),stat=ierr)
-    if(ierr/=0) call err%error('e',message="abnormal memory allocation")
+    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
     call icos_shape(point_num,edge_num,face_num,face_order_max,point_coord, &
       edge_point,face_order,face_point)
@@ -459,9 +459,9 @@ contains
 
     end do
 
-    if ( allocated( edge_point) ) deallocate(edge_point)
-    if ( allocated( face_order) ) deallocate(face_order)
-    if ( allocated( face_point) ) deallocate(face_point)
+    if ( allocated( edge_point ) )  deallocate(edge_point)
+    if ( allocated( face_order ) )  deallocate(face_order)
+    if ( allocated( face_point ) )  deallocate(face_point)
     if ( allocated( point_coord ) ) deallocate(point_coord)
   
     return

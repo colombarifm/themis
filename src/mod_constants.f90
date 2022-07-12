@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2021 Themis developers
+!   Copyright (c) 2017 - 2022 Themis developers
 !
 !   This file was written by Felippe M. Colombari.
 !
@@ -33,8 +33,8 @@ module mod_constants
 
   implicit none
 
-  character( len = 16 ), parameter     :: version = '1.0.0'
-  character( len = 7 ), parameter      :: revision = 'ae2e8ac'
+  character( len = 8 ), parameter      :: version = '3.0.0'
+  character( len = 8 ), parameter      :: revision = 'ae2e8ac'
 
   integer, public, parameter           :: DP = selected_real_kind(15, 307) !  double precision constant for portability
   integer, public, parameter           :: SP = selected_real_kind(6, 37)   !  single precision constant for portability
@@ -47,10 +47,10 @@ module mod_constants
   real( kind = DP ), public, parameter :: FPINF   = huge(1.0_DP)           !          define machine-precision INFINITY
   real( kind = DP ), public, parameter :: MS      = 0.001_DP               !                            convert ms to s
   
+  character( len = 100 ), public, parameter  :: DASHLINE = repeat('-',100)      !                       just a dashline
   character( len = 11 ), public, parameter   :: INT_ALPHABET   = '1234567890'    !       allowed character for integers
   character( len = 12 ), public, parameter   :: FLOAT_ALPHABET = '.-1234567890'  !         allowed character for floats
   character( len = 66 ), public, parameter   :: CHAR_ALPHABET  = &
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._-1234567890 '   !              allowed character for strings
-  character( len = 100 ), public, parameter  :: DASHLINE = repeat('-',100)      !                       just a dashline
 
 end module mod_constants

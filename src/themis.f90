@@ -31,6 +31,12 @@
 !> - modular version
 !> @date - Jan, 2020
 !> - module reorganization
+!> @date - Apr, 2020
+!> - major revision
+!> @date - May, 2021
+!> - added support for ensemble of structures of molecule 2
+!> @date - Jul, 2022
+!> - added support to PDB files (read and write)
 !---------------------------------------------------------------------------------------------------
 
 program themis
@@ -38,7 +44,8 @@ program themis
   use mod_constants         , only : DP
   use mod_error_handling    , only : Normal_termination, Raise_error, error
   use mod_cmd_line          , only : Parse_arguments, irun, grid_type, rad, grid_transl
-  use mod_input_read        , only : Read_input_file, ref1, vector1, ref2, vector2, rot1_factor, trans_factor, potential
+  use mod_input_read        , only : Read_input_file, ref1, vector1, ref2, vector2, nconf2, &
+                                     point_rot_factor, trans_factor, potential, file_type
   use mod_read_molecules    , only : mol1, mol2
   use mod_grids             , only : grid_trans, grid_rot1
   use mod_loops             , only : Run_loops, Rerun_loops, Calculate_ztotal
@@ -50,8 +57,8 @@ program themis
   implicit none
   
   real( kind = DP )                :: timet
-  integer                          :: finish, start, rate2
-  type(error)                      :: err
+  integer                          :: finish, start, rate2, n_conf
+  type( error )                    :: err
   
   call display_header()
   call Parse_arguments
@@ -64,11 +71,24 @@ program themis
 
     CASE ( "RUN", "run" )
 
-      call mol1 % Read_molecule ( "conf1.xyz" )
+      SELECT CASE( file_type )
+
+        CASE( "XYZ", "xyz" )
+
+          call mol1 % Read_molecule ( "conf1.xyz", 1, "XYZ" )
+          call mol2 % Read_molecule ( "conf2.xyz", nconf2, "XYZ" )
+
+        CASE( "PDB", "pdb" )
+
+          call mol1 % Read_molecule ( "conf1.pdb", 1, "PDB" )
+          call mol2 % Read_molecule ( "conf2.pdb", nconf2, "PDB" )
+
+      END SELECT
+
       call mol1 % Check_molecule ( ref1, vector1, 1 )
-      call mol1 % Translate_molecule( ref1 )
-      call mol1 % Align_molecule( vector1, ref1 )
-      call mol1 % Rotate_molecule( 1 )
+      call mol1 % Translate_molecule( ref1, 1 )
+      call mol1 % Align_molecule( vector1, ref1, 1 )
+      call mol1 % Rotate_molecule( 1, 1 )
 
       SELECT CASE (grid_type)
 
@@ -85,12 +105,16 @@ program themis
 
       end SELECT
 
-      call mol2 % Read_molecule ( "conf2.xyz" )
       call mol2 % Check_molecule ( ref2, vector2, 2 )
-      call mol2 % Translate_molecule( ref2 )
-      call mol2 % Align_molecule( vector2, ref2 )
 
-      call grid_rot1 % Build_rotation1_sphere( rot1_factor )
+      do n_conf = 1, nconf2
+
+        call mol2 % Translate_molecule( ref2, n_conf )
+        call mol2 % Align_molecule( vector2, ref2, n_conf )
+
+      enddo
+
+      call grid_rot1 % Build_rotation1_sphere( point_rot_factor )
       call Run_loops
 
       SELECT CASE ( potential )
@@ -119,10 +143,23 @@ program themis
 
     CASE ( "RERUN", "rerun" )
 
-      call mol1 % Read_molecule ( "conf1.xyz" )
-      call mol1 % Translate_molecule( ref1 )
-      call mol1 % Align_molecule( vector1, ref1 )
-      call mol1 % Rotate_molecule( 1 )
+      SELECT CASE( file_type )
+
+        CASE( "XYZ", "xyz" )
+
+          call mol1 % Read_molecule ( "conf1.xyz", 1, "XYZ" )
+          call mol2 % Read_molecule ( "conf2.xyz", nconf2, "XYZ" )
+
+        CASE( "PDB", "pdb" )
+
+          call mol1 % Read_molecule ( "conf1.pdb", 1, "PDB" )
+          call mol2 % Read_molecule ( "conf2.pdb", nconf2, "PDB" )
+
+      END SELECT
+      
+      call mol1 % Translate_molecule( ref1, 1 )
+      call mol1 % Align_molecule( vector1, ref1, 1 )
+      call mol1 % Rotate_molecule( 1, 1 )
     
       SELECT CASE ( grid_type )
 
@@ -139,11 +176,15 @@ program themis
 
       END SELECT
       
-      call mol2 % Read_molecule ( "conf2.xyz" )
-      call mol2 % Translate_molecule( ref2 )
-      call mol2 % Align_molecule( vector2, ref2 )
+      call mol2 % Translate_molecule( ref2, nconf2 )
+      
+      do n_conf = 1, nconf2
 
-      call grid_rot1 % Build_rotation1_sphere( rot1_factor )
+        call mol2 % Align_molecule( vector2, ref2, nconf2 )
+
+      enddo
+
+      call grid_rot1 % Build_rotation1_sphere( point_rot_factor )
       call Rerun_loops
       call Calculate_ztotal
 
