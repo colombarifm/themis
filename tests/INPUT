@@ -3,11 +3,12 @@ translation_factor : 2
 rot2_factor :  36
 rot2_range : 360.0
 temperature : 300 
-potential : none 
+potential : lj-coul 
 ref_mol1 : 1                  
 rot_ref_mol1 : 4
 ref_mol2 : 1 
 rot_ref_mol2 : 2
+nconf_mol2 : 1
 shortest_distance : 1.5
 write_xtc : no 
 lowest_structures : 10
