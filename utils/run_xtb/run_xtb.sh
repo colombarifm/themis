@@ -27,7 +27,7 @@ MANPATH=${MANPATH}:${XTBHOME}/man
 PATH=${PATH}:${XTBHOME}/bin:${XTBHOME}/python
 LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${XTBHOME}/lib
 PYTHONPATH=${PYTHONPATH}:${XTBHOME}/python
-EXEC=$XTBHOME/build/xtb
+EXEC=
 
 export XTBHOME PATH XTBPATH MANPATH LD_LIBRARY_PATH PYTHONPATH
 
@@ -256,6 +256,18 @@ Check_options () {
 
   fi
 
+  if [ -f $EXEC ]
+  then
+
+    printf "\n\t%s" "ERROR : EXEC path not set" 
+    printf "\n\t%s" "TIP   : edit line 30 of this script" 
+    printf "\n\n\t"
+    printf "=%.0s" {1..80}
+    printf "\n"
+    exit 0
+
+  fi
+
 }
 
 Inquire_files () {
@@ -387,16 +399,16 @@ Run_xtb () {
 
     #Check_dummy
 
-#    $EXEC \
-#      $file.xyz \
-#    --uhf $uhf \
-#    --chrg $chrg \
-#    --namespace $file \
-#    --norestart \
-#    --input input_xtb > $file.log 2> /dev/null 
+    $EXEC \
+      $file.xyz \
+    --uhf $uhf \
+    --chrg $chrg \
+    --namespace $file \
+    --norestart \
+    --input input_xtb > $file.log 2> /dev/null 
                        
-#    mv $file.xyz ../2_finished/
-#    mv $file.log ../2_finished/
+    mv $file.xyz ../2_finished/
+    mv $file.log ../2_finished/
                         
   done 
 
