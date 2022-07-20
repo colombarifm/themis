@@ -53,4 +53,27 @@ module mod_constants
   character( len = 66 ), public, parameter   :: CHAR_ALPHABET  = &
     'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._-1234567890 '   !              allowed character for strings
 
+  character( len = 26 ), public, parameter           :: UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  character( len = 26 ), public, parameter           :: LOWERCASE = 'abcdefghijklmnopqrstuvwxyz'
+
+contains
+
+  Pure Function to_lower (input_string) Result (output_string)
+
+    implicit none
+    character( len = * ), intent(IN)          :: input_string
+    character( len = len(input_string) )      :: output_string
+
+    integer :: ic, i
+
+    output_string = input_string
+    
+    do i = 1, len_trim(input_string)
+      ic = index(UPPERCASE, input_string(i:i))
+      if (ic > 0) output_string(i:i) = LOWERCASE(ic:ic)
+    end do
+
+  end function to_lower
+
 end module mod_constants
+

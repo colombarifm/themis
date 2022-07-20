@@ -69,22 +69,11 @@ program themis
 
   SELECT CASE ( irun )
 
-    CASE ( "RUN", "run" )
+    CASE ( "run" )
 
-      SELECT CASE( file_type )
-
-        CASE( "XYZ", "xyz" )
-
-          call mol1 % Read_molecule ( "conf1.xyz", 1, "XYZ" )
-          call mol2 % Read_molecule ( "conf2.xyz", nconf2, "XYZ" )
-
-        CASE( "PDB", "pdb" )
-
-          call mol1 % Read_molecule ( "conf1.pdb", 1, "PDB" )
-          call mol2 % Read_molecule ( "conf2.pdb", nconf2, "PDB" )
-
-      END SELECT
-
+      call mol1 % Read_molecule ( "conf1."//file_type, 1, file_type )
+      call mol2 % Read_molecule ( "conf2."//file_type, nconf2, file_type )
+      
       call mol1 % Check_molecule ( ref1, vector1, 1 )
       call mol1 % Translate_molecule( ref1, 1 )
       call mol1 % Align_molecule( vector1, ref1, 1 )
@@ -141,21 +130,10 @@ program themis
 
       END SELECT
 
-    CASE ( "RERUN", "rerun" )
+    CASE ( "rerun" )
 
-      SELECT CASE( file_type )
-
-        CASE( "XYZ", "xyz" )
-
-          call mol1 % Read_molecule ( "conf1.xyz", 1, "XYZ" )
-          call mol2 % Read_molecule ( "conf2.xyz", nconf2, "XYZ" )
-
-        CASE( "PDB", "pdb" )
-
-          call mol1 % Read_molecule ( "conf1.pdb", 1, "PDB" )
-          call mol2 % Read_molecule ( "conf2.pdb", nconf2, "PDB" )
-
-      END SELECT
+      call mol1 % Read_molecule ( "conf1."//file_type, 1, file_type )
+      call mol2 % Read_molecule ( "conf2."//file_type, nconf2, file_type )
       
       call mol1 % Translate_molecule( ref1, 1 )
       call mol1 % Align_molecule( vector1, ref1, 1 )
@@ -202,6 +180,6 @@ program themis
   END SELECT
 
   call Display_date_time( "FINISHED AT: " )           
-  call err%termination(0,'f')
+  call err % termination(0,'f')
 
 end program

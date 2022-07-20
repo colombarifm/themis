@@ -42,7 +42,7 @@
 module mod_input_read
   use iso_fortran_env    , only : output_unit
   use mod_info           , only : Display_date_time
-  use mod_constants      , only : dp, int_alphabet, float_alphabet, char_alphabet, dashline, fpinf
+  use mod_constants      , only : dp, int_alphabet, float_alphabet, char_alphabet, dashline, fpinf, to_lower
   use mod_error_handling
 
   implicit none
@@ -157,7 +157,8 @@ contains
 
           nochar = verify( trim(attribute), int_alphabet)
 
-          if ( ( nochar > 0 ) .or. ( len( trim(attribute) ) == 0 ) .or. ( attribute == '0' ) ) then
+          !if ( ( nochar > 0 ) .or. ( len( trim(attribute) ) == 0 ) .or. ( attribute == '0' ) ) then
+          if ( ( nochar > 0 ) .or. ( len( trim(attribute) ) == 0 ) ) then
 
             msg_line = "Please use an integer ( > 0 ) to define the dodecahedron tesselation level."
 
@@ -334,9 +335,11 @@ contains
 
           select case( attribute )
 
-            case( 'XYZ', 'xyz', 'PDB', 'pdb', 'MOP', 'mop', 'none' )
+            case( 'XYZ', 'xyz', 'PDB', 'pdb', 'MOP', 'mop', 'NONE', 'none' )
 
               read(attribute, '(A)', iostat=ios) writeframe
+
+              writeframe = to_lower( writeframe )
 
             case default
 
@@ -367,6 +370,8 @@ contains
             case( 'XYZ', 'xyz', 'PDB', 'pdb' )
 
               read(attribute, '(A)', iostat=ios) file_type
+
+              file_type = to_lower( file_type )
 
             case default
 
@@ -627,9 +632,11 @@ contains
 
           select case( attribute )
 
-            case( "yes", "true", "T", "no", "false", "F" )
+            case( "yes", "true", "TRUE", "T", "no", "false", "FALSE", "F" )
 
               read(attribute, '(A)', iostat=ios) wrtxtc
+
+              wrtxtc = to_lower( wrtxtc )
 
             case default
 
@@ -717,93 +724,129 @@ contains
     if ( ( key_translation_factor .eqv. .false. ) .and. ( grid_type == "shell" ) ) then
         
       call err % error('e',message="Missing valid entry for 'translation_factor' on INPUT file!")
-    
+   
+      stop
+
     else if ( ( key_translation_factor .eqv. .true. ) .and. ( grid_type /= "shell" ) ) then
     
       call err % error('w',message="NOTE: Ignoring unused INPUT entry 'translation_factor'")
     
     else if ( key_point_rot_factor .eqv. .false. ) then
-    
+   
       call err % error('e',message="Missing valid entry for 'point_rot_factor' on INPUT file!")
-    
+
+      stop
+
     else if ( key_axis_rot_moves .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'axis_rot_moves' on INPUT file!")
-    
+   
+      stop
+
     else if ( key_axis_rot_range .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'axis_rot_range' on INPUT file!")
-    
+   
+      stop
+
     else if ( key_potential .eqv. .false. ) then
     
-      call err % error("Missing valid entry for 'potential' on INPUT file!")
+      call err % error('e', message="Missing valid entry for 'potential' on INPUT file!")
     
+      stop
+
     else if ( key_write_frames .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'write_frames' on INPUT file!")
     
+      stop
+
     else if ( key_ref_mol1 .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'ref_mol1' on INPUT file!")
     
+      stop
+
     else if ( key_ref_mol2 .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'ref_mol2' on INPUT file!")
     
+      stop
+
     else if ( key_rot_ref_mol1 .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'rot_ref_mol1' on INPUT file!")
     
+      stop
+
     else if ( key_rot_ref_mol2 .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'rot_ref_mol2' on INPUT file!")
     
+      stop
+
     else if ( key_mol2_conf .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'nconf_mol2' on INPUT file!")
     
+      stop
+
     else if ( key_shortest_distance .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'shortest_distances' on INPUT file!")
     
+      stop
+
     else if ( key_cutoff_distance .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'cutoff_distances' on INPUT file!")
     
+      stop
+
     else if ( key_write_xtc .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'write_xtc' on INPUT file!")
    
+      stop
+
     else if ( key_file_format .eqv. .false. ) then
 
       call err % error('e',message="Missing valid entry for 'coord_format' on INPUT file!")
    
+      stop
+
     else if ( key_lowest_structures .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'lowest_structures' on INPUT file!")
     
+      stop
+
     endif
 
-    if ( ( writeframe == "MOP" ) .and. ( key_mopac_job .eqv. .false. ) ) then
+    if ( ( writeframe == "mop" ) .and. ( key_mopac_job .eqv. .false. ) ) then
     
       call err % error('e',message="MOPAC input files will be written but no 'mopac_job' entry &
                                    &was found on INPUT file!", tip="check mopac_job entry.")
 
-    else if ( ( writeframe /= "MOP" ) .and. ( key_mopac_job .eqv. .true. ) ) then
+      stop
+
+    else if ( ( writeframe /= "mop" ) .and. ( key_mopac_job .eqv. .true. ) ) then
         
       call err % error('w',message="Ignoring unused INPUT entry 'mopac_job'")
-    
+   
     endif
 
-    if ( ( file_type == "PDB" ) .and. ( writeframe == "XYZ" ) ) then
+    if ( ( file_type == "pdb" ) .and. ( writeframe == "xyz" ) ) then
 
       call err % error('w',message="Reading PDB files and writting XYZ files. Useful information &
                                    & will be lost!'")
 
-    else if ( ( file_type == "XYZ" ) .and. ( writeframe == "PDB" ) ) then
+    else if ( ( file_type == "xyz" ) .and. ( writeframe == "pdb" ) ) then
 
       call err % error('e',message="Reading XYZ files and writting PDB files. Structural data is &
                                    &missing!", tip="check writeframe entry.")
+
+      stop
 
     endif
 

@@ -171,6 +171,7 @@ contains
 
       call err % error( 'e', message = "while reading file "//trim(adjustl(ljc_filename))//"." )
       call err % error( 'e', check   = "for sigma values < 0." )
+      
       write( output_unit, '( /, T3, A )' ) dashline
 
       stop
@@ -179,6 +180,7 @@ contains
 
       call err % error( 'e', message = "while reading file "//trim(adjustl(ljc_filename))//"." )
       call err % error( 'e', check   = "for epsilon values < 0." )
+      
       write( output_unit, '( /, T3, A )' ) dashline
         
       stop

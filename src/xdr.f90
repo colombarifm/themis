@@ -92,10 +92,9 @@ contains
     type(C_PTR) :: xd_c
     character (len=*), intent(in) :: filename_in
     character (len=206) :: filename
-    logical :: ex
     character(len=1), optional, intent(in) :: mode_opt
 
-    trj%mode = 'w'
+    trj%mode = mode_opt 
 
     ! Set the file name to be read in for C.
     filename = trim(filename_in)//C_NULL_CHAR

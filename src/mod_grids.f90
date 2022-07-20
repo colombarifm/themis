@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2021 Themis developers
+!   Copyright (c) 2017 - 2022 Themis developers
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -31,6 +31,8 @@
 !> - subroutine for spherical grids generation was added
 !> @date - Nov 2019
 !> - update error condition by error_handling module added by Asdrubal Lozada-Blanco
+!> @date - Jul 2022
+!> - accept trans_factor = 0 and point_rot_factor = 0 to generate single configurations
 !---------------------------------------------------------------------------------------------------
 
 module mod_grids
@@ -245,26 +247,45 @@ contains
     integer                                          :: ierr
     type(error)                                      :: err
 
-    node_num = 12 + 10 * 3 * ( trans_factor - 1 ) + 10 * ( trans_factor - 2 ) * ( trans_factor - 1 )
-    !edge_num = 30 * factor * factor
-    !face_num = 20 * factor * factor
+    ! if parameter is zero, do not perform molecular translations, just place it at (0,0,rad)!
+    
+    if ( trans_factor == 0 ) then
 
-    this % numpoint = node_num
+      node_num = 1
 
-    allocate( node_xyz(3,node_num), stat=ierr )
-    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
+      this % numpoint = node_num
 
-    allocate( this % points( node_num ), stat=ierr )
-    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
+      allocate( this % points( node_num ), stat=ierr )
+      if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
-    call sphere_icos1_points ( trans_factor, node_num, node_xyz )
+      this % points(:) % grid_xyz(1) = 0.0_DP 
+      this % points(:) % grid_xyz(2) = 0.0_DP 
+      this % points(:) % grid_xyz(3) = 1.0_DP * rad
 
-    this % points(:) % grid_xyz(1) = node_xyz(1,:) * rad
-    this % points(:) % grid_xyz(2) = node_xyz(2,:) * rad
-    this % points(:) % grid_xyz(3) = node_xyz(3,:) * rad
+    else
 
-    if ( allocated(node_xyz) ) deallocate(node_xyz)
+      node_num = 12 + 10 * 3 * ( trans_factor - 1 ) + 10 * ( trans_factor - 2 ) * ( trans_factor - 1 )
+      !edge_num = 30 * factor * factor
+      !face_num = 20 * factor * factor
+
+      this % numpoint = node_num
+
+      allocate( node_xyz(3,node_num), stat=ierr )
+      if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
+
+      allocate( this % points( node_num ), stat=ierr )
+      if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
+
+      call sphere_icos1_points ( trans_factor, node_num, node_xyz )
+
+      this % points(:) % grid_xyz(1) = node_xyz(1,:) * rad
+      this % points(:) % grid_xyz(2) = node_xyz(2,:) * rad
+      this % points(:) % grid_xyz(3) = node_xyz(3,:) * rad
+
+      if ( allocated(node_xyz) ) deallocate(node_xyz)
       
+    endif
+
     return
   end subroutine Build_translation_sphere
 

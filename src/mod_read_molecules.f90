@@ -198,7 +198,7 @@ contains
     
     file_unit = Get_new_unit(10)
 
-    if ( structure_format == "XYZ" ) then
+    if ( structure_format == "xyz" ) then
 
       call Inquire_file( file_unit, molecule_filename, file_status, file_format, file_access )
 
@@ -257,7 +257,7 @@ contains
 
       enddo
 
-    else if ( structure_format == "PDB" ) then
+    else if ( structure_format == "pdb" ) then
 
       call Inquire_file( file_unit, molecule_filename, file_status, file_format, file_access )
 
@@ -354,6 +354,20 @@ contains
     endif
 
     close(file_unit)
+
+    if ( num_conformations > 1 ) then
+
+      call Inquire_file( file_unit, "ensemble_energy_conf2.dat", file_status, file_format, file_access )
+
+      do n_conf = 1, num_conformations !
+
+        read(file_unit,*) this % conf_energy( n_conf )
+   
+      enddo
+
+      close(file_unit)
+
+    endif
 
     return
   end subroutine Read_molecule
@@ -610,7 +624,7 @@ contains
     allocate( this % molecules(2) % atoms( nconf2, mol2 % num_atoms ),stat=ierr )
     if(ierr/=0) call err%error('e',message="abnormal memory allocation")
 
-    if ( structure_format == "XYZ" ) then
+    if ( structure_format == "xyz" ) then
 
       do n_atom_1 = 1, mol1 % num_atoms
 
@@ -626,7 +640,7 @@ contains
 
       enddo
 
-    else if ( structure_format == "PDB" ) then
+    else if ( structure_format == "pdb" ) then
       
       pdb_fmt='(a6,i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,10x,a2)'
 

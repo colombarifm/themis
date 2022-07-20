@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2021 Themis developers
+!   Copyright (c) 2017 - 2022 Themis developers
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -178,19 +178,6 @@ contains
     
     call system_clock( tini, rate )
 
-!    do n_conf = 1, nconf2
-
-!      write(666,*) mol2 % num_atoms
-!      write(666,*) 
-      
-!      do n_atom_2 = 1, mol2 % num_atoms
-
-!        write(666,'(a3,3f12.6)') mol2 % atoms( n_conf, n_atom_2 ) % symbol, mol2 % atoms( n_conf, n_atom_2 ) % xyz(:)
-
-!      enddo
-
-!    enddo
-
     tlp: do n_trans = 1, grid_trans % numpoint
 
       clp: do n_conf = 1, nconf2  ! mol2 % nconf
@@ -232,33 +219,33 @@ contains
               
               select case ( writeframe )
 
-                case ( "XYZ", "xyz", "Xyz" )
+                case ( "xyz" )
 
                   open( unit = 66, file = prefix//'.xyz', status = 'unknown' )
 
                   lowest = 0.0_DP
 
-                  call dimers % Build_dimer( n_conf, "XYZ" )
+                  call dimers % Build_dimer( n_conf, file_type )
              
                   call dimers % Write_xyz( lowest, n_conf )
                             
                   close( 66 )
 
-                case ( "PDB", "pdb", "Pdb" )
+                case ( "pdb" )
 
                   open( unit = 66, file = prefix//'.pdb', status = 'unknown' )
 
-                  call dimers % Build_dimer( n_conf, "PDB" )
+                  call dimers % Build_dimer( n_conf, file_type )
              
                   call dimers % Write_pdb( n_conf )
                            
                   close( 66 )
 
-                case ( "MOP", "mop", "Mop" )
+                case ( "mop" )
   
                   open( unit = 66, file = prefix//'.mop', status = 'unknown' )
         
-                  call dimers % Build_dimer( n_conf, "XYZ" )
+                  call dimers % Build_dimer( n_conf, "xyz" )
           
                   call dimers % Write_mop( mopac_head, n_conf )
                             
@@ -373,7 +360,7 @@ contains
     implicit none
 
     integer                           :: n_rot2, n_rot1, n_conf, n_trans
-    integer                           :: ios         = 0
+    integer                           :: ios         
     integer                           :: file_unit   
     character( len = : ), allocatable :: file_format 
     character( len = : ), allocatable :: file_access 

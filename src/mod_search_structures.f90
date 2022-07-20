@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2021 Themis developers
+!   Copyright (c) 2017 - 2022 Themis developers
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -215,18 +215,8 @@ contains
     cosphir   =  0.0_DP
     sinphir   =  1.0_DP
 
-    
-    if ( file_type == "XYZ" ) then
-
-      call mol1 % Read_molecule( "conf1.xyz", 1, "XYZ" )
-      call mol2 % Read_molecule( "conf2.xyz", nconf2, "XYZ" )
-
-    else if ( file_type == "PDB" ) then
-
-      call mol1 % Read_molecule( "conf1.pdb", 1, "PDB" )
-      call mol2 % Read_molecule( "conf2.pdb", nconf2, "PDB" )
-
-    endif
+    call mol1 % Read_molecule( "conf1."//file_type, 1, file_type )
+    call mol2 % Read_molecule( "conf2."//file_type, nconf2, file_type )
 
     call mol1 % Translate_molecule( ref1, 1 )
     call mol1 % Align_molecule( vector1, ref1, 1 )
@@ -272,21 +262,21 @@ contains
 
       lowest = energy_ordered(n)
 
-      if ( file_type == "XYZ" ) then
+      if ( file_type == "xyz" ) then
 
         open( unit = 66, file = 'lowest_'//nfrm//'.xyz', status = 'unknown' )
 
-        call dimers % Build_dimer( n_conf, "XYZ" )
+        call dimers % Build_dimer( n_conf, file_type )
 
         call dimers % Write_xyz( lowest, n_conf )
  
         close( 66 )
 
-      else if ( file_type == "PDB" ) then
+      else if ( file_type == "pdb" ) then
 
         open( unit = 66, file = 'lowest_'//nfrm//'.pdb', status = 'unknown' )
 
-        call dimers % Build_dimer( n_conf, "PDB" )
+        call dimers % Build_dimer( n_conf, file_type )
 
         call dimers % Write_pdb( n_conf )
  
