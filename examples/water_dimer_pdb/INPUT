@@ -11,7 +11,7 @@ rot_ref_mol2 : 2
 nconf_mol2 : 1
 shortest_distance : 1.5
 write_xtc : no 
-coord_format : XYZ
+coord_format : PDB
 lowest_structures : 10
 write_frames : none  
 mopac_job : pm7 1scf mop

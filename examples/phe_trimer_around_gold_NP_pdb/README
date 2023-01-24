@@ -1,0 +1,8 @@
+This example consists in:
+
+* A gold spherical NP as the reference molecule (conf1), around which an ensemble of PHE-PHE-PHE (conf2) will be sampled;
+* The conformations of the PHE trimer were obtained by a classical MD run, considering a given number of lowest energy
+structures at T = 300 K;
+* Energy values for PHE trimer conformations must be provided and are written in ensemble_energy_conf2.dat file;
+* An user-defined grid was used to sample conf2 around conf1 (grid.xyz);
+* Structure files are given in PDB format.

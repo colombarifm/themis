@@ -1,0 +1,10 @@
+TITLE     216H2O,WATJP01,SPC216,SPC-MODEL,300K,BOX(M)=1.86206NM,WFVG,MAR. 1984
+REMARK    THIS IS A SIMULATION BOX
+CRYST1   18.621   18.621   18.621  90.00  90.00  90.00 P 1           1
+MODEL        1
+ATOM      1  OW  SOL     1       0.000   0.067   0.000  1.00  0.00            
+ATOM      2  HW1 SOL     1      -0.767  -0.530   0.000  1.00  0.00            
+ATOM      3  HW2 SOL     1       0.767  -0.530   0.000  1.00  0.00            
+ATOM      4  XX  SOL     1       0.000   0.000   0.000  1.00  0.00            
+TER
+ENDMDL

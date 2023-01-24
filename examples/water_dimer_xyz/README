@@ -1,0 +1,5 @@
+This example consists in:
+
+* One water molecule (conf2) sampled in a spherical grid around another water molecule (conf1);
+* A single conformations of conf2 is used;
+* Structure files are given in XYZ format.
