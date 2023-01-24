@@ -2,12 +2,17 @@
 #                                                                                                 #
 #> @file   run_xtb.sh                                                                             #
 #> @author Felippe M. Colombari                                                                   #
-#> @brief  Generate an ensemble of XYZ coordinates with Themis and loop over them performing      
+#> @brief  Generate an ensemble of XYZ coordinates with Themis and loop over them performing      # 
 #          single-point calculations with xTB software.                                           #
 #> @date - Aug, 2019                                                                              #
-#> - first version
-#> @date - Nov, 2020
+#> - first version                                                                                #
+#> @date - Nov, 2020                                                                              #
 #> - documentation and revision                                                                   #
+#> @date - Jun, 2022                                                                              #
+#> - add more path verifications (XTBHOME and EXEC)                                               #
+#> @date - Jul, 2022                                                                              #
+#> - add automatic generation/calculation for separated molecules                                 #
+#> - include internal energy for mol 2 conformational ensemble                                    #
 #> @email  bug reports to: colombarifm@hotmail.com                                                #
 #> @note   usage: ./run_xtb.sh --charge <charge> --uhf <uhf> (--restart)                          #
 #> @note   usage: ./run_xtb.sh --help (for help)                                                  #
@@ -325,12 +330,39 @@ Run_themis () {
   cp       ../0_files/grid.xyz    .
   cp       ../0_files/themis      .
 
-  printf "\n\t%s\n"       "Step 1: Structure generation with Themis" 
+  printf "\n\t%s\n"       "Step 1: Ensemble generation with Themis" 
   printf "\n\t\t%s\t%42s" "Running Themis " "... "
   
-  ../0_files/themis --run --user grid.xyz > out
+  ../0_files/themis --run --user grid.xyz > ../log_themis.out
 
   printf "%s\n" "DONE"
+
+  #
+
+  mkdir -p separated_molecules/
+  cd       separated_molecules/
+  cp       ../conf1.xyz .
+  cp       ../conf2.xyz .
+  cp       ../INPUT     .
+  cp       ../themis    .
+
+  # zero here means one translation point
+  sed -i 's/.*point_rot_factor :.*/\point_rot_factor : 0 /'     INPUT
+  # zero here means one rotation move around ref atom of mol2
+  sed -i 's/.*translation_factor :.*/\translation_factor : 0 /' INPUT
+  # one here means one rotation move around axis of mol2
+  sed -i 's/.*axis_rot_moves :.*/\axis_rot_moves : 1 /'         INPUT
+
+  printf "\n\t%s\n"       "Step 1.1: Separated molecules generation with Themis" 
+  printf "\n\t\t%s\t%42s" "Running Themis " "... "
+  
+  ../../0_files/themis --run --shell 50.0 > log_themis.out
+
+  printf "%s\n" "DONE"
+
+  cd ..
+
+  #
 
   number_of_files=$( find -maxdepth 1 -type f -name 'point_*.xyz' | wc -l )
 
@@ -345,7 +377,7 @@ Run_continuation () {
 
   cd 1_structures
 
-  printf "\n\t%s\n"   "Step 1: Structure generation with Themis" 
+  printf "\n\t%s\n"   "Step 1: Ensemble generation with Themis" 
   printf "\n\t\t%s\n" "Continuation job" 
   
   number_of_files=$( find -maxdepth 1 -type f -name 'point_*.xyz' | wc -l )
@@ -392,6 +424,8 @@ Run_xtb () {
   printf "\n\n\t\t"
   printf "*%.0s" {1..70}
   
+  ### calculations for the ensemble of interacting molecules
+
   for i in $( find -maxdepth 1 -type f -name 'point_*.xyz' )
   do                           
   
@@ -412,6 +446,38 @@ Run_xtb () {
                         
   done 
 
+  printf "\n\n\t\t%s" " DONE! Calculating internal energies..."
+  printf "\n\n\t"
+  
+  ### calculations for the ensemble of non-interacting molecule 2 conformations
+
+  cd  separated_molecules/
+
+  rm internal_energies.dat 2&> /dev/null
+
+  for i in $( find -maxdepth 1 -type f -name 'point_*.xyz' )
+  do                           
+  
+    file=$( basename $i .xyz ) 
+
+    #Check_dummy
+  
+    $EXEC \
+      $file.xyz \
+    --uhf $uhf \
+    --chrg $chrg \
+    --namespace $file \
+    --norestart \
+    --input ../input_xtb > $file.log 2> /dev/null 
+    
+    grep "TOTAL ENERGY" $file.log | awk '{printf $4}' >> internal_energies.dat
+
+  done
+  
+  cp internal_energies.dat ../2_finished/
+
+  cd ..
+
   printf "\n\n\t\t%s" " DONE! Now, follow the next steps"
   printf "\n\n\t"
   printf "=%.0s" {1..80}
@@ -424,12 +490,11 @@ Run_xtb () {
   cp       ../0_files/grid.xyz  ../3_rerun_themis/
   cp       ../0_files/themis    ../3_rerun_themis/
 
-
   printf "\n\t%s"   "Step 3: Extract total energies from output files and get interaction energies"
   printf "\n\n\t%s" "        * Copy xtb_extract.py to 2_finished/"
   printf "\n\n\t%s" "        * Edit xtb_extract.py properly ACCORDING TO YOUR SYSTEM"
   printf "\n\t%s"   "          ** Enter number of translation and rotation moves" 
-  printf "\n\t%s"   "          ** Enter internal energy"
+ # printf "\n\t%s"   "          ** Enter internal energy (separated dimer energy)"
   printf "\n\n\t%s" "        * python3 xtb_extract.py"
 
   printf "\n\n\t"

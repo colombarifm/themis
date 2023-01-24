@@ -1,0 +1,11 @@
+v3.0
+
+* support to PDB files (input and output)
+* incorporation of ensemble of conformations of molecule 2 (internal energies must be provided)
+* added new loop over molecule 2 conformations
+* updated filenames for coordinate files
+* updated INPUT file strings
+* updated script to run xtb calculations (utils/run_xtb)
+* updated script to read xtb output files (utils/read_xtb)
+* updated script to convert gromacs topologies to themis parameters (utils/gmx2pdb)
+* drop support to xtc writting (one can generate PDB files and run gromacs on them instead)
