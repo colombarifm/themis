@@ -8,4 +8,4 @@ v3.0
 * updated script to run xtb calculations (utils/run_xtb)
 * updated script to read xtb output files (utils/read_xtb)
 * updated script to convert gromacs topologies to themis parameters (utils/gmx2pdb)
-* drop support to xtc writting (one can generate PDB files and run gromacs on them instead)
+* lib/libxdrfile.a recompiled 
