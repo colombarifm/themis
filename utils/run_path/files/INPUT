@@ -1,16 +1,18 @@
-translation_factor : 4
-rot1_factor : 4
-rot2_factor :  120
-rot2_range : 360.0
+point_rot_factor : 3
+translation_factor : 3
+axis_rot_moves :  120
+axis_rot_range : 360.0
 temperature : 300 
 potential : lj-coul
 ref_mol1 : 1                  
 rot_ref_mol1 : 4
-ref_mol2 : 1 
+ref_mol2 : 1
 rot_ref_mol2 : 2
-shortest_distance : 0.8
+nconf_mol2 : 1
+shortest_distance : 1.5
 write_xtc : no 
-lowest_structures : 10
+lowest_structures : 20
+coord_format : XYZ
 write_frames : none
 mopac_job : pm7 1scf mop
 cutoff_distance : 0.0
