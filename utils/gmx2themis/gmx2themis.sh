@@ -8,12 +8,15 @@
 #> - first script created                                                                         #
 #> @date - May, 2021                                                                              #
 #> - documentation and revision                                                                   #
+#> @date - Mar, 2023
+#> - add some cmd line checks
 #> @email  bug reports to: colombarifm@hotmail.com                                                #
 #> @note   usage: ./gmx2themis.sh --top <topology file> --ff <ffnonbonded file>                   #
-#>                                --numat <number of atoms> --out <output file>                   #
+#>                                --num <number of atoms> --out <output file>                     #
 #> @note   usage: ./gmx2themis.sh --help (for help)                                               #
 #> @note   units: Angstrom and kJ/mol                                                             #
 #> @note   units: Please check the resulting file carefully!!!                                    #
+#> @note   this version works only for the oplsaa forcefield!!                                    #
 #                                                                                                 #
 ###################################################################################################
 
@@ -35,7 +38,7 @@ Show_usage () {
   printf "\n\n"
 
   line[1]="$0 --top <topology file> --ff <ffnonbonded file>" 
-  line[2]="   --numat <number of atoms> --out <output file>"
+  line[2]="   --num <number of atoms> --out <output file>"
   line[3]=""
   line[4]="   <topology file> is the file containing the [ atoms ] directive" 
   line[5]="<ffnonbonded file> is the file containing the [ atomtypes ] directive" 
@@ -43,10 +46,11 @@ Show_usage () {
   line[7]="     <output file> is the file in which the parameters will be written"
   line[8]=""
   line[9]="Note: units are Angstrom and kJ/mol" 
-  line[10]=""
-  line[11]="$0 --help (shows this help)"
+  line[10]="Note: this version works only for the OPLSAA forcefield" 
+  line[11]=""
+  line[12]="$0 --help (shows this help)"
 
-  for i in $( seq 1 1 11 )
+  for i in $( seq 1 1 12 )
   do
 
     printf "\t%*s\n" $(((${#line[$i]}+$columns)/2)) "${line[$i]}"
@@ -67,6 +71,9 @@ Check_arg_num () {
 
   if [ -z "$arg_num" ] || [[ "$arg_num" == -[0-9]* ]] || [[ "$arg_num" == *[a-z]* ]]
   then
+    printf "\n\t"
+    printf "=%.0s" {1..80}
+    printf "\n\n\t"
     printf "ERROR : invalid option for %s\n\t" $flag_meaning
     printf "TIP   : integer in flag %2s must be > 0\n\n\t" $flag
     printf "        Enter '-h' option for help.\n\n\t"
@@ -83,6 +90,9 @@ Check_arg_str () {
 
   if [ -z "$arg_str" ] || [[ "$arg_str" == -[a-z]* ]]
   then
+    printf "\n\t"
+    printf "=%.0s" {1..80}
+    printf "\n\n\t"
     printf "ERROR : invalid option for %s\n\t" $flag_meaning
     printf "TIP   : no valid argument supplied for flag %2s\n\n\t" $flag
     printf "        Enter '-h' option for help.\n\n\t"
@@ -95,13 +105,89 @@ Check_arg_str () {
 
 #-------------------------------------------------------------------------------------------------#
 
+Check_output_file () {
+
+  if [ -z "${output}" ] 
+  then
+    printf "\n\t"
+    printf "=%.0s" {1..80}
+    printf "\n\n\t"
+    printf "ERROR : invalid option for output file\n\t" 
+    printf "TIP   : no valid argument supplied for flag --out\n\n\t"
+    printf "        Enter '--help' option for help.\n\n\t"
+    printf "=%.0s" {1..80}
+    printf "\n"
+    exit
+  fi
+
+}
+
+#-------------------------------------------------------------------------------------------------#
+
+Check_parameters_file () {
+    
+  if [ -z "${ffnonbonded_file}" ] 
+  then
+    printf "\n\t"
+    printf "=%.0s" {1..80}
+    printf "\n\n\t"
+    printf "ERROR : invalid option for nonbonded parameters file\n\t" 
+    printf "TIP   : no valid argument supplied for flag --ff\n\n\t"
+    printf "        Enter '--help' option for help.\n\n\t"
+    printf "=%.0s" {1..80}
+    printf "\n"
+    exit
+  fi
+
+}
+
+#-------------------------------------------------------------------------------------------------#
+
+Check_topology_file () {
+
+  if  [ -z "${topology_file}" ]
+  then
+    printf "\n\t"
+    printf "=%.0s" {1..80}
+    printf "\n\n\t"
+    printf "ERROR : invalid option for topology file\n\t" 
+    printf "TIP   : no valid argument supplied for flag --top\n\n\t"
+    printf "        Enter '--help' option for help.\n\n\t"
+    printf "=%.0s" {1..80}
+    printf "\n"
+    exit
+  fi
+
+}
+
+#-------------------------------------------------------------------------------------------------#
+
+Check_number_of_atoms () {
+
+  if [ -z "${numat}" ] || [[ ${numat} < 1 ]]
+  then
+    printf "\n\t"
+    printf "=%.0s" {1..80}
+    printf "\n\n\t"
+    printf "ERROR : invalid option for number of atoms\n\t" 
+    printf "TIP   : no valid argument supplied for flag --num\n\n\t"
+    printf "        Enter '--help' option for help.\n\n\t"
+    printf "=%.0s" {1..80}
+    printf "\n"
+    exit
+  fi
+
+}
+
+#-------------------------------------------------------------------------------------------------#
+
 Call_cmd_line () {
 
-  while [[ "$1" == -* ]] 
+  while [[ "$#" -gt 0 ]] 
   do
-  
+ 
     case "$1" in
-      -h|--help) Show_usage
+      --help) Show_usage
               exit 0
               ;;
       --top) flag=$1
@@ -109,7 +195,7 @@ Call_cmd_line () {
           shift
           arg_str=$1
           Check_arg_str
-          topology_file=$arg_str 
+          topology_file=$arg_str
           ;;
       --ff) flag=$1
           flag_meaning="ffnonbonded_file"
@@ -132,10 +218,9 @@ Call_cmd_line () {
           Check_arg_str
           output=$arg_str
           ;;
-      --)
-          shift
-          break
-          ;;
+      *) Show_usage
+         exit 0
+         ;;
     esac
     shift
   done
@@ -143,7 +228,6 @@ Call_cmd_line () {
   return 1
 
 }
-
 
 #-------------------------------------------------------------------------------------------------#
 
@@ -315,7 +399,13 @@ Write_parameters () {
 
 #-------------------------------------------------------------------------------------------------#
 
-Call_cmd_line $@
+Call_cmd_line "$@"
+
+Check_output_file
+Check_parameters_file
+Check_number_of_atoms
+Check_topology_file
+
 Check_topology
 Read_topology
 Check_nonbonded
