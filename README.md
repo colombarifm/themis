@@ -29,7 +29,7 @@ See [installation instructions](./INSTALL.md)
 
 * [`src`](./src): The source code
 * [`utils`](./utils): Useful scripts that could be used with Themis
-* [`tests`](./tests): Input files for test (water dimer using spherical grids) 
+* [`examples`](./examples): Input files for test 
 * [`manual`](./manual): Themis user guide 
 * [`lib`](./lib): xdrfile library
 
