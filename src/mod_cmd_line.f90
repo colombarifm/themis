@@ -44,13 +44,14 @@ module mod_cmd_line
   implicit none
 
   private
-  public Parse_Arguments, rad, irun, grid_type, grid_transl
+  public Parse_Arguments, rad, irun, grid_type, grid_transl, use_plot
 
   real( kind = DP )                                :: rad         = 0.0_DP
   character( len = 10 )                            :: irun        = char(0)
   character( len = 10 )                            :: grid_type   = char(0)
   character( len = 40 )                            :: grid_transl = char(0) 
   character( len = 20 ), allocatable, dimension(:) :: arg         
+  logical                                          :: use_plot    = .false.
 
   integer                                          :: ierr
   type(error)                                      :: err
@@ -236,6 +237,11 @@ contains
                 endif
 
               endif
+
+              
+            case('--plot')
+
+              use_plot = .true.
 
             case default
 
