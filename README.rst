@@ -8,7 +8,7 @@ Building this documentation
 
 This documentation is built with sphinx.
 
-Ypu can easily setup sphinx with the provided conda environment file
+You can easily setup sphinx with the provided conda environment file
 
 .. code::
 
