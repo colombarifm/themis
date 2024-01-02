@@ -6,7 +6,7 @@ enable_language (Fortran CXX)
 cmake_policy(SET CMP0015 NEW)
 
 if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
-  set (CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -Wall -g -O3 -ffpe-summary=none -fcheck=bounds -Wno-compare-reals -Wno-conversion -fbacktrace -fcheck=all -Wextra -no-pie")
+  set (CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fopenmp -Wall -g -O3 -ffpe-summary=none -fcheck=bounds -Wno-compare-reals -Wno-conversion -fbacktrace -fcheck=all -Wextra -no-pie -march=native" )
 endif()
 
 if(CMAKE_Fortran_COMPILER_ID MATCHES "Intel")
