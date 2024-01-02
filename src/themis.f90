@@ -43,7 +43,7 @@ program themis
   use mod_info              , only : Display_header, Display_date_time
   use mod_constants         , only : DP
   use mod_error_handling    , only : Normal_termination, Raise_error, error
-  use mod_cmd_line          , only : Parse_arguments, irun, grid_type, rad, grid_transl
+  use mod_cmd_line          , only : Parse_arguments, irun, grid_type, rad, grid_transl, use_plot
   use mod_input_read        , only : Read_input_file, ref1, vector1, ref2, vector2, nconf2, &
                                      point_rot_factor, trans_factor, potential, file_type
   use mod_read_molecules    , only : mol1, mol2
@@ -53,6 +53,7 @@ program themis
   use mod_write_vmd         , only : Write_VMD_files
   use mod_search_structures , only : Count_structures, Sort_energy, Search_structures
   use mod_deallocate_all    , only : Deallocate_arrays
+  use mod_plot             
 
   implicit none
   
@@ -178,6 +179,8 @@ program themis
       call Deallocate_arrays
 
   END SELECT
+
+  if(use_plot) Call Call_plot()
 
   call Display_date_time( "FINISHED AT: " )           
   call err % termination(0,'f')
