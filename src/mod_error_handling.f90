@@ -4,9 +4,9 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2023 Themis developers
+!   Copyright (c) 2017 - 2024 Themis developers
 !
-!   This file was written by Asdrubal Lozada-Blanco.
+!   This file was written by Asdrubal Lozada-Blanco and Felippe M. Colombari
 !
 !---------------------------------------------------------------------------------------------------
 !
@@ -28,6 +28,8 @@
 !> This is a Standard Fortran 2008 compliance code
 !> @date - Nov 2019
 !> - module created and incorporated into code
+!> @date - Jan 2023
+!> - module revised
 !---------------------------------------------------------------------------------------------------
 
 module mod_error_handling
@@ -70,9 +72,9 @@ contains
         if (present( code ))    write(output_unit,'("Code: ",i0)')        self % code
       case('e')
         if (present( message )) write(output_unit,'(/,T5,"Error: abnormal condition ",a)') self % message
-        if (present( check ))   write(output_unit,'(/,T5,"Please check ",a)')             self % check
-        if (present( tip ))     write(output_unit,'(/,T5,"TIP: ",a)')                     self % tip
-        if (present( code ))    write(output_unit,'("Code: ",i0)')                        self % code
+        if (present( check ))   write(output_unit,'(/,T5,"Please check ",a)')              self % check
+        if (present( tip ))     write(output_unit,'(/,T5,"TIP: ",a)')                      self % tip
+        if (present( code ))    write(output_unit,'("Code: ",i0)')                         self % code
     end select
 
     if ( allocated( self % message ) ) deallocate( self % message )
