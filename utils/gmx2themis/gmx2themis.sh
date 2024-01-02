@@ -2,28 +2,34 @@
 #                                                                                                 #
 #> @file   gmx2themis.sh                                                                          #
 #> @author Felippe M. Colombari                                                                   #
-#> @brief  Extract oplsaa charge, sigma and epsilon parameters from gromacs files and write them  #
+#> @brief  Extract charge, sigma and epsilon parameters from gromacs top+itp files and write them #
 #>         to Themis parameters file.                                                             #
 #> @date - Mar, 2019                                                                              #
 #> - first script created                                                                         #
 #> @date - May, 2021                                                                              #
 #> - documentation and revision                                                                   #
-#> @date - Mar, 2023
-#> - add some cmd line checks
+#> @date - Mar, 2023                                                                              #
+#> - add some cmd line checks                                                                     #
+#> @date - May, 2023                                                                              #
+#> - replace "opls" parameter search for general atomtypes                                        #
+#> @date - Jan, 2024                                                                              #
+#> - final checks and update documentation                                                        #
 #> @email  bug reports to: colombarifm@hotmail.com                                                #
 #> @note   usage: ./gmx2themis.sh --top <topology file> --ff <ffnonbonded file>                   #
 #>                                --num <number of atoms> --out <output file>                     #
 #> @note   usage: ./gmx2themis.sh --help (for help)                                               #
-#> @note   units: Angstrom and kJ/mol                                                             #
-#> @note   units: Please check the resulting file carefully!!!                                    #
-#> @note   this version works only for the oplsaa forcefield!!                                    #
+#> @note   final units: Angstrom and kJ/mol                                                       #
+#> @note   Please check the resulting file carefully!!!                                           #
+#> @note   This version was tested for oplsaa and charmm36 forcefields!!                          #
 #                                                                                                 #
 ###################################################################################################
-
-#!/bin/bash 
-
-export LC_NUMERIC="en_US.UTF-8"
-
+#                                                                                                 #
+#!/bin/bash                                                                                       #
+#                                                                                                 #
+###################################################################################################
+#                                                                                                 # 
+export LC_NUMERIC="en_US.UTF-8"                                                                   #
+#                                                                                                 #
 #-------------------------------------------------------------------------------------------------#
 
 Show_usage () {
@@ -42,11 +48,11 @@ Show_usage () {
   line[3]=""
   line[4]="   <topology file> is the file containing the [ atoms ] directive" 
   line[5]="<ffnonbonded file> is the file containing the [ atomtypes ] directive" 
-  line[6]=" <number of atoms> is the number of atoms" 
+  line[6]=" <number of atoms> is the number of atoms of the molecule" 
   line[7]="     <output file> is the file in which the parameters will be written"
   line[8]=""
   line[9]="Note: units are Angstrom and kJ/mol" 
-  line[10]="Note: this version works only for the OPLSAA forcefield" 
+  line[10]="Note: this version was tested for OPLSAA and CHARMM36 forcefields" 
   line[11]=""
   line[12]="$0 --help (shows this help)"
 
@@ -277,6 +283,29 @@ Check_topology () {
 
 Read_topology () {
 
+  sed -n '/atoms/,/bonds/{/atoms/b;/bonds/b;p}' topol.top > tmp1
+  sed -i '/^;/d' tmp1
+  sed -i '/^$/d' tmp1
+
+  i=1
+  while read -r line
+  do
+
+    atom_type[$i]=$( echo ${line} | awk '{printf "^%6s", $2}' )
+    atom_symb[$i]=$( echo ${line} | awk '{printf $5}' )
+    atom_chrg[$i]=$( echo ${line} | awk '{printf $7}' )
+
+
+    ((i++))
+
+  done < tmp1
+
+}
+
+#-------------------------------------------------------------------------------------------------#
+
+Read_topology_old () {
+
   word1="opls_[0-9][0-9][0-9] "    
   word2="opls_[0-9][0-9][0-9][A-Z]"  
 
@@ -359,6 +388,24 @@ Check_nonbonded () {
 #-------------------------------------------------------------------------------------------------#
 
 Read_nonbonded () {
+
+  i=1
+
+  printf "%4s\t%10s\t%10s\t%10s\n" "###" "chrg" "sigma (A)" "eps (kJ/mol)" > $output
+
+  for i in $( seq 1 1 $numat )
+  do
+
+    atom_sigm[$i]=$( grep "${atom_type[$i]}" ${ffnonbonded_file} | awk '{printf "%10.5f", $6*10}' )
+    atom_epsl[$i]=$( grep "${atom_type[$i]}" ${ffnonbonded_file} | awk '{printf "%10.5f", $7}' )
+
+  done
+
+}
+
+#-------------------------------------------------------------------------------------------------#
+
+Read_nonbonded_old () {
 
   i=1
 
