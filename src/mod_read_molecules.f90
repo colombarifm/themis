@@ -617,7 +617,7 @@ contains
     integer                           :: n_atom_1, n_atom_2
     integer                           :: ierr
     type(error)                       :: err
-    character( len = 53 )             :: pdb_fmt
+    character( len = 56 )             :: pdb_fmt
 
     allocate( this % molecules(1) % atoms( 1 , mol1 % num_atoms ),stat=ierr )
     if(ierr/=0) call err%error('e',message="abnormal memory allocation")
@@ -642,7 +642,7 @@ contains
 
     else if ( structure_format == "pdb" ) then
       
-      pdb_fmt='(a6,i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,10x,a2)'
+      pdb_fmt='(a6,i5,2x,a4,1x,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,10x,a2)'
 
       do n_atom_1 = 1, mol1 % num_atoms
 
@@ -723,9 +723,10 @@ contains
     class( dimer ), intent(inout)       :: this
     integer                             :: n_atom_1, n_atom_2
     integer, intent(IN)                 :: n_conf
-    character( len = 53 )               :: pdb_fmt
+    character( len = 56 )               :: pdb_fmt
 
-    pdb_fmt='(a6,i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,10x,a2)'
+    !pdb_fmt='(a6,i5,2x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,10x,a2)'
+    pdb_fmt='(a6,i5,2x,a4,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,10x,a2)'
 
     write(66,'(a5,i9)') "MODEL", 1
 
@@ -734,7 +735,7 @@ contains
       write(66,pdb_fmt) this % molecules(1) % atoms( 1, n_atom_1 ) % rec_type, &
                         this % molecules(1) % atoms( 1, n_atom_1 ) % atom_num, &
                         this % molecules(1) % atoms( 1, n_atom_1 ) % symbol, &
-                        this % molecules(1) % atoms( 1, n_atom_1 ) % alt_loc, &
+    !                    this % molecules(1) % atoms( 1, n_atom_1 ) % alt_loc, &
                         this % molecules(1) % atoms( 1, n_atom_1 ) % res_name, &
                         this % molecules(1) % atoms( 1, n_atom_1 ) % chain_id, & 
                         this % molecules(1) % atoms( 1, n_atom_1 ) % res_num, &
@@ -751,7 +752,7 @@ contains
       write(66,pdb_fmt) this % molecules(2) % atoms( n_conf, n_atom_2 ) % rec_type, &
                         this % molecules(2) % atoms( n_conf, n_atom_2 ) % atom_num, &
                         this % molecules(2) % atoms( n_conf, n_atom_2 ) % symbol, &
-                        this % molecules(2) % atoms( n_conf, n_atom_2 ) % alt_loc, &
+    !                    this % molecules(2) % atoms( n_conf, n_atom_2 ) % alt_loc, &
                         this % molecules(2) % atoms( n_conf, n_atom_2 ) % res_name, &
                         this % molecules(2) % atoms( n_conf, n_atom_2 ) % chain_id, & 
                         this % molecules(2) % atoms( n_conf, n_atom_2 ) % res_num, &
