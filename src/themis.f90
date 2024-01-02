@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2021 Themis developers
+!   Copyright (c) 2017 - 2024 Themis developers
 !
 !   This file was written by Felippe M. Colombari.
 !
@@ -26,7 +26,7 @@
 !> @author Felippe M. Colombari
 !> @brief  Main module of THEMIS 
 !> @date - Jun, 2017                                                           
-!> - initial test version (dimer.x)
+!> - initial test version (dimer.f)
 !> @date - Oct, 2017
 !> - modular version
 !> @date - Jan, 2020
@@ -37,6 +37,8 @@
 !> - added support for ensemble of structures of molecule 2
 !> @date - Jul, 2022
 !> - added support to PDB files (read and write)
+!> @date - Nov, 2023
+!> - added initial parallelization scheme (openmp)
 !---------------------------------------------------------------------------------------------------
 
 program themis

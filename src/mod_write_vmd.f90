@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2021 Themis developers
+!   Copyright (c) 2017 - 2024 Themis developers
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -42,7 +42,7 @@ contains
   !> @date - Jun, 2017
   !> - subroutine  created
   !> @date - Dec, 2018
-  !> - no PDB files needed.... \o/
+  !> - no PDB files with b-factors needed.... \o/
   !> - TCL script written by Asdrubal Lozada-Blanco
   !---------------------------------------------------------------------------	
   subroutine Write_vmd_files

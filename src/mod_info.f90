@@ -4,9 +4,9 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2023 Themis developers
+!   Copyright (c) 2017 - 2024 Themis developers
 !
-!   This file was written by Asdrubal Lozada-Blanco and Felippe M. Colombari.
+!   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
 !---------------------------------------------------------------------------------------------------
 !
@@ -23,7 +23,7 @@
 !
 !---------------------------------------------------------------------------------------------------
 !> @file   mod_info.f90
-!> @author Asdrubal Lozada-Blanco, Felippe Mariano Colombari
+!> @author Felippe Mariano Colombari, Asdrubal Lozada-Blanco
 !> @brief  This module contains the program header
 !> @date - Dec, 2019 
 !> - module created and incorporated into code
