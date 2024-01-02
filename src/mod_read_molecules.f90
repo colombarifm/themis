@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2023 Themis developers
+!   Copyright (c) 2017 - 2024 Themis developers
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -37,6 +37,8 @@
 !> - internal energies of molecule 2 are read from independent file
 !> - added support to PDB files (read and write)
 !> - PDB format http://www.wwpdb.org/documentation/file-format-content/format33/sect9.html#ATOM
+!> @date - Jan, 2024
+!> - fix format for PDB in/out files
 !---------------------------------------------------------------------------------------------------
 
 module mod_read_molecules
