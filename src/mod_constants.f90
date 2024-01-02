@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2023 Themis developers
+!   Copyright (c) 2017 - 2024 Themis developers
 !
 !   This file was written by Felippe M. Colombari.
 !
@@ -27,6 +27,8 @@
 !> @brief  Defines a set constants.
 !> @date - Dec, 2017                                                           
 !> - independent module created                                                
+!> @date - Jan, 2023                                                           
+!> - add function to convert uppercase strings to lowercase strings                   
 !---------------------------------------------------------------------------------------------------
 
 module mod_constants
@@ -48,10 +50,10 @@ module mod_constants
   real( kind = DP ), public, parameter :: MS      = 0.001_DP               !                            convert ms to s
   
   character( len = 100 ), public, parameter  :: DASHLINE = repeat('-',100)      !                       just a dashline
-  character( len = 11 ), public, parameter   :: INT_ALPHABET   = '1234567890'    !       allowed character for integers
-  character( len = 12 ), public, parameter   :: FLOAT_ALPHABET = '.-1234567890'  !         allowed character for floats
+  character( len = 11 ), public, parameter   :: INT_ALPHABET   = '1234567890'   !        allowed character for integers
+  character( len = 12 ), public, parameter   :: FLOAT_ALPHABET = '.-1234567890' !          allowed character for floats
   character( len = 66 ), public, parameter   :: CHAR_ALPHABET  = &
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._-1234567890 '   !              allowed character for strings
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._-1234567890 '        !         allowed character for strings
 
   character( len = 26 ), public, parameter           :: UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
   character( len = 26 ), public, parameter           :: LOWERCASE = 'abcdefghijklmnopqrstuvwxyz'
@@ -64,16 +66,15 @@ contains
     character( len = * ), intent(IN)          :: input_string
     character( len = len(input_string) )      :: output_string
 
-    integer :: ic, i
+    integer :: char_index, char_counter
 
     output_string = input_string
     
-    do i = 1, len_trim(input_string)
-      ic = index(UPPERCASE, input_string(i:i))
-      if (ic > 0) output_string(i:i) = LOWERCASE(ic:ic)
+    do char_counter = 1, len_trim(input_string)
+      char_index = index(UPPERCASE, input_string(char_counter:char_counter))
+      if (char_index > 0) output_string(char_counter:char_counter) = LOWERCASE(char_index:char_index)
     end do
 
   end function to_lower
 
 end module mod_constants
-
