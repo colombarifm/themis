@@ -9,8 +9,10 @@
 #> - first script created                                                                         #
 #> @date - Dec, 2019                                                                              #
 #> - documentation and revision                                                                   #
+#> @date - Jan, 2024                                                                              #
+#> - new revision                                                                                 #
 #> @email  bug reports to: colombarifm@hotmail.com                                                #
-#> @note   usage: ./run_path.sh -a <min_dist> <max_dist> <step>                                   #
+#> @note   usage: ./run_path.sh --min <min_dist> --max <max_dist> --step <step>                   #
 #> @note   usage: ./run_path.sh -h (for help)                                                     #
 #> @note   units: Angstrom                                                                        #
 #                                                                                                 #
@@ -83,7 +85,7 @@ Show_usage () {
 
   printf "\t\t%6s\n"            "Usage:"
 
-  line[1]="$0 -a <min_dist> -z <max_dist> -s <step>" 
+  line[1]="$0 --min <min_dist> --max <max_dist> --step <step>" 
   line[2]=""
   line[3]="<min_dist> is the minimum distance" 
   line[4]="<max_dist> is the maximum distance" 
@@ -126,7 +128,7 @@ Check_arg () {
   then
     printf "ERROR : invalid option for %s\n\t" $flag_meaning
     printf "TIP   : no valid argument supplied for flag %2s\n\n\t" $flag
-    printf "        Enter '-h' option for help.\n\n\t"
+    printf "        Enter '--help' option for help.\n\n\t"
     printf "=%.0s" {1..80}
     printf "\n"
     exit
@@ -148,38 +150,37 @@ Check_arg () {
 
 Call_cmd_line () {
 
-  while [[ "$1" == -* ]] 
+  while [[ "$#" -gt 0 ]] 
   do
   
     case "$1" in
-      -h) Show_usage
-          exit 0
-          ;;
-      -a) flag=$1
-          flag_meaning="min_distance"
-          shift
-          arg=$1
-          Check_arg 
-          min_dist=$arg
-          ;;
-      -z) flag=$1
-          flag_meaning="max_distance"
-          shift
-          arg=$1
-          Check_arg 
-          max_dist=$arg
-          ;;
-      -s) flag=$1
-          flag_meaning="step_increment"
-          shift
-          arg=$1
-          Check_arg 
-          step=$arg
-          ;;
-      --)
-          shift
-          break
-          ;;
+      --help) Show_usage
+              exit 0
+              ;;
+      --min) flag=$1
+             flag_meaning="min_distance"
+             shift
+             arg=$1
+             Check_arg 
+             min_dist=$arg
+             ;;
+      --max) flag=$1
+             flag_meaning="max_distance"
+             shift
+             arg=$1
+             Check_arg 
+             max_dist=$arg
+             ;;
+      --step) flag=$1
+              flag_meaning="step_increment"
+              shift
+              arg=$1
+              Check_arg 
+              step=$arg
+              ;;
+      *) Show_usage
+         exit 0
+         ;;
     esac
     shift
   done
@@ -194,8 +195,8 @@ Check_options () {
   then
 
     printf "ERROR : invalid option for %s\n\t" "min_distance/max_distance"
-    printf "TIP   : real number supplied for flag %2s must be smaller than one in flag %2s\n\n\t" "-a" "-z"
-    printf "        Enter '-h' option for help.\n\n\t"
+    printf "TIP   : real number supplied for flag %2s must be smaller than one in flag %2s\n\n\t" "--min" "--max"
+    printf "        Enter '--help' option for help.\n\n\t"
     printf "=%.0s" {1..80}
     printf "\n\t"
     exit
