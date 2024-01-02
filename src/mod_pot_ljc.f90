@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2023 Themis developers
+!   Copyright (c) 2017 - 2024 Themis developers
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -31,6 +31,8 @@
 !> - support added  
 !> @date - Nov 2019
 !> - update error condition by error_handling module added by Asdrubal Lozada-Blanco
+!> @date - Nov 2023
+!> - add openmp parallelization on energy calculation loop
 !---------------------------------------------------------------------------------------------------
 
 module mod_pot_ljc
@@ -68,6 +70,8 @@ module mod_pot_ljc
     procedure, pass, public                          :: Calc_energy => Calc_LJC_energy 
   end type ljc_dimer
 
+  logical, allocatable, dimension(:,:)               :: is_dummy
+  
   type( ljc_dimer )                                  :: ljc_dimers
 
 contains
@@ -220,6 +224,9 @@ contains
     allocate( this % dummy( mol1 % num_atoms, mol2 % num_atoms ), stat=ierr )
     if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
 
+    allocate( is_dummy( mol1 % num_atoms, mol2 % num_atoms ), stat=ierr )
+    if ( ierr /= 0 ) call err % error( 'e', message = "abnormal memory allocation" )
+
     this % eps_ij = 0.0_DP
     this % sig_ij = 0.0_DP
     this % q_ij   = 0.0_DP
@@ -242,6 +249,7 @@ contains
           .or. ( mol2 % atoms( 1, n_atom_2 ) % symbol(1:1) == 'X' ) ) then
 
           this % dummy( n_atom_1, n_atom_2 ) = .true.
+          is_dummy( n_atom_1, n_atom_2 ) = .true.
 
         endif
 
@@ -262,44 +270,53 @@ contains
   !------------------------------------------------------------------------------
   subroutine  Calc_ljc_energy( this, n_rot2, n_rot1, n_conf, n_trans )
     use mod_input_read, only: rcut_sqr, atom_overlap, inter_energy
+    use omp_lib
 
     implicit none
 
     class( ljc_dimer ), intent(INOUT) :: this
     integer, intent(IN)               :: n_rot2, n_rot1, n_conf, n_trans
     integer                           :: n_atom_1, n_atom_2
-    real( kind = DP )                 :: lj_factor_cube, rij, rijrij
+    real( kind = DP )                 :: lj_factor_cube, rij, rijrij, e_lj, e_coul
+    logical :: exit_outer
 
-    this % pot_coul = 0.0_DP
-    this % pot_lj   = 0.0_DP
+    e_coul = 0.0_DP
+    e_lj   = 0.0_DP
     rijrij          = 0.0_DP
     rij             = 0.0_DP
 
-     n1lp: do n_atom_2 = 1, mol2 % num_atoms
+   !$omp parallel do private(n_atom_1, n_atom_2,rijrij,rij,lj_factor_cube,is_dummy),&
+   !$omp & shared(mol1, mol2, atom_overlap), reduction(+:e_lj,e_coul),&
+   !$omp & schedule(guided,2) 
+    n1lp: do n_atom_2 = 1, mol2 % num_atoms
 
-       n2lp: do n_atom_1 = 1, mol1 % num_atoms
+      exit_outer = .false.
+
+      n2lp: do n_atom_1 = 1, mol1 % num_atoms
 
         rijrij = sum( ( mol1 % atoms( 1, n_atom_1 ) % xyz(:) - mol2 % atoms( n_conf, n_atom_2 ) % xyz(:) ) * &
                       ( mol1 % atoms( 1, n_atom_1 ) % xyz(:) - mol2 % atoms( n_conf, n_atom_2 ) % xyz(:) ) )
 
-        if ( ( rijrij <= rcut_sqr ) .and. ( this % dummy( n_atom_1, n_atom_2 ) .eqv. .false. ) ) then 
+        if ( ( rijrij <= rcut_sqr ) .and. ( is_dummy( n_atom_1, n_atom_2 ) .eqv. .false. ) ) then 
 
           atom_overlap( n_rot2, n_rot1, n_conf, n_trans ) = .true.
 
-          this % pot_lj   = 1.0E10_DP
-          this % pot_coul = 0.0_DP
+          exit_outer = .true.
 
-          exit n1lp
+          e_lj   = 1.0E10_DP
+          e_coul = 0.0_DP 
+
+          exit !1lp
 
         else if ( ( rijrij > rcut_sqr ) .and. ( this % dummy( n_atom_1, n_atom_2 ) .eqv. .false. ) ) then
 
           lj_factor_cube = ( this % sig_ij( n_atom_1, n_atom_2 ) / rijrij ) ** 3
 
-          this % pot_lj = this % pot_lj + this % eps_ij( n_atom_1, n_atom_2 ) * ( lj_factor_cube * ( lj_factor_cube - 1 ) )
+          e_lj = e_lj + this % eps_ij( n_atom_1, n_atom_2 ) * ( lj_factor_cube * ( lj_factor_cube - 1 ) )
 
           rij = dsqrt(rijrij)
             
-          this % pot_coul = this % pot_coul + this % q_ij( n_atom_1, n_atom_2 ) / rij
+          e_coul = e_coul + this % q_ij( n_atom_1, n_atom_2 ) / rij
 
         else if ( ( rijrij <= rcut_sqr ) .and. ( this % dummy( n_atom_1, n_atom_2 ) .eqv. .true. ) ) then
 
@@ -314,8 +331,9 @@ contains
       enddo n2lp
 
     enddo n1lp
-
-    inter_energy( n_rot2, n_rot1, n_conf, n_trans ) = ( this % pot_coul + this % pot_lj ) 
+    !$omp end parallel do
+    
+    inter_energy( n_rot2, n_rot1, n_conf, n_trans ) = e_coul + e_lj 
   
     return
   end subroutine Calc_ljc_energy
