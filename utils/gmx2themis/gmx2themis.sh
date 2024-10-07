@@ -283,7 +283,7 @@ Check_topology () {
 
 Read_topology () {
 
-  sed -n '/atoms/,/bonds/{/atoms/b;/bonds/b;p}' topol.top > tmp1
+  sed -n '/atoms/,/bonds/{/atoms/b;/bonds/b;p}' ${topology_file} > tmp1
   sed -i '/^;/d' tmp1
   sed -i '/^$/d' tmp1
 
@@ -291,7 +291,7 @@ Read_topology () {
   while read -r line
   do
 
-    atom_type[$i]=$( echo ${line} | awk '{printf "^%6s", $2}' )
+    atom_type[$i]=$( echo ${line} | awk '{printf $2}' )
     atom_symb[$i]=$( echo ${line} | awk '{printf $5}' )
     atom_chrg[$i]=$( echo ${line} | awk '{printf $7}' )
 
@@ -299,45 +299,6 @@ Read_topology () {
     ((i++))
 
   done < tmp1
-
-}
-
-#-------------------------------------------------------------------------------------------------#
-
-Read_topology_old () {
-
-  word1="opls_[0-9][0-9][0-9] "    
-  word2="opls_[0-9][0-9][0-9][A-Z]"  
-
-  i=1
-  while read -r line
-  do
-
-    case $line in 
-            
-      *${word1}*) 
-  
-        atom_type[$i]=$( echo $line | awk '{printf "%-9s", $2}' )
-        #echo "${atom_type[$i]}" ${#atom_type[$i]} "A"
-        atom_symb[$i]=$( echo $line | awk '{printf "%4s", $5}' )
-        atom_chrg[$i]=$( echo $line | awk '{printf "%10.5f", $7}' )
-        (( i++ ))
-        ;;
-      
-      *${word2}*) 
-  
-        atom_type[$i]=$( echo $line | awk '{printf "%-9s", $2}' )
-        #echo "${atom_type[$i]}" ${#atom_type[$i]} "B"
-        atom_symb[$i]=$( echo $line | awk '{printf "%4s", $5}' )
-        atom_chrg[$i]=$( echo $line | awk '{printf "%10.5f", $7}' )
-        (( i++ ))
-        ;;
-      *)
-        ;;
-
-    esac
-    shift
-  done < $topology_file
 
 }
 
@@ -396,26 +357,10 @@ Read_nonbonded () {
   for i in $( seq 1 1 $numat )
   do
 
-    atom_sigm[$i]=$( grep "${atom_type[$i]}" ${ffnonbonded_file} | awk '{printf "%10.5f", $6*10}' )
-    atom_epsl[$i]=$( grep "${atom_type[$i]}" ${ffnonbonded_file} | awk '{printf "%10.5f", $7}' )
+    printf "searching atom ${atom_type[$i]} \n"
 
-  done
-
-}
-
-#-------------------------------------------------------------------------------------------------#
-
-Read_nonbonded_old () {
-
-  i=1
-
-  printf "%4s\t%10s\t%10s\t%10s\n" "###" "chrg" "sigma (A)" "eps (kJ/mol)" > $output
-
-  for i in $( seq 1 1 $numat )
-  do
-
-    atom_sigm[$i]=$( grep "${atom_type[$i]}" $ffnonbonded_file | awk '{printf "%10.5f", $7*10}' )
-    atom_epsl[$i]=$( grep "${atom_type[$i]}" $ffnonbonded_file | awk '{printf "%10.5f", $8}' )
+    atom_sigm[$i]=$( sed -n '/atomtypes/,/pairtypes/p' ${ffnonbonded_file} | cut -d';' -f1,10 | grep -w  " ${atom_type[$i]} " | awk '{printf "%10.5f", $6*10}' )
+    atom_epsl[$i]=$( sed -n '/atomtypes/,/pairtypes/p' ${ffnonbonded_file} | cut -d';' -f1,10 | grep -w  " ${atom_type[$i]} " | awk '{printf "%10.5f", $7}' )
 
   done
 
