@@ -316,7 +316,7 @@ contains
 
           read(line_buffer(1:6)  , * ) this % atoms( n_conf, c_natom ) % rec_type  
           read(line_buffer(7:11) , * ) this % atoms( n_conf, c_natom ) % atom_num
-          read(line_buffer(14:16), * ) this % atoms( n_conf, c_natom ) % symbol         
+          read(line_buffer(13:16), * ) this % atoms( n_conf, c_natom ) % symbol         
           
           !read(line_buffer(17:17), * ) this % atoms( n_conf, c_natom ) % alt_loc        not needed?
           !this % atoms( n_conf, c_natom ) % alt_loc = "A"
@@ -728,7 +728,7 @@ contains
     character( len = 56 )               :: pdb_fmt
 
     !pdb_fmt='(a6,i5,2x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,10x,a2)'
-    pdb_fmt='(a6,i5,2x,a4,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,10x,a2)'
+    pdb_fmt='(a6,i5,1x,a4,1x,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,10x,a2)'
 
     write(66,'(a5,i9)') "MODEL", 1
 
@@ -736,7 +736,7 @@ contains
 
       write(66,pdb_fmt) this % molecules(1) % atoms( 1, n_atom_1 ) % rec_type, &
                         this % molecules(1) % atoms( 1, n_atom_1 ) % atom_num, &
-                        this % molecules(1) % atoms( 1, n_atom_1 ) % symbol, &
+                        adjustr(this % molecules(1) % atoms( 1, n_atom_1 ) % symbol), &
     !                    this % molecules(1) % atoms( 1, n_atom_1 ) % alt_loc, &
                         this % molecules(1) % atoms( 1, n_atom_1 ) % res_name, &
                         this % molecules(1) % atoms( 1, n_atom_1 ) % chain_id, & 
@@ -753,7 +753,7 @@ contains
 
       write(66,pdb_fmt) this % molecules(2) % atoms( n_conf, n_atom_2 ) % rec_type, &
                         this % molecules(2) % atoms( n_conf, n_atom_2 ) % atom_num, &
-                        this % molecules(2) % atoms( n_conf, n_atom_2 ) % symbol, &
+                        adjustr(this % molecules(2) % atoms( n_conf, n_atom_2 ) % symbol), &
     !                    this % molecules(2) % atoms( n_conf, n_atom_2 ) % alt_loc, &
                         this % molecules(2) % atoms( n_conf, n_atom_2 ) % res_name, &
                         this % molecules(2) % atoms( n_conf, n_atom_2 ) % chain_id, & 
