@@ -280,14 +280,17 @@ contains
     real( kind = DP )                 :: lj_factor_cube, rij, rijrij, e_lj, e_coul
     logical :: exit_outer
 
+    lj_factor_cube = 0.0_DP
     e_coul = 0.0_DP
     e_lj   = 0.0_DP
     rijrij          = 0.0_DP
     rij             = 0.0_DP
 
-   !$omp parallel do private(n_atom_1, n_atom_2,rijrij,rij,lj_factor_cube,is_dummy),&
-   !$omp & shared(mol1, mol2, atom_overlap), reduction(+:e_lj,e_coul),&
-   !$omp & schedule(guided,2) 
+
+   !$omp parallel do private(n_atom_1, n_atom_2, rijrij, rij, is_dummy, lj_factor_cube),&
+   !$omp & reduction(+:e_lj, e_coul),&
+   !$omp & shared(mol1, mol2),& 
+   !$omp & schedule(guided,2)
     n1lp: do n_atom_2 = 1, mol2 % num_atoms
 
       exit_outer = .false.
@@ -297,7 +300,7 @@ contains
         rijrij = sum( ( mol1 % atoms( 1, n_atom_1 ) % xyz(:) - mol2 % atoms( n_conf, n_atom_2 ) % xyz(:) ) * &
                       ( mol1 % atoms( 1, n_atom_1 ) % xyz(:) - mol2 % atoms( n_conf, n_atom_2 ) % xyz(:) ) )
 
-        if ( ( rijrij <= rcut_sqr ) .and. ( is_dummy( n_atom_1, n_atom_2 ) .eqv. .false. ) ) then 
+        if ( ( rijrij <= rcut_sqr ) .and. ( this % dummy( n_atom_1, n_atom_2 ) .eqv. .false. ) ) then 
 
           atom_overlap( n_rot2, n_rot1, n_conf, n_trans ) = .true.
 
