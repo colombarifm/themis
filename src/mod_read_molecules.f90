@@ -323,7 +323,7 @@ contains
           
           read(line_buffer(18:20), * ) this % atoms( n_conf, c_natom ) % res_name
           
-          !read(line_buffer(22:22), * ) this % atoms( n_conf, c_natom ) % chain_id       often missing?
+          read(line_buffer(22:22), * ) this % atoms( n_conf, c_natom ) % chain_id       !often missing?
           
           read(line_buffer(23:26), * ) this % atoms( n_conf, c_natom ) % res_num
           
@@ -340,7 +340,7 @@ contains
           !read(line_buffer(61:66), '(A)') this % atoms( n_conf, c_natom ) % t_fact    often missing?
           this % atoms( n_conf, c_natom ) % t_fact = 0.00 
 
-          !read(line_buffer(77:78), '(A)') this % atoms( n_conf, c_natom ) % elem_symbol often missing?
+          read(line_buffer(77:78), '(A)') this % atoms( n_conf, c_natom ) % elem_symbol !often missing?
           this % atoms( n_conf, c_natom ) % elem_symbol = this % atoms( n_conf, c_natom ) % symbol(1:1) 
 
         else if ( line_buffer(1:6) == "ENDMDL" ) then
@@ -653,7 +653,7 @@ contains
         this % molecules(1) % atoms( 1, n_atom_1 ) % symbol      = mol1 % atoms( 1, n_atom_1 ) % symbol
         this % molecules(1) % atoms( 1, n_atom_1 ) % alt_loc     = "A" 
         this % molecules(1) % atoms( 1, n_atom_1 ) % res_name    = mol1 % atoms( 1, n_atom_1 ) % res_name
-        this % molecules(1) % atoms( 1, n_atom_1 ) % chain_id    = "A"
+        this % molecules(1) % atoms( 1, n_atom_1 ) % chain_id    = mol1 % atoms( 1, n_atom_1 ) % chain_id
         this % molecules(1) % atoms( 1, n_atom_1 ) % res_num     = mol1 % atoms( 1, n_atom_1 ) % res_num
         this % molecules(1) % atoms( 1, n_atom_1 ) % ins_code    = "A" 
         this % molecules(1) % atoms( 1, n_atom_1 ) % xyz(:)      = mol1 % atoms( 1, n_atom_1 ) % xyz(:)
@@ -670,7 +670,7 @@ contains
         this % molecules(2) % atoms( n_conf, n_atom_2 ) % symbol      = mol2 % atoms( n_conf, n_atom_2 ) % symbol
         this % molecules(2) % atoms( n_conf, n_atom_2 ) % alt_loc     = "B" 
         this % molecules(2) % atoms( n_conf, n_atom_2 ) % res_name    = mol2 % atoms( n_conf, n_atom_2 ) % res_name
-        this % molecules(2) % atoms( n_conf, n_atom_2 ) % chain_id    = "B"
+        this % molecules(2) % atoms( n_conf, n_atom_2 ) % chain_id    = mol2 % atoms( n_conf, n_atom_2 ) % chain_id
         this % molecules(2) % atoms( n_conf, n_atom_2 ) % res_num     = mol2 % atoms( n_conf, n_atom_2 ) % res_num
         this % molecules(2) % atoms( n_conf, n_atom_2 ) % ins_code    = "B" 
         this % molecules(2) % atoms( n_conf, n_atom_2 ) % xyz(:)      = mol2 % atoms( n_conf, n_atom_2 ) % xyz(:)
@@ -748,6 +748,7 @@ contains
                         this % molecules(1) % atoms( 1, n_atom_1 ) % elem_symbol
 
     enddo
+
 
     do n_atom_2 = 1, mol2 % num_atoms
 
