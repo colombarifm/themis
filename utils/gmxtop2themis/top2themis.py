@@ -81,6 +81,7 @@ def Get_atoms( ):
     ini_str  = "[ atoms ]"
     cmt_str  = ";"
     skp_str  = "\n"
+    dir_str  = "#"
     end_str  = "[ bonds ]"
 
     for line in flist:
@@ -90,7 +91,7 @@ def Get_atoms( ):
             parsing = False
         if parsing:
             if not line.startswith(ini_str):
-                if not line.startswith(skp_str) and not line.startswith(cmt_str):
+                if not line.startswith(skp_str) and not line.startswith(cmt_str) and not line.startswith(dir_str):
                     tmp  = line.strip().split() 
                     atype.append(tmp[1])
                     label.append(tmp[4])
