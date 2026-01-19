@@ -15,4 +15,3 @@ lowest_structures : 20
 coord_format : XYZ
 write_frames : none
 mopac_job : pm7 1scf mop
-cutoff_distance : 0.0
