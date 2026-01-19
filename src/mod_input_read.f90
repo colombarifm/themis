@@ -48,7 +48,7 @@ module mod_input_read
   implicit none
 
   private 
-  public Read_input_file, potential, writeframe, wrtxtc, temp, rcut_sqr, cutoff_sqr, point_rot_factor, axis_rot_moves, &
+  public Read_input_file, potential, writeframe, wrtxtc, temp, rcut_sqr, point_rot_factor, axis_rot_moves, &
     trans_factor, axis_rot_range, ref1, ref2, vector1, vector2, nconf2, nstruc, atom_overlap, inter_energy, mopac_head, &
     file_type
 
@@ -63,8 +63,6 @@ module mod_input_read
   real( kind = DP )      :: temp             = 0.0
   real( kind = DP )      :: rcut             = 0.0
   real( kind = DP )      :: rcut_sqr         = 0.0
-  real( kind = DP )      :: cutoff           = 0.0
-  real( kind = DP )      :: cutoff_sqr       = 0.0
   real( kind = DP )      :: axis_rot_range   = 0.0
   integer                :: trans_factor     = 0
   integer                :: point_rot_factor = 0
@@ -73,7 +71,7 @@ module mod_input_read
   integer                :: ref2             = 0
   integer                :: vector1          = 0
   integer                :: vector2          = 0
-  integer                :: nconf2           = 0
+  integer                :: nconf2           = 1 ! new default (backward compatibility with v2.1)
   integer                :: nstruc           = 0
 
   logical                :: key_translation_factor = .false.
@@ -89,7 +87,6 @@ module mod_input_read
   logical                :: key_rot_ref_mol2       = .false.
   logical                :: key_mol2_conf          = .false.
   logical                :: key_shortest_distance  = .false.
-  logical                :: key_cutoff_distance    = .false.
   logical                :: key_write_xtc          = .false.
   logical                :: key_file_format        = .false.
   logical                :: key_lowest_structures  = .false.
@@ -550,47 +547,6 @@ contains
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        else if ( buffer(1:16) == 'cutoff_distance ' ) then
-
-          key_cutoff_distance = .true.
-
-          nochar = verify( trim( attribute ), float_alphabet )
-
-          if ( ( nochar > 0 ) .or. ( len( trim(attribute) ) == 0 ) ) then
-
-            msg_line = "Please use a float to specify the maximum site-site &
-                       &distance (in Angstrom) to calculate pair energies. &
-                       &"//new_line('a')   
-
-            call err % error( 'e', message = "while reading INPUT file.")
-
-            call err % error( 'e', check = "line "//trim(adjustl(line_number))//". Keyword '"//trim(adjustl(keyword))//"' &
-              &has an invalid attribute '"//trim(adjustl(attribute))//"'.")
-
-            call err % error( 'e', tip = msg_line )
-
-            call Display_date_time( "FINISHED AT: " )
-            
-            stop
-
-          else
-
-            read(attribute, *, iostat=ios) cutoff
-
-            if ( cutoff < 1.0_DP ) then
-                
-              cutoff_sqr = fpinf
-
-            else
-
-              cutoff_sqr = cutoff * cutoff
-
-            endif
-
-          endif
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
         else if ( buffer(1:18) == 'shortest_distance ' ) then
 
           key_shortest_distance = .true.
@@ -787,19 +743,13 @@ contains
 
     else if ( key_mol2_conf .eqv. .false. ) then
     
-      call err % error('e',message="Missing valid entry for 'nconf_mol2' on INPUT file!")
+      call err % error('w',message="Missing valid entry for 'nconf_mol2' on INPUT file. Using default.")
     
-      stop
+      !stop
 
     else if ( key_shortest_distance .eqv. .false. ) then
     
       call err % error('e',message="Missing valid entry for 'shortest_distances' on INPUT file!")
-    
-      stop
-
-    else if ( key_cutoff_distance .eqv. .false. ) then
-    
-      call err % error('e',message="Missing valid entry for 'cutoff_distances' on INPUT file!")
     
       stop
 
@@ -850,7 +800,7 @@ contains
 
     endif
 
-    call Display_date_time( "FINISHED AT: " )
+    !call Display_date_time( "FINISHED AT: " )
 
   end subroutine Check_keys
 
