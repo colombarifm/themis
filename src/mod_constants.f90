@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2024 Themis developers
+!   Copyright (c) 2017 - 2026 Themis developers
 !
 !   This file was written by Felippe M. Colombari.
 !
@@ -35,8 +35,7 @@ module mod_constants
 
   implicit none
 
-  character( len = 8 ), parameter      :: version = '3.0.0'
-  character( len = 8 ), parameter      :: revision = 'ae2e8ac'
+  character( len = 8 ), parameter      :: version = '2.2.0'
 
   integer, public, parameter           :: DP = selected_real_kind(15, 307) !  double precision constant for portability
   integer, public, parameter           :: SP = selected_real_kind(6, 37)   !  single precision constant for portability

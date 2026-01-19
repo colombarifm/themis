@@ -4,7 +4,7 @@
 !
 !   Free software, licensed under GNU GPL v3
 !
-!   Copyright (c) 2017 - 2024 Themis developers
+!   Copyright (c) 2017 - 2026 Themis developers
 !
 !   This file was written by Felippe M. Colombari and Asdrubal Lozada-Blanco.
 !
@@ -33,9 +33,7 @@
 
 module mod_info
   use iso_fortran_env , only : output_unit
-  use mod_constants   , only : dashline, DP, version, revision
-  ! TODO: include in makefile 
-  !   include 'revision.inc'     
+  use mod_constants   , only : dashline, DP, version
   implicit none
   private
 
@@ -53,7 +51,6 @@ contains
     write(output_unit,'(/,T40, A, A)') "Author: Felippe M. Colombari"
     write(output_unit,'(/,T36, A, A)') "Contributions: Asdrubal Lozada-Blanco"
     write(output_unit,'(/,T43, A, A)') "Program version: ",trim(version)
-    write(output_unit,'(T46, A, A)'  ) "Revision ", revision
     write(output_unit,'(T3, A)') dashline
 
   end subroutine Display_header
